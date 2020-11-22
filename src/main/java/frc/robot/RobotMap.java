@@ -61,6 +61,7 @@ public class RobotMap {
   public static double shooterTiltMotorTicksPerDegree = .5;
   public static double tiltFangsUpperLimit = 140; //0
   public static double tiltFangsLowerLimit = -570; // -281.8
+  public static double tiltFangsMiddle = -200;
 
   public static int minYTiltPixel = 400;
   public static int maxYTiltPixel = 250;

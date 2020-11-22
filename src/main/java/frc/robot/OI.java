@@ -31,6 +31,8 @@ public class OI {
   Button runIntake = new JoystickButton(driveStick, 1);
   Button turretButton = new JoystickButton(driveStick, 2);
   Button intakeEject = new JoystickButton(driveStick, 3);
+  Button ShooterTiltSetpointButton = new JoystickButton(driveStick, 5);
+  Button ShooterTiltZeroButton = new JoystickButton(driveStick, 6); 
   //int turret = new turnStick.getPov();
   //turnsStick
 
@@ -55,6 +57,8 @@ public class OI {
      runIntake.whileHeld(new IntakeInCommand());
      runIntake.whenReleased(new IntakeUpCommand());
      intakeEject.whileHeld(new IntakeEject());
+     ShooterTiltSetpointButton.whileHeld(new ShooterTiltGoToSetpointCommand());
+     ShooterTiltZeroButton.whileHeld(new ShooterTiltGoToZeroCommand());
      //Left Joystick
 
 

@@ -325,7 +325,12 @@ public void configureTiltMotorControllerForMagic(){
 
   public void tiltGoToSetpoint() {
     configureTiltMotorControllerForMagic();
-    tiltMotorController.set(ControlMode.MotionMagic, 500);
+    tiltMotorController.set(ControlMode.MotionMagic, RobotMap.tiltFangsMiddle);
+
+  }
+  public void tiltGoToZero() {
+    configureTiltMotorControllerForMagic();
+    tiltMotorController.set(ControlMode.MotionMagic, 0);
 
   }
 
