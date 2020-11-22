@@ -9,6 +9,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
+import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterTurretCenterCommand extends Command {
   /**for now, would only work within a 180 degree range; needs testing */
@@ -41,12 +43,16 @@ public class ShooterTurretCenterCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+    if (Robot.shooterSubsystem.getPanEncoder() < RobotMap.shooterPanMotorEncoderFrontVal - RobotMap.panDefaultAcceptableError && Robot.shooterSubsystem.getPanEncoder() > RobotMap.shooterPanMotorEncoderFrontVal + RobotMap.panDefaultAcceptableError) {
     return true;
+  }
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    ShooterSubsystem.panMotorController.set(0);
   }
 
   // Called when another command which requires one or more of the same

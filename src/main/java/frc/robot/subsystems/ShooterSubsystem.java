@@ -145,6 +145,7 @@ public class ShooterSubsystem extends Subsystem {
   { /*boolean retVal =false;
     if ((getPanEncoder() <RobotMap.shooterEstimatedPos90PanEncoderVal) && ( getPanEncoder() >RobotMap.shooterEstimatedNeg90PanEncoderVal) )
     { */panMotorController.set(ControlMode.MotionMagic, RobotMap.shooterPanMotorEncoderFrontVal);
+        System.out.println("moving!");
    /* retVal = true;}
     return retVal;*/
   }

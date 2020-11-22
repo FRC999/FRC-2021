@@ -52,9 +52,9 @@ public class RobotMap {
   public final static int shooterYResolution = 240; 
   public final static int shooterResolutionAcceptableError = 15;
   public  static double shooterPanSpeed = -.1;
-  public static double shooterPanMotorEncoderFrontVal = 2250;
-  public static double shooterEstimatedPos90PanEncoderVal = 3021;
-  public static double shooterEstimatedNeg90PanEncoderVal = 1178;
+  public static double shooterPanMotorEncoderFrontVal = 2270;
+  public static double shooterEstimatedPos90PanEncoderVal = 3250;
+  public static double shooterEstimatedNeg90PanEncoderVal = 1300;
 
 
   public static int shooterTiltMotorTicksPerRotation = 178;
@@ -93,7 +93,8 @@ public class RobotMap {
  */
 
   //single stick setup
-  public final static int turnStickPort = OI.driveStickPort;
+  public final static int drivestickPort = OI.driveStickPort;
+  public final static int turnStickPort = OI.turnStickPort;
   public final static int buttonBoxPort = OI.copilotPort;
   public final static double deadbandX = 0.1;
   public final static double deadbandY = 0.1;
@@ -105,7 +106,7 @@ public class RobotMap {
   public static int ColorWheelSolenoidReverseChannel = 1;
   public static int IntakeSolenoidForwardChannel = 5;
   public static int IntakeSolenoidReverseChannel = 3;
-  public static int climberSolenoidForwardChannel = 3;
+  public static int climberSolenoidForwardChannel = 4;
   public static int climberSolenoidReverseChannel = 2;
 
   // ULTRASONIC CONSTANTS

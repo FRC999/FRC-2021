@@ -89,7 +89,7 @@ public class Robot extends TimedRobot {
     System.out.println("falconBotSwitch = "+ RobotMap.isFalconBot);
     if(RobotMap.isFalconBot){
       driveSubsystem = new FalconDriveSubsystem();
-      RobotMap.isSplitStick = true;
+      RobotMap.isSplitStick = false;
       // the IAmFalconBot method reset some RobotMap constants for the FalconBot chassis
       // but the call to it was moved into the FalconDriveSubsystem constructor
       System.out.println("We're a FALCON");

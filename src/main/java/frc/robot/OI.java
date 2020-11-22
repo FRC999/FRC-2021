@@ -27,12 +27,12 @@ public class OI {
   public Joystick turnStick = new Joystick(turnStickPort);
   public Joystick buttonBox = new Joystick(copilotPort);
 
-  //turnStick
-  Button runIntake = new JoystickButton(turnStick, 1);
-  Button turretButton = new JoystickButton(turnStick, 2);
-  Button intakeEject = new JoystickButton(turnStick, 3);
+  //driveStick
+  Button runIntake = new JoystickButton(driveStick, 1);
+  Button turretButton = new JoystickButton(driveStick, 2);
+  Button intakeEject = new JoystickButton(driveStick, 3);
   //int turret = new turnStick.getPov();
-  //Left Joystick
+  //turnsStick
 
   //Button Board
   Button climberSolenoidForward = new JoystickButton(buttonBox, 1);
@@ -46,6 +46,7 @@ public class OI {
   Button fangsFullyBack = new JoystickButton(buttonBox, 9);
   Button visionTracking = new JoystickButton(buttonBox, 10);
   Button fullShooter = new JoystickButton(buttonBox, 11); //loader + magazine + shooter
+  Button zeroTurret = new JoystickButton(buttonBox, 12);
   
   public OI() {
      // Setup All Commands Here
@@ -70,7 +71,8 @@ public class OI {
     fangsFullyBack.whenPressed(new ShooterTiltGoToSetpointCommand());
     visionTracking.whileHeld(new ShooterVisionCommand());
     fullShooter.whileHeld(new ShooterFullCommand());
-    //zeroTurret.whileHeld(new ShooterTurretCenterCommand());
+    turretButton.whileHeld(new ShootManuallyCommand());
+    zeroTurret.whileHeld(new ShooterTurretCenterCommand());
     
   }
 }
