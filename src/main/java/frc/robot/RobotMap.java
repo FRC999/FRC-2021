@@ -84,9 +84,18 @@ public class RobotMap {
   public final static int climberMotorControllerID = 13;
 
   // Driver Input Devices
-  public final static int leftJoystickPort = 0;
-  public final static int buttonBoxPort = 1;
-  public final static int rightJoystickPort = 2;
+ 
+  /*
+  //dual stick setup
+  public final static int leftJoystickPort = OI.driveStick;
+  public final static int buttonBoxPort = OI.copilot;
+  public final static int rightJoystickPort = OI.turnStick;
+ */
+
+  //single stick setup
+  public final static int driveStickPort = OI.driveStick;
+  public final static int buttonBoardPort = OI.copilot;
+  
   public final static double deadbandX = 0.1;
   public final static double deadbandY = 0.1;
   public final static double deadbandZ = 0.1;

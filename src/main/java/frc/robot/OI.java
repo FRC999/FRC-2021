@@ -18,13 +18,20 @@ import frc.robot.commands.*;
  * the robot.
  */
 public class OI {
+ 
+  public static int driveStick = 0;
+  public static int copilot = 1;
+  public static int turnStick = 2;
+
   public Joystick leftJoystick = new Joystick(RobotMap.leftJoystickPort);
   public Joystick rightJoystick = new Joystick(RobotMap.rightJoystickPort);
   public Joystick buttonBox = new Joystick(RobotMap.buttonBoxPort);
 
   //RightJoystick
   Button runIntake = new JoystickButton(rightJoystick, 1);
+  Button turretButton = new JoystickButton(rightJoystick, 2);
   Button intakeEject = new JoystickButton(rightJoystick, 3);
+  int turret = new rightJoystick.getPov();
   //Left Joystick
 
   //Button Board
@@ -33,13 +40,12 @@ public class OI {
   Button climberSolenoidReverse = new JoystickButton(buttonBox, 3);
   Button magazineInward = new JoystickButton(buttonBox, 4);
   Button loaderUp = new JoystickButton(buttonBox, 5);
-  public Button shooterMotor = new JoystickButton(buttonBox, 6);
+  Button shooterMotor = new JoystickButton(buttonBox, 6);
   Button magazineOutward = new JoystickButton(buttonBox, 7);
   Button loaderDown = new JoystickButton(buttonBox, 8);
   Button fangsFullyBack = new JoystickButton(buttonBox, 9);
   Button visionTracking = new JoystickButton(buttonBox, 10);
   Button fullShooter = new JoystickButton(buttonBox, 11); //loader + magazine + shooter
-  Button zeroTurret = new JoystickButton(buttonBox, 12);
   
   public OI() {
      // Setup All Commands Here

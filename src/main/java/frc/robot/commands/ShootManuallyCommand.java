@@ -51,13 +51,15 @@ public class ShootManuallyCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
+    System.out.println(Robot.shooterSubsystem.getPanEncoder());
+    /*
     Robot.shooterSubsystem.shoot(-1);
     //use the twist and throttle to control shooter pan and tilt
     //double tilt = Robot.oi.leftJoystick.getThrottle();
     Robot.shooterSubsystem.pan(Robot.oi.leftJoystick.getZ());
     //Robot.shooterSubsystem.tilt(tilt);
     Robot.smartDashboardSubsystem.updateShooterValues();
+    */
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -69,6 +71,7 @@ public class ShootManuallyCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    
   }
 
   // Called when another command which requires one or more of the same
