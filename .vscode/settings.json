@@ -1,0 +1,39 @@
+{
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "bin/": true,
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true
+  },
+  "cSpell.words": [
+    "canutils",
+    "ctre",
+    "deadband",
+    "ilib",
+    "izone",
+    "leds",
+    "linuxathena",
+    "livewindow",
+    "rio",
+    "robo",
+    "roborio",
+    "subclassing",
+    "submodule",
+    "teleop",
+    "teleoperated",
+    "testtable",
+    "windowsx",
+    "wp",
+    "wpiapi"
+  ],
+  "cSpell.ignoreWords": [
+    "fpid"
+  ]
+}
