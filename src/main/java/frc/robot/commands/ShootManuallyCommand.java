@@ -20,7 +20,7 @@ public class ShootManuallyCommand extends Command {
   }
  /* public double panVal() {
     double pan = 0;
-      if (Robot.oi.leftJoystick.getZ() > 0) { // Panning right (clockwise)
+      if (Robot.oi.driveStick.getZ() > 0) { // Panning right (clockwise)
       if (Robot.shooterSubsystem.getPanEncoder() >= 1406) {
     pan = 0;
     return pan;
@@ -35,7 +35,7 @@ public class ShootManuallyCommand extends Command {
         return pan;
         }
       } else {
-        pan = Robot.oi.leftJoystick.getZ();
+        pan = Robot.oi.driveStick.getZ();
         return pan;
       }
     }
@@ -55,8 +55,8 @@ public class ShootManuallyCommand extends Command {
     /*
     Robot.shooterSubsystem.shoot(-1);
     //use the twist and throttle to control shooter pan and tilt
-    //double tilt = Robot.oi.leftJoystick.getThrottle();
-    Robot.shooterSubsystem.pan(Robot.oi.leftJoystick.getZ());
+    //double tilt = Robot.oi.driveStick.getThrottle();
+    Robot.shooterSubsystem.pan(Robot.oi.driveStick.getZ());
     //Robot.shooterSubsystem.tilt(tilt);
     Robot.smartDashboardSubsystem.updateShooterValues();
     */
@@ -71,7 +71,7 @@ public class ShootManuallyCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    
+
   }
 
   // Called when another command which requires one or more of the same

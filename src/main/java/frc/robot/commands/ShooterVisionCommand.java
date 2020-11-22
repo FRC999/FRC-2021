@@ -45,10 +45,14 @@ public class ShooterVisionCommand extends Command {
     } else {
       counter = 0;
     }
-if (Robot.oi.shooterMotor.get())
+
+/*
+if (Robot.oi.turnStick.getButton(6))
 {Robot.shooterSubsystem.shoot(1);} 
 else {Robot.shooterSubsystem.shoot(0);}
-    //bounds = Robot.shooterSubsystem.inBounds(Robot.shooterSubsystem.getX());
+*/
+
+//bounds = Robot.shooterSubsystem.inBounds(Robot.shooterSubsystem.getX());
     //side = Robot.shooterSubsystem.whichSide();
 /*
     switch (side) {

@@ -344,7 +344,7 @@ public void configureTiltMotorControllerForMagic(){
   } 
 
   public void manualAimTiltFangs(){
-    double tiltValue = ((Robot.oi.leftJoystick.getThrottle()*-1) + 1) / 2;
+    double tiltValue = ((Robot.oi.driveStick.getThrottle()*-1) + 1) / 2;
     double output = tiltValue*RobotMap.shooterTiltMotorTicksPerRotation;
 
     if (fangsActivated==true)
@@ -360,7 +360,7 @@ public void configureTiltMotorControllerForMagic(){
     if (getTiltPot() >= RobotMap.tiltFangsLowerLimit &&  getTiltPot() <= RobotMap.tiltFangsUpperLimit) {
       maxSpeed = 0.25;
     }
-    double output = (Robot.oi.leftJoystick.getThrottle()*-1) * maxSpeed;
+    double output = (Robot.oi.driveStick.getThrottle()*-1) * maxSpeed;
     Robot.smartDashboardSubsystem.updateShooterValues();
    // System.out.println(output);
     tiltMotorController.set(ControlMode.PercentOutput, output);

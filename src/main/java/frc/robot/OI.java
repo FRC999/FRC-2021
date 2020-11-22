@@ -19,19 +19,19 @@ import frc.robot.commands.*;
  */
 public class OI {
  
-  public static int driveStick = 0;
-  public static int copilot = 1;
-  public static int turnStick = 2;
+  public static int driveStickPort = 0;
+  public static int copilotPort = 1;
+  public static int turnStickPort = 2;
 
-  public Joystick leftJoystick = new Joystick(RobotMap.leftJoystickPort);
-  public Joystick rightJoystick = new Joystick(RobotMap.rightJoystickPort);
-  public Joystick buttonBox = new Joystick(RobotMap.buttonBoxPort);
+  public Joystick driveStick = new Joystick(driveStickPort);
+  public Joystick turnStick = new Joystick(turnStickPort);
+  public Joystick buttonBox = new Joystick(copilotPort);
 
-  //RightJoystick
-  Button runIntake = new JoystickButton(rightJoystick, 1);
-  Button turretButton = new JoystickButton(rightJoystick, 2);
-  Button intakeEject = new JoystickButton(rightJoystick, 3);
-  int turret = new rightJoystick.getPov();
+  //turnStick
+  Button runIntake = new JoystickButton(turnStick, 1);
+  Button turretButton = new JoystickButton(turnStick, 2);
+  Button intakeEject = new JoystickButton(turnStick, 3);
+  //int turret = new turnStick.getPov();
   //Left Joystick
 
   //Button Board
@@ -70,7 +70,7 @@ public class OI {
     fangsFullyBack.whenPressed(new ShooterTiltGoToSetpointCommand());
     visionTracking.whileHeld(new ShooterVisionCommand());
     fullShooter.whileHeld(new ShooterFullCommand());
-    zeroTurret.whileHeld(new ShooterTurretCenterCommand());
+    //zeroTurret.whileHeld(new ShooterTurretCenterCommand());
     
   }
 }
