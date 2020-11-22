@@ -1,6 +1,6 @@
 # FRC-2020
 
-Code for the 2020 FIRST Robotics Competition!
+Code for the 2021 FIRST Robotics Competition based on the 2020 code (pulled from CompetitionBotBranch).
 
 ## Git explained
 
