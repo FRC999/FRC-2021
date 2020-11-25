@@ -263,7 +263,7 @@ public class ShooterSubsystem extends Subsystem {
   }
 
 //Start of work on the FANGS
-  Boolean fangsActivated = false;
+  Boolean fangsActivated = true;
 
 public void configureTiltMotorControllerForMagic(){
 
