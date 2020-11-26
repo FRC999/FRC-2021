@@ -225,7 +225,7 @@ public class ShooterSubsystem extends Subsystem {
       }
         break;
 
-      case "Right": {
+      case "Above": {
         panMotorController.set(ControlMode.MotionMagic, Math.round(
             getTiltPot() - (differenceFromMiddleY() / RobotMap.pixelsPerDegreeY * RobotMap.potentiometerTicksPerDegreeY)));
       }
