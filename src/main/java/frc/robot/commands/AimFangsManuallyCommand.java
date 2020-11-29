@@ -10,7 +10,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.ShooterSubsystem;
 
 public class AimFangsManuallyCommand extends Command {
   public AimFangsManuallyCommand() {
@@ -46,7 +45,7 @@ public class AimFangsManuallyCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    if(Robot.shooterSubsystem.fangsActivated !=true) {
+    if(Robot.shooterSubsystem.fangsActivated != true) {
       Robot.shooterSubsystem.tiltFangDeployToggle();
     }
     //set shooter wheel to full speed
