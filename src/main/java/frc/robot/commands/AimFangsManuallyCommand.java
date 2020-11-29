@@ -9,10 +9,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShootManuallyCommand extends Command {
-  public ShootManuallyCommand() {
+public class AimFangsManuallyCommand extends Command {
+  public AimFangsManuallyCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.shooterSubsystem);
@@ -45,6 +46,9 @@ public class ShootManuallyCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    if(Robot.shooterSubsystem.fangsActivated !=true) {
+      Robot.shooterSubsystem.tiltFangDeployToggle();
+    }
     //set shooter wheel to full speed
   }
 
@@ -53,7 +57,10 @@ public class ShootManuallyCommand extends Command {
   protected void execute() {
     System.out.println("PAN : " + Robot.shooterSubsystem.getPanEncoder());
     System.out.println("TILT : " + Robot.shooterSubsystem.getTiltPot());
-    robot.shooterSubsystem.manualAimTiltFangs();
+    Robot.shooterSubsystem.manualAimTiltFangs();
+    if(Robot.shooterSubsystem.getTiltPot() < RobotMap.tiltFangsLowerLimit || Robot.shooterSubsystem.getTiltPot() > RobotMap.tiltFangsUpperLimit) {
+      Robot.shooterSubsystem.tiltFangDeployToggle();
+    }
     /*
     Robot.shooterSubsystem.shoot(-1);
     //use the twist and throttle to control shooter pan and tilt
@@ -67,7 +74,7 @@ public class ShootManuallyCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (robot.oi.driveStick.getThrottle()) {
+    if (Robot.shooterSubsystem.fangsActivated) {
         return false;
     } else {
         return true;
@@ -77,7 +84,7 @@ public class ShootManuallyCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    robot.shooterSubsystem.tiltStandby();
+    Robot.shooterSubsystem.tiltStandby();
   }
 
   // Called when another command which requires one or more of the same

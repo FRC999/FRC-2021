@@ -33,6 +33,7 @@ public class OI {
   Button intakeEject = new JoystickButton(driveStick, 3);
   Button ShooterTiltSetpointButton = new JoystickButton(driveStick, 5);
   Button ShooterTiltZeroButton = new JoystickButton(driveStick, 6); 
+  Button FangsManual = new JoystickButton(driveStick,7);
   //int turret = new turnStick.getPov();
   //turnsStick
 
@@ -49,7 +50,6 @@ public class OI {
   Button visionTracking = new JoystickButton(buttonBox, 10);
   Button fullShooter = new JoystickButton(buttonBox, 11); //loader + magazine + shooter
   Button zeroTurret = new JoystickButton(buttonBox, 12);
-  
   public OI() {
      // Setup All Commands Here
      
@@ -77,6 +77,6 @@ public class OI {
     fullShooter.whileHeld(new ShooterFullCommand());
     turretButton.whileHeld(new ShootManuallyCommand());
     zeroTurret.whileHeld(new ShooterTurretCenterCommand());
-    
+    FangsManual.whileHeld(new AimFangsManuallyCommand());
   }
 }
