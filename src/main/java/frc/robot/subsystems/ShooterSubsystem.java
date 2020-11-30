@@ -18,8 +18,8 @@ public class ShooterSubsystem extends Subsystem {
 
   public static WPI_TalonSRX shooterMotorController = new WPI_TalonSRX(RobotMap.shooterWheelMotorControllerID);
   public static WPI_TalonSRX panMotorController = new WPI_TalonSRX(RobotMap.shooterPanMotorControllerID);
-  public static WPI_TalonSRX tiltMotorController = new WPI_TalonSRX(RobotMap.ShooterTiltMotorControllerID);
-  public static Boolean fangsActivated = false;
+  public WPI_TalonSRX tiltMotorController = new WPI_TalonSRX(RobotMap.ShooterTiltMotorControllerID);
+  public Boolean fangsActivated = false;
   // double shooterSpeed = 0.5;
 
   NetworkTableInstance networkTableInstance = NetworkTableInstance.getDefault();
@@ -327,6 +327,13 @@ public void configureTiltMotorControllerForMagic(){
     tiltMotorController.set(ControlMode.MotionMagic, RobotMap.tiltFangsMiddle);
 
   }
+
+  public void tiltGoToSetpoint(int setpoint) {
+    configureTiltMotorControllerForMagic();
+    tiltMotorController.set(ControlMode.MotionMagic, setpoint);
+
+  }
+
   public void tiltGoToZero() {
     configureTiltMotorControllerForMagic();
     tiltMotorController.set(ControlMode.MotionMagic, 0);

@@ -38,9 +38,15 @@ public class OI {
   //turnsStick
 
   //Button Board
-  Button climberSolenoidForward = new JoystickButton(buttonBox, 1);
-  Button winchMotor = new JoystickButton(buttonBox, 2);
-  Button climberSolenoidReverse = new JoystickButton(buttonBox, 3);
+// *** Temporary reasign buttons to Fang control
+  //Button climberSolenoidForward = new JoystickButton(buttonBox, 1);
+  //Button winchMotor = new JoystickButton(buttonBox, 2);
+  //Button climberSolenoidReverse = new JoystickButton(buttonBox, 3);
+  Button ShooterFangsUp10 = new JoystickButton(buttonBox, 1);
+  Button ShooterFangsToZero = new JoystickButton(buttonBox, 2);
+  Button ShooterFangsDown10 = new JoystickButton(buttonBox, 3);
+// *** End Temporary Code
+
   Button magazineInward = new JoystickButton(buttonBox, 4);
   Button loaderUp = new JoystickButton(buttonBox, 5);
   Button shooterMotor = new JoystickButton(buttonBox, 6);
@@ -64,9 +70,15 @@ public class OI {
 
 
     //Button Board
-    climberSolenoidForward.whenPressed(new ClimbExtendCommand());
-    winchMotor.whileHeld(new ClimbWinchUpCommand());
-    climberSolenoidReverse.whenPressed(new ClimbRetractCommand());
+// *** Temporary reasign buttons to Fang control
+    //climberSolenoidForward.whenPressed(new ClimbExtendCommand());
+    //winchMotor.whileHeld(new ClimbWinchUpCommand());
+    //climberSolenoidReverse.whenPressed(new ClimbRetractCommand());
+
+    ShooterFangsUp10.whenPressed(new ShooterFangsUp10Command());
+    ShooterFangsToZero.whileHeld(new ShooterFangsToZeroCommand());
+    ShooterFangsDown10.whenPressed(new ShooterFangsDown10Command());
+    
     magazineInward.whileHeld(new IntakeMagazineInCommand());
     loaderUp.whileHeld(new IntakeLoaderUpCommand());
     shooterMotor.whileHeld(new ShooterRunWheelCommand());
