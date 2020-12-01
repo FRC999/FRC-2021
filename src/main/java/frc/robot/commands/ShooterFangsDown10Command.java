@@ -24,19 +24,21 @@ public class ShooterFangsDown10Command extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    setpoint = Robot.shooterSubsystem.getTiltPot() -10;
+    setpoint = Robot.shooterSubsystem.getTiltPot() +5;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    //System.out.println("TILTING DOWN");
+
     Robot.shooterSubsystem.tiltGoToSetpoint(setpoint);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (Robot.shooterSubsystem.getTiltPot() >= setpoint - RobotMap.tiltDefaultAcceptableError && Robot.shooterSubsystem.getTiltPot() <= setpoint + RobotMap.tiltDefaultAcceptableError) {
+    if (Robot.shooterSubsystem.getTiltPot() >= setpoint + RobotMap.tiltDefaultAcceptableError && Robot.shooterSubsystem.getTiltPot() <= setpoint - RobotMap.tiltDefaultAcceptableError) {
       return true;
     } else {
       return false;
@@ -46,7 +48,7 @@ public class ShooterFangsDown10Command extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.shooterSubsystem.tiltMotorController.set(0);
+    Robot.shooterSubsystem.tiltStandby();
   }
 
   // Called when another command which requires one or more of the same

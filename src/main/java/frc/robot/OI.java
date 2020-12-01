@@ -34,6 +34,7 @@ public class OI {
   Button ShooterTiltSetpointButton = new JoystickButton(driveStick, 5);
   Button ShooterTiltZeroButton = new JoystickButton(driveStick, 6); 
   Button FangsManual = new JoystickButton(driveStick,7);
+  Button StatusReport = new JoystickButton(driveStick,11);
   //int turret = new turnStick.getPov();
   //turnsStick
 
@@ -75,9 +76,9 @@ public class OI {
     //winchMotor.whileHeld(new ClimbWinchUpCommand());
     //climberSolenoidReverse.whenPressed(new ClimbRetractCommand());
 
-    ShooterFangsUp10.whenPressed(new ShooterFangsUp10Command());
+    ShooterFangsUp10.whileHeld(new ShooterFangsUp10Command());
     ShooterFangsToZero.whileHeld(new ShooterFangsToZeroCommand());
-    ShooterFangsDown10.whenPressed(new ShooterFangsDown10Command());
+    ShooterFangsDown10.whileHeld(new ShooterFangsDown10Command());
     
     magazineInward.whileHeld(new IntakeMagazineInCommand());
     loaderUp.whileHeld(new IntakeLoaderUpCommand());
@@ -90,5 +91,6 @@ public class OI {
     turretButton.whileHeld(new ShootManuallyCommand());
     zeroTurret.whileHeld(new ShooterTurretCenterCommand());
     FangsManual.whileHeld(new AimFangsManuallyCommand());
+    StatusReport.whileHeld(new StatusReport());
   }
 }

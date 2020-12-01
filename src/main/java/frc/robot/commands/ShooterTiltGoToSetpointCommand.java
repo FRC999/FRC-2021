@@ -27,22 +27,23 @@ public class ShooterTiltGoToSetpointCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.shooterSubsystem.tiltGoToSetpoint();
+    Robot.shooterSubsystem.tiltGoToSetpoint(200);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-  if (Robot.shooterSubsystem.getTiltPot() > RobotMap.tiltFangsMiddle - RobotMap.tiltDefaultAcceptableError && Robot.shooterSubsystem.getPanEncoder() > RobotMap.tiltFangsMiddle + Robot.shooterSubsystem.getTiltPot()) {
+    if (Robot.shooterSubsystem.getTiltPot() >= 200 + RobotMap.tiltDefaultAcceptableError && Robot.shooterSubsystem.getTiltPot() <= 200 - RobotMap.tiltDefaultAcceptableError) {
       return true;
-    }
+    } else {
       return false;
     }
+  }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.shooterSubsystem.tiltMotorController.set(0);
+    Robot.shooterSubsystem.tiltStandby();
   }
 
   // Called when another command which requires one or more of the same

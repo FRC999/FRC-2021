@@ -33,11 +33,12 @@ public class ShooterTiltGoToZeroCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-  if (Robot.shooterSubsystem.getTiltPot() > 0 - RobotMap.tiltDefaultAcceptableError && Robot.shooterSubsystem.getPanEncoder() > 0 + Robot.shooterSubsystem.getTiltPot()) {
+    if (Robot.shooterSubsystem.getTiltPot() >= 0 - RobotMap.tiltDefaultAcceptableError && Robot.shooterSubsystem.getTiltPot() <= 0 + RobotMap.tiltDefaultAcceptableError) {
       return true;
-    }
+    } else {
       return false;
     }
+  }
 
   // Called once after isFinished returns true
   @Override
