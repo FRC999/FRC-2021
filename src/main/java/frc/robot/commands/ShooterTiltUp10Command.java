@@ -9,70 +9,41 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.RobotMap;
 
-public class ShootManuallyCommand extends Command {
-  public ShootManuallyCommand() {
+public class ShooterTiltUp10Command extends Command {
+  public ShooterTiltUp10Command() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.shooterSubsystem);
-    
   }
- /* public double panVal() {
-    double pan = 0;
-      if (Robot.oi.driveStick.getZ() > 0) { // Panning right (clockwise)
-      if (Robot.shooterSubsystem.getPanEncoder() >= 1406) {
-    pan = 0;
-    return pan;
-      } else {
-        pan = 0;
-        return pan;
-      }
-    } else { //Panning left (counterclockwise)
-      if (Robot.shooterSubsystem.getPanEncoder() > 435) {
-        if (Robot.shooterSubsystem.getPanEncoder() <= 3340) {
-         pan = 0;
-        return pan;
-        }
-      } else {
-        pan = Robot.oi.driveStick.getZ();
-        return pan;
-      }
-    }
-    return pan;
-  }
-  */
+
+  public static int setpoint = 0;
+
+
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //set shooter wheel to full speed
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    System.out.println("PAN : " + Robot.shooterSubsystem.getPanEncoder());
-    System.out.println("TILT : " + Robot.shooterSubsystem.getTiltPot());
-    /*
-    Robot.shooterSubsystem.shoot(-1);
-    //use the twist and throttle to control shooter pan and tilt
-    //double tilt = Robot.oi.driveStick.getThrottle();
-    Robot.shooterSubsystem.pan(Robot.oi.driveStick.getZ());
-    //Robot.shooterSubsystem.tilt(tilt);
-    Robot.smartDashboardSubsystem.updateShooterValues();
-    */
+    //System.out.println("TILTING UP");
+    setpoint = Robot.shooterSubsystem.getTiltPot() +10;
+    Robot.shooterSubsystem.tiltGoToSetpoint(setpoint);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+      return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-
+    Robot.shooterSubsystem.tiltStandby();
   }
 
   // Called when another command which requires one or more of the same

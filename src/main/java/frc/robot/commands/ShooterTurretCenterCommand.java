@@ -20,12 +20,12 @@ public class ShooterTurretCenterCommand extends Command {
     requires(Robot.shooterSubsystem);
   }
 
-   boolean canFinish;
+  // boolean canFinish;
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    canFinish = false;
+   // canFinish = false;
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -43,9 +43,9 @@ public class ShooterTurretCenterCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (Robot.shooterSubsystem.getPanEncoder() < RobotMap.shooterPanMotorEncoderFrontVal - RobotMap.panDefaultAcceptableError && Robot.shooterSubsystem.getPanEncoder() > RobotMap.shooterPanMotorEncoderFrontVal + RobotMap.panDefaultAcceptableError) {
-    return true;
-  }
+  //  if (Robot.shooterSubsystem.getPanEncoder() < RobotMap.shooterPanMotorEncoderFrontVal - RobotMap.panDefaultAcceptableError && Robot.shooterSubsystem.getPanEncoder() > RobotMap.shooterPanMotorEncoderFrontVal + RobotMap.panDefaultAcceptableError) {
+  ///  return true;
+  //}
     return false;
   }
 

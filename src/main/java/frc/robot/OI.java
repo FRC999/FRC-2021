@@ -33,7 +33,7 @@ public class OI {
   Button intakeEject = new JoystickButton(driveStick, 3);
   Button ShooterTiltSetpointButton = new JoystickButton(driveStick, 5);
   Button ShooterTiltZeroButton = new JoystickButton(driveStick, 6); 
-  Button FangsManual = new JoystickButton(driveStick,7);
+  Button TiltManual = new JoystickButton(driveStick,7);
   Button StatusReport = new JoystickButton(driveStick,11);
   //int turret = new turnStick.getPov();
   //turnsStick
@@ -43,9 +43,9 @@ public class OI {
   //Button climberSolenoidForward = new JoystickButton(buttonBox, 1);
   //Button winchMotor = new JoystickButton(buttonBox, 2);
   //Button climberSolenoidReverse = new JoystickButton(buttonBox, 3);
-  Button ShooterFangsUp10 = new JoystickButton(buttonBox, 1);
-  Button ShooterFangsToZero = new JoystickButton(buttonBox, 2);
-  Button ShooterFangsDown10 = new JoystickButton(buttonBox, 3);
+  Button ShooterTiltUp10 = new JoystickButton(buttonBox, 1);
+  Button ShooterTiltToZero = new JoystickButton(buttonBox, 2);
+  Button ShooterTiltDown10 = new JoystickButton(buttonBox, 3);
 // *** End Temporary Code
 
   Button magazineInward = new JoystickButton(buttonBox, 4);
@@ -76,9 +76,9 @@ public class OI {
     //winchMotor.whileHeld(new ClimbWinchUpCommand());
     //climberSolenoidReverse.whenPressed(new ClimbRetractCommand());
 
-    ShooterFangsUp10.whileHeld(new ShooterFangsUp10Command());
-    ShooterFangsToZero.whileHeld(new ShooterFangsToZeroCommand());
-    ShooterFangsDown10.whileHeld(new ShooterFangsDown10Command());
+    ShooterTiltUp10.whileHeld(new ShooterTiltUp10Command());
+    ShooterTiltToZero.whileHeld(new ShooterTiltGoToZeroCommand());
+    ShooterTiltDown10.whileHeld(new ShooterTiltDown10Command());
     
     magazineInward.whileHeld(new IntakeMagazineInCommand());
     loaderUp.whileHeld(new IntakeLoaderUpCommand());
@@ -88,9 +88,9 @@ public class OI {
     fangsFullyBack.whenPressed(new ShooterTiltGoToSetpointCommand());
     visionTracking.whileHeld(new ShooterVisionCommand());
     fullShooter.whileHeld(new ShooterFullCommand());
-    turretButton.whileHeld(new ShootManuallyCommand());
+    turretButton.whileHeld(new ShooterPanManuallyCommand());
     zeroTurret.whileHeld(new ShooterTurretCenterCommand());
-    FangsManual.whileHeld(new AimFangsManuallyCommand());
+    TiltManual.whileHeld(new ShooterTiltManuallyCommand());
     StatusReport.whileHeld(new StatusReport());
   }
 }

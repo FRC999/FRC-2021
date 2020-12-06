@@ -9,29 +9,25 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class AimFangsManuallyCommand extends Command {
-  public AimFangsManuallyCommand() {
+public class ShooterPanManuallyCommand extends Command {
+  public ShooterPanManuallyCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.shooterSubsystem);
-    
   }
-
+ 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    if(Robot.shooterSubsystem.fangsActivated !=true) {
-      Robot.shooterSubsystem.tiltFangDeployToggle();
-    }
+    //set shooter wheel to full speed
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.shooterSubsystem.testTiltFangs();
+   Robot.shooterSubsystem.testPanTurret();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -43,7 +39,7 @@ public class AimFangsManuallyCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.shooterSubsystem.tiltStandby();
+    Robot.shooterSubsystem.panStandby();
   }
 
   // Called when another command which requires one or more of the same

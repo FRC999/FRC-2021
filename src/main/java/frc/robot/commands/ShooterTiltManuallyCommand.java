@@ -10,39 +10,34 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShooterFangsUp10Command extends Command {
-  public ShooterFangsUp10Command() {
+public class ShooterTiltManuallyCommand extends Command {
+  public ShooterTiltManuallyCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.shooterSubsystem);
+    
   }
-
-  public static int setpoint = 0;
-
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    setpoint = Robot.shooterSubsystem.getTiltPot() -5;
+    if(Robot.shooterSubsystem.fangsActivated !=true) {
+      Robot.shooterSubsystem.tiltFangDeployToggle();
+    }
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //System.out.println("TILTING UP");
-
-    Robot.shooterSubsystem.tiltGoToSetpoint(setpoint);
+    Robot.shooterSubsystem.testTiltFangs();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (Robot.shooterSubsystem.getTiltPot() >= setpoint + RobotMap.tiltDefaultAcceptableError && Robot.shooterSubsystem.getTiltPot() <= setpoint - RobotMap.tiltDefaultAcceptableError) {
-      return true;
-    } else {
-      return false;
-    }
+    return false;
   }
 
   // Called once after isFinished returns true

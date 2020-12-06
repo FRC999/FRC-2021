@@ -30,6 +30,7 @@ public class ShooterVisionCommand extends Command {
   //  loc = "";
   //  bounds = false;
     side = "";
+    System.out.println("Vision!");
   }
 
   public static int getCounter() {
@@ -45,6 +46,7 @@ public class ShooterVisionCommand extends Command {
     } else {
       counter = 0;
     }
+    System.out.println(side);
 
 /*
 if (Robot.oi.turnStick.getButton(6))

@@ -115,7 +115,10 @@ public class Robot extends TimedRobot {
     Robot.driveSubsystem.driveTrainBrakeMode();
     Robot.navXSubsystem.zeroYaw();
     Robot.shooterSubsystem.configureShooterControllers();
-    Robot.shooterSubsystem.configurePanMotorControllerForMagic();
+    Robot.shooterSubsystem.configurePanMotorControllerForPosition();
+    Robot.shooterSubsystem.configureTiltMotorControllerForPosition();
+    Robot.shooterSubsystem.zeroTiltPot();
+    //Robot.shooterSubsystem.configurePanMotorControllerForMagic();
     //Robot.shooterSubsystem.zeroShooterEncoders();
     //Robot.controlPanelSubsystem.resetMotorController();
     

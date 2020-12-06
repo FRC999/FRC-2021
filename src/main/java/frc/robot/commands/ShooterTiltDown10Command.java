@@ -12,8 +12,8 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 
-public class ShooterFangsDown10Command extends Command {
-  public ShooterFangsDown10Command() {
+public class ShooterTiltDown10Command extends Command {
+  public ShooterTiltDown10Command() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.shooterSubsystem);
@@ -24,25 +24,20 @@ public class ShooterFangsDown10Command extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    setpoint = Robot.shooterSubsystem.getTiltPot() +5;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     //System.out.println("TILTING DOWN");
-
+    setpoint = Robot.shooterSubsystem.getTiltPot() -10;
     Robot.shooterSubsystem.tiltGoToSetpoint(setpoint);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (Robot.shooterSubsystem.getTiltPot() >= setpoint + RobotMap.tiltDefaultAcceptableError && Robot.shooterSubsystem.getTiltPot() <= setpoint - RobotMap.tiltDefaultAcceptableError) {
-      return true;
-    } else {
       return false;
-    }
   }
 
   // Called once after isFinished returns true
