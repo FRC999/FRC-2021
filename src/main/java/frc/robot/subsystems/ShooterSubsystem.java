@@ -134,11 +134,8 @@ public class ShooterSubsystem extends Subsystem {
     shooterMotorController.set(ControlMode.PercentOutput, 0);
   }
 
-  
-
   public void shoot(double shooterSpeed) {
-    shooterMotorController.set(ControlMode.PercentOutput, -shooterSpeed);
-  
+    shooterMotorController.set(ControlMode.PercentOutput, -shooterSpeed);  
   }
 
   public  double deadbandPan(double pan) {
@@ -156,7 +153,6 @@ public class ShooterSubsystem extends Subsystem {
     return pan;
   }
 
-
   public void pan(double pan) {
     panMotorController.set(ControlMode.PercentOutput, deadbandPan(pan));
   }
@@ -165,16 +161,8 @@ public class ShooterSubsystem extends Subsystem {
     panMotorController.set(ControlMode.PercentOutput, 0);
   }
 
-
-  /** do not use in a context in which it would be outside the encoder values 1178-. Boolean indicates whether it is. */
-  public void panToRobotFront()
-  { /*boolean retVal =false;
-    if ((getPanEncoder() <RobotMap.shooterEstimatedPos90PanEncoderVal) && ( getPanEncoder() >RobotMap.shooterEstimatedNeg90PanEncoderVal) )
-    { */
-      panMotorController.set(ControlMode.Position, RobotMap.shooterPanMotorEncoderFrontVal);
-        //System.out.println("moving!");
-   /* retVal = true;}
-    return retVal;*/
+  public void panToSetpoint(int setpoint){
+    panMotorController.set(ControlMode.Position, setpoint);
   }
 
   /**
@@ -306,15 +294,7 @@ public void zeroTiltPot() {
 
   public void tiltGoToSetpoint(int setpoint) {
     tiltMotorController.set(ControlMode.Position, setpoint);
-
   }
-
-  public void tiltGoToZero() {
-    configureTiltMotorControllerForPosition();
-    tiltMotorController.set(ControlMode.Position, 0);
-
-  }
-
 
   public void tiltFangDeployToggle(){
     if (fangsActivated==false)

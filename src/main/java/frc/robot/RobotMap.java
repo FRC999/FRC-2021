@@ -52,7 +52,7 @@ public class RobotMap {
   public final static int shooterYResolution = 240; 
   public final static int shooterResolutionAcceptableError = 15;
   public  static double shooterPanSpeed = -.1;
-  public static double shooterPanMotorEncoderFrontVal = 2270;
+  public static int shooterPanMotorEncoderFrontVal = 2270;
   public static double shooterEstimatedPos90PanEncoderVal = 3250;
   public static double shooterEstimatedNeg90PanEncoderVal = 1300;
 

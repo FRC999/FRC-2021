@@ -31,28 +31,19 @@ public class ShooterTurretCenterCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-   Robot.shooterSubsystem.panToRobotFront();
-   // {canFinish = true;}
-    /*else if (Robot.shooterSubsystem.getPanEncoder() > 3340) // outside of range where encoders are clear
-    {Robot.shooterSubsystem.pan(0.4);}*/
-    
-
-
+   Robot.shooterSubsystem.panToSetpoint(RobotMap.shooterPanMotorEncoderFrontVal);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-  //  if (Robot.shooterSubsystem.getPanEncoder() < RobotMap.shooterPanMotorEncoderFrontVal - RobotMap.panDefaultAcceptableError && Robot.shooterSubsystem.getPanEncoder() > RobotMap.shooterPanMotorEncoderFrontVal + RobotMap.panDefaultAcceptableError) {
-  ///  return true;
-  //}
     return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    ShooterSubsystem.panMotorController.set(0);
+    Robot.shooterSubsystem.panStandby();
   }
 
   // Called when another command which requires one or more of the same
