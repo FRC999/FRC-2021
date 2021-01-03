@@ -28,6 +28,8 @@ public class StatusReport extends Command {
   protected void execute() {
     System.out.println("PAN : " + Robot.shooterSubsystem.getPanEncoder());
     System.out.println("TILT : " + Robot.shooterSubsystem.getTiltPot());
+    System.out.println("Vision X: " + Robot.shooterSubsystem.getX());
+    System.out.println("Vision Y: " + Robot.shooterSubsystem.getY());
 
   }
 

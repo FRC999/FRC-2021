@@ -48,7 +48,7 @@ public class RobotMap {
   /* TODO: get a more accurate value for this */
   //public final static int shooterPanMotorEncoderTicksPerRotation = 3977;
   public  static int shooterPanMotorEncoderTicksPerRotation = 178;
-  public final static int shooterXResolution = 320;
+  public final static int shooterXResolution = 640;
   public final static int shooterYResolution = 240; 
   public final static int shooterResolutionAcceptableError = 15;
   public  static double shooterPanSpeed = -.1;
@@ -58,9 +58,9 @@ public class RobotMap {
 
 
   public static int shooterTiltMotorTicksPerRotation = 1024;
-  public static double shooterTiltMotorTicksPerDegree = .5;
-  public static double tiltFangsUpperLimit = 530; //0
-  public static double tiltFangsLowerLimit = 0; // -281.8
+  public static double shooterTiltMotorTicksPerDegree = 0.352; // 360 deg / 1024 ticks
+  public static double tiltFangsUpperLimit = 730; //
+  public static double tiltFangsLowerLimit = 0; // 
   public static int tiltFangsMiddle = 200;
 
   public static int minYTiltPixel = 400;
@@ -209,22 +209,22 @@ public class RobotMap {
   // Closed loop PAN PID parameter values 
   // Modified for Closed loop position control
   public final static int PID_PAN = 0;
-  public final static double P_PAN = 2;
-  public final static double I_PAN = 0.01;
-  public final static double D_PAN = 0.1;
+  public final static double P_PAN = .04;
+  public final static double I_PAN = 0.002;
+  public final static double D_PAN = 0.2;
   public final static double F_PAN = 0; // set to zero for position closed loop
   // Allowable error to exit movement methods
-  public static int panDefaultAcceptableError = 2;
+  public static int panDefaultAcceptableError = 1;
 
   // Closed loop TILT PID parameter values 
   // Modified for Closed loop position control
   public final static int PID_TILT = 0;
   public final static double P_TILT = 10;
   public final static double I_TILT = 0.04;
-  public final static double D_TILT = 0.0;
+  public final static double D_TILT = 01;
   public final static double F_TILT = 0; // set to zero for position closed loop 
   // Allowable error to exit movement methods
-  public static int tiltDefaultAcceptableError = 2;
+  public static int tiltDefaultAcceptableError = 1;
 
   // Allowable error to exit vision tracking movement methods
   public static int allowableLeft = ((RobotMap.shooterXResolution / 2) - (RobotMap.shooterResolutionAcceptableError));
@@ -275,7 +275,7 @@ public class RobotMap {
 
     shooterPanMotorEncoderTicksPerRotation = 3977;
     //TODO: may need to be negative if turns the wrong way
-    shooterPanSpeed = 1;
+    shooterPanSpeed = .5;
 
 
     shooterTiltMotorTicksPerRotation = 1024;   //Analog potentiometer 1024 units per rotation.

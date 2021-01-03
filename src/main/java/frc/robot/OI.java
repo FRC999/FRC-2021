@@ -86,7 +86,7 @@ public class OI {
     magazineOutward.whileHeld(new IntakeMagazineInCommand());
     loaderDown.whileHeld(new IntakeLoaderDownCommand());
     fangsFullyBack.whenPressed(new ShooterTiltGoToSetpointCommand());
-    visionTracking.whileHeld(new ShooterVisionCommand());
+    visionTracking.whenPressed(new ShooterVisionCommand());
     fullShooter.whileHeld(new ShooterFullCommand());
     turretButton.whileHeld(new ShooterPanManuallyCommand());
     zeroTurret.whileHeld(new ShooterTurretCenterCommand());

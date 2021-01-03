@@ -60,8 +60,8 @@ public class ShooterSubsystem extends Subsystem {
      * Max out the peak output (for all modes). However you can limit the output of
      * a given PID object with configClosedLoopPeakOutput().
      */
-    panMotorController.configPeakOutputForward(+1.0, RobotMap.configureTimeoutMs);
-    panMotorController.configPeakOutputReverse(-1.0, RobotMap.configureTimeoutMs);
+    panMotorController.configPeakOutputForward(+0.25, RobotMap.configureTimeoutMs);
+    panMotorController.configPeakOutputReverse(-0.25, RobotMap.configureTimeoutMs);
     panMotorController.configNominalOutputForward(0, RobotMap.configureTimeoutMs);
     panMotorController.configNominalOutputReverse(0, RobotMap.configureTimeoutMs);
 
@@ -230,49 +230,53 @@ public class ShooterSubsystem extends Subsystem {
    public void centerShooterVertically() {
     switch (whichVerticalSide()) {
       case "Below": {
-        tiltMotorController.set(ControlMode.MotionMagic, Math.round(
+        tiltMotorController.set(ControlMode.Position, Math.round(
             getTiltPot() + (differenceFromMiddleY() / RobotMap.pixelsPerDegreeY * RobotMap.potentiometerTicksPerDegreeY)));
       }
         break;
 
       case "Center": {
-        tiltMotorController.set(ControlMode.PercentOutput, 0);
+        tiltStandby();
+        //tiltMotorController.set(ControlMode.PercentOutput, 0);
       }
         break;
 
       case "Above": {
-        panMotorController.set(ControlMode.MotionMagic, Math.round(
+        tiltMotorController.set(ControlMode.Position, Math.round(
             getTiltPot() - (differenceFromMiddleY() / RobotMap.pixelsPerDegreeY * RobotMap.potentiometerTicksPerDegreeY)));
       }
         break;
 
       default: {
-        tiltMotorController.set(ControlMode.PercentOutput, 0);
+        tiltStandby();
+        //tiltMotorController.set(ControlMode.PercentOutput, 0);
       }
     }
   }
 
-  public void centerShooter() {
+  public void centerShooterPan() {
     switch (whichSide()) {
       case "Left": {
-        panMotorController.set(ControlMode.MotionMagic, Math.round(
+        panMotorController.set(ControlMode.Position, Math.round(
             getPanEncoder() - (differenceFromMiddleX() / RobotMap.pixelsPerDegreeX * RobotMap.encoderTicksPerDegreeX)));
       }
         break;
 
       case "Center": {
-        panMotorController.set(ControlMode.PercentOutput, 0);
+        panStandby();
+        //panMotorController.set(ControlMode.PercentOutput, 0);
       }
         break;
 
       case "Right": {
-        panMotorController.set(ControlMode.MotionMagic, Math.round(
+        panMotorController.set(ControlMode.Position, Math.round(
             getPanEncoder() + (differenceFromMiddleX() / RobotMap.pixelsPerDegreeX * RobotMap.encoderTicksPerDegreeX)));
       }
         break;
 
       default: {
-        panMotorController.set(ControlMode.PercentOutput, 0);
+        panStandby();
+        //panMotorController.set(ControlMode.PercentOutput, 0);
       }
     }
   }
@@ -299,13 +303,13 @@ public void zeroTiltPot() {
   public void tiltFangDeployToggle(){
     if (fangsActivated==false)
     {
-    tiltMotorController.set(ControlMode.MotionMagic, RobotMap.tiltFangsUpperLimit);
+    tiltMotorController.set(ControlMode.Position, RobotMap.tiltFangsUpperLimit);
     fangsActivated = true;
     }
 
     else if (fangsActivated==true)
     {
-      tiltMotorController.set(ControlMode.MotionMagic, RobotMap.tiltFangsLowerLimit);
+      tiltMotorController.set(ControlMode.Position, RobotMap.tiltFangsLowerLimit);
       fangsActivated = false;
     }
   } 
@@ -318,14 +322,13 @@ public void zeroTiltPot() {
   }
 
   public void testTiltFangs(){
-    //System.out.println("Testing");
+    //System.out.println("Testing TILT");
     double maxSpeed = 0; //sets motorspeed to 0 if tilt is against stops
     //if (getTiltPot() >= RobotMap.tiltFangsLowerLimit &&  getTiltPot() <= RobotMap.tiltFangsUpperLimit) {
       maxSpeed = 0.25;
     //}
     double output = (Robot.oi.driveStick.getThrottle()*-1) * maxSpeed;
     Robot.smartDashboardSubsystem.updateShooterValues();
-    //System.out.println(output);
     tiltMotorController.set(ControlMode.PercentOutput, output);
   }
 
