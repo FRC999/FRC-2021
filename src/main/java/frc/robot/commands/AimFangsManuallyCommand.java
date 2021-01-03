@@ -60,6 +60,7 @@ public class AimFangsManuallyCommand extends Command {
     if(Robot.shooterSubsystem.getTiltPot() < RobotMap.tiltFangsLowerLimit || Robot.shooterSubsystem.getTiltPot() > RobotMap.tiltFangsUpperLimit) {
       Robot.shooterSubsystem.tiltFangDeployToggle();
     }
+    System.out.println(Robot.shooterSubsystem.tiltValue);
     /*
     Robot.shooterSubsystem.shoot(-1);
     //use the twist and throttle to control shooter pan and tilt

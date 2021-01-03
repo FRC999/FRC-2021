@@ -20,6 +20,7 @@ public class ShooterSubsystem extends Subsystem {
   public static WPI_TalonSRX panMotorController = new WPI_TalonSRX(RobotMap.shooterPanMotorControllerID);
   public static WPI_TalonSRX tiltMotorController = new WPI_TalonSRX(RobotMap.ShooterTiltMotorControllerID);
   public Boolean fangsActivated = false;
+  public double tiltValue = 0.0;
   // double shooterSpeed = 0.5;
 
   NetworkTableInstance networkTableInstance = NetworkTableInstance.getDefault();
@@ -349,7 +350,7 @@ public void configureTiltMotorControllerForMagic(){
   } 
 
   public void manualAimTiltFangs(){
-    double tiltValue = ((Robot.oi.driveStick.getThrottle()*-1) + 1) / 2;
+    tiltValue = ((Robot.oi.driveStick.getThrottle()*-1) + 1) / 2;
     double output = tiltValue*RobotMap.shooterTiltMotorTicksPerRotation;
 
     if (fangsActivated==true)
