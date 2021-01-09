@@ -50,7 +50,7 @@ public class RobotMap {
   public  static int shooterPanMotorEncoderTicksPerRotation = 178;
   public final static int shooterXResolution = 640;
   public final static int shooterYResolution = 240; 
-  public final static int shooterResolutionAcceptableError = 15;
+  public final static int shooterResolutionAcceptableError = 10;
   public  static double shooterPanSpeed = -.1;
   public static int shooterPanMotorEncoderFrontVal = 2270;
   public static double shooterEstimatedPos90PanEncoderVal = 3250;
@@ -209,9 +209,9 @@ public class RobotMap {
   // Closed loop PAN PID parameter values 
   // Modified for Closed loop position control
   public final static int PID_PAN = 0;
-  public final static double P_PAN = .04;
-  public final static double I_PAN = 0.002;
-  public final static double D_PAN = 0.2;
+  public final static double P_PAN = 1.5;
+  public final static double I_PAN = 0.0002;
+  public final static double D_PAN = 15;
   public final static double F_PAN = 0; // set to zero for position closed loop
   // Allowable error to exit movement methods
   public static int panDefaultAcceptableError = 1;
@@ -224,7 +224,7 @@ public class RobotMap {
   public final static double D_TILT = 01;
   public final static double F_TILT = 0; // set to zero for position closed loop 
   // Allowable error to exit movement methods
-  public static int tiltDefaultAcceptableError = 1;
+  public static int tiltDefaultAcceptableError = 10;
 
   // Allowable error to exit vision tracking movement methods
   public static int allowableLeft = ((RobotMap.shooterXResolution / 2) - (RobotMap.shooterResolutionAcceptableError));

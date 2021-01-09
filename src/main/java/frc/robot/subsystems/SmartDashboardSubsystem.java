@@ -22,7 +22,7 @@ public class SmartDashboardSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   public SmartDashboardSubsystem() {
-    SmartDashboard.putString("Friendly", "Good Morning!");
+   // SmartDashboard.putString("Friendly", "Good Morning!");
   }
 
   @Override
@@ -36,6 +36,9 @@ public class SmartDashboardSubsystem extends Subsystem {
     SmartDashboard.putNumber("Pan Encoder", Robot.shooterSubsystem.getPanEncoder());
     SmartDashboard.putNumber("Tilt Pot", Robot.shooterSubsystem.getTiltPot());
     SmartDashboard.putNumber("CounterForVision", ShooterVisionCommand.getCounter());
+    SmartDashboard.putNumber("Vision X", Robot.shooterSubsystem.getX());
+    SmartDashboard.putNumber("Vision y", Robot.shooterSubsystem.getY());
+    SmartDashboard.putNumber("Pan Error", Robot.shooterSubsystem.getPanError() );
   }
 
   public void updateEncoderValue() {
@@ -51,9 +54,9 @@ public class SmartDashboardSubsystem extends Subsystem {
 
   public void updateUltrasonicValues() {
  //   SmartDashboard.putNumber("ultrasonic 1 raw value", Robot.ultrasonicSubsystem.getUltrasonicLeftDistanceInRaw());
-    SmartDashboard.putNumber("ultrasonic 1 mm value", Robot.ultrasonicSubsystem.getUltrasonicLeftDistanceInMM());
+    //SmartDashboard.putNumber("ultrasonic 1 mm value", Robot.ultrasonicSubsystem.getUltrasonicLeftDistanceInMM());
    // SmartDashboard.putNumber("ultrasonic 2 raw value", Robot.ultrasonicSubsystem.getUltrasonicRightDistanceInRaw());
-    SmartDashboard.putNumber("ultrasonic 2 mm value", Robot.ultrasonicSubsystem.getUltrosonicRightDistanceInMM());
+    //SmartDashboard.putNumber("ultrasonic 2 mm value", Robot.ultrasonicSubsystem.getUltrosonicRightDistanceInMM());
   }
   public void updateControlPanelValues() {
    /* SmartDashboard.putNumber("control panel quad encoder raw value", Robot.controlPanelSubsystem.readEncoderRaw() );

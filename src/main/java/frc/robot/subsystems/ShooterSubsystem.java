@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -60,8 +61,8 @@ public class ShooterSubsystem extends Subsystem {
      * Max out the peak output (for all modes). However you can limit the output of
      * a given PID object with configClosedLoopPeakOutput().
      */
-    panMotorController.configPeakOutputForward(+0.25, RobotMap.configureTimeoutMs);
-    panMotorController.configPeakOutputReverse(-0.25, RobotMap.configureTimeoutMs);
+    panMotorController.configPeakOutputForward(+1, RobotMap.configureTimeoutMs);
+    panMotorController.configPeakOutputReverse(-1, RobotMap.configureTimeoutMs);
     panMotorController.configNominalOutputForward(0, RobotMap.configureTimeoutMs);
     panMotorController.configNominalOutputReverse(0, RobotMap.configureTimeoutMs);
 
@@ -80,7 +81,7 @@ public class ShooterSubsystem extends Subsystem {
      * derivative error never gets large enough to be useful. - sensor movement is
      * very slow causing the derivative error to be near zero.
      */
-    panMotorController.configClosedLoopPeriod(0, RobotMap.closedLoopPeriodMs, RobotMap.configureTimeoutMs);
+    panMotorController.configClosedLoopPeriod(1, RobotMap.closedLoopPeriodMs, RobotMap.configureTimeoutMs);
 
   } // End configurePanMotorControllerForPosition
 
@@ -170,7 +171,7 @@ public class ShooterSubsystem extends Subsystem {
    * the maximum; if it returns 1000, the pi is not posting to networktables.
    */
   public double getX() {
-    return networkTableInstance.getTable("TestTable/PI").getEntry("X").getDouble(1000);// 640 is the maximum;
+    return networkTableInstance.getTable("TestTable/PI").getEntry("CenterXCoord").getDouble(1000);// 640 is the maximum;
   }
 
   /**
@@ -178,7 +179,7 @@ public class ShooterSubsystem extends Subsystem {
    * the maximum; if it returns 1000, the pi is not posting to networktables.
    */
   public double getY() {
-    return networkTableInstance.getTable("TestTable/PI").getEntry("Y").getDouble(1000);// 480 is the maximum;
+    return networkTableInstance.getTable("TestTable/PI").getEntry("CenterYCoord").getDouble(1000);// 480 is the maximum;
   }
 
   /**
@@ -196,6 +197,10 @@ public class ShooterSubsystem extends Subsystem {
   public double differenceFromMiddleY() {
     return (getY() - (RobotMap.shooterYResolution / 2));
   }
+  public double getPanError() {
+    return panMotorController.getClosedLoopError();// Returns the PID error for Pan motion control;
+  }
+
 
   public String whichSide() {
     String state = "";
@@ -224,10 +229,18 @@ public class ShooterSubsystem extends Subsystem {
         state = "Center";
       }
     }
+    else state = "Park";
     return state; 
    }
 
-   public void centerShooterVertically() {
+   public void centerShooterTilt() {
+     if (getY() < 1000) {
+       tiltMotorController.set(ControlMode.Position, Math.round(729 - getY()));  
+      }
+    } 
+
+  /*
+  public void centerShooterTilt() {
     switch (whichVerticalSide()) {
       case "Below": {
         tiltMotorController.set(ControlMode.Position, Math.round(
@@ -247,15 +260,51 @@ public class ShooterSubsystem extends Subsystem {
       }
         break;
 
+        case "Park": {
+          tiltMotorController.set(ControlMode.Position, 200);
+        }
+          break;
+  
       default: {
         tiltStandby();
         //tiltMotorController.set(ControlMode.PercentOutput, 0);
       }
     }
   }
+*/
 
   public void centerShooterPan() {
     switch (whichSide()) {
+      case "Left": {
+
+        panMotorController.set(ControlMode.Position, Math.round(
+            getPanEncoder() - (differenceFromMiddleX() / RobotMap.pixelsPerDegreeX * RobotMap.encoderTicksPerDegreeX)));
+      }
+        break;
+
+      case "Center": {
+        panStandby();
+        //panMotorController.set(ControlMode.PercentOutput, 0);
+      }
+        break;
+
+      case "Right": {
+        panMotorController.set(ControlMode.Position, Math.round(
+            getPanEncoder() + (differenceFromMiddleX() / RobotMap.pixelsPerDegreeX * RobotMap.encoderTicksPerDegreeX)));
+      }
+        break;
+
+      default: {
+        panStandby();
+        //panMotorController.set(ControlMode.PercentOutput, 0);
+      }
+    }
+  }
+  public void centerShooterPan(String side, double lastError) {
+    if (Math.abs(lastError) < Math.abs(getPanError())+1) {
+      panMotorController.set(ControlMode.Position, lastError, DemandType.Neutral, 0);
+    }
+    switch (side) {
       case "Left": {
         panMotorController.set(ControlMode.Position, Math.round(
             getPanEncoder() - (differenceFromMiddleX() / RobotMap.pixelsPerDegreeX * RobotMap.encoderTicksPerDegreeX)));

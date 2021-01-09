@@ -19,7 +19,8 @@ public class ShooterVisionCommand extends Command {
   }
   //public String loc = "";
   public static int counter = 0;
-  public int counterNum = 7;
+  public int counterNum = 20;
+  public double lastError = Robot.shooterSubsystem.getPanError();
   //public boolean bounds = false;
   public String side = "";
 
@@ -27,6 +28,7 @@ public class ShooterVisionCommand extends Command {
   @Override
   protected void initialize() {
     counter = 0;
+
   //  loc = "";
   //  bounds = false;
     side = "";
@@ -39,11 +41,14 @@ public class ShooterVisionCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.shooterSubsystem.centerShooterPan();
+   // Robot.shooterSubsystem.centerShooterPan();
+    //Robot.shooterSubsystem.centerShooterTilt();
     side = Robot.shooterSubsystem.whichSide();
     if (side == ("Center")) {
       counter +=1;
     } else {
+      Robot.shooterSubsystem.centerShooterPan(side, lastError);
+      lastError = Robot.shooterSubsystem.getPanError();
       counter = 0;
     }
     //System.out.println(side);
