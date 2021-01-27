@@ -16,9 +16,6 @@ import frc.robot.RobotMap;
  * Add your docs here.
  */
 public class FalconDriveSubsystem extends DriveSubsystemBase {
-  //For isOnTarget
-  boolean wasOnTarget = false;
-  int withinAcceptableErrorLoops = 0;
 
   static WPI_TalonFX frontLeftDriveTalonFX = new WPI_TalonFX(RobotMap.frontLeftDriveMotorControllerID);
   static WPI_TalonFX backLeftDriveTalonFX = new WPI_TalonFX(RobotMap.backLeftDriveMotorControllerID);
@@ -42,17 +39,4 @@ public class FalconDriveSubsystem extends DriveSubsystemBase {
   public void configureEncoders() {
     //empty, because the default for the Falcon is to use the integrated controller
   }
-
-  /**
-   * Sets the talons to our preferred defaults
-   * We are going away from controller-groups, and back to master-slave
-   * Call this in robot-init: it preforms basic setup for ArcadeDrive
-   */
-  public void resetDriveTrainControllers() {
-	  super.resetDriveTrainControllers();
-  }
-
-  public void configureDriveTrainControllersForSimpleMagic(){
-    super.configureDriveTrainControllersForSimpleMagic();
-  } // End configureDriveTrainControllersForSimpleMagic
 }

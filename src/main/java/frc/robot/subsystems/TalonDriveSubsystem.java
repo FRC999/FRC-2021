@@ -18,10 +18,6 @@ import frc.robot.RobotMap;
 public class TalonDriveSubsystem extends DriveSubsystemBase {
   // Put methods for controlling this subsystem here. Call these from Commands.
 
-  //For isOnTarget
-  boolean wasOnTarget = false;
-  int withinAcceptableErrorLoops = 0;
-
   static WPI_TalonSRX frontLeftDriveTalonSRX = new WPI_TalonSRX(RobotMap.frontLeftDriveMotorControllerID);
   static WPI_TalonSRX backLeftDriveTalonSRX = new WPI_TalonSRX(RobotMap.backLeftDriveMotorControllerID);
   static WPI_TalonSRX frontRightDriveTalonSRX = new WPI_TalonSRX(RobotMap.frontRightDriveMotorControllerID);
@@ -35,21 +31,9 @@ public class TalonDriveSubsystem extends DriveSubsystemBase {
     drive = new DifferentialDrive(frontLeftDriveTalonSRX, frontRightDriveTalonSRX);
   }
 
-  /**
-   * Sets the talons to our preferred defaults
-   * We are going away from controller-groups, and back to master-slave
-   * Call this in robot-init: it preforms basic setup for ArcadeDrive
-   */
-  public void resetDriveTrainControllers() {
-    super.resetDriveTrainControllers();
-  }
-
   public void configureEncoders(){
     frontLeftDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     frontRightDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
   }
 
-  public void configureDriveTrainControllersForSimpleMagic(){
-    super.configureDriveTrainControllersForSimpleMagic();
-  } // End configureDriveTrainControllersForSimpleMagic
 }
