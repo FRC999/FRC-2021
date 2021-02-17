@@ -44,6 +44,11 @@ public abstract class DriveSubsystemBase extends Subsystem {
 
   DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(
       Units.inchesToMeters(RobotMap.distanceBetweenWheels));
+
+  /** Note that DifferentialDriveOdometry contructor was revised since team 5190 posted their video
+   * The parameters listed here were gathered from WPI documentation as well as the document
+   * created by Team 8027. I also assume that the initial vector was zeroed properly in the Robot class.
+   */
   DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Robot.navXSubsystem.getHeading(),
       new Pose2d(RobotMap.startingPoseX, RobotMap.startingPoseY, new Rotation2d()));
 
