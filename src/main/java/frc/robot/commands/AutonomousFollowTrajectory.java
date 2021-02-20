@@ -5,11 +5,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
 
 public class AutonomousFollowTrajectory extends Command {
   public AutonomousFollowTrajectory() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(Robot.driveSubsystem);
+    // Awkward, but requiring one doesn't imply requiring the other
+    // Questionable whether anything will require kinematics but not drive, though
+    requires(Robot.kinematicsController);
   }
 
   // Called just before this Command runs the first time

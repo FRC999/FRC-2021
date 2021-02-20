@@ -37,21 +37,18 @@ public class TalonDriveSubsystem extends DriveSubsystemBase {
 
   }
 
-  /**
-   * Sets the talons to our preferred defaults We are going away from
-   * controller-groups, and back to master-slave Call this in robot-init: it
-   * preforms basic setup for ArcadeDrive
-   */
-  public void resetDriveTrainControllers() {
-    super.resetDriveTrainControllers();
-  }
-
   public void configureEncoders() {
     frontLeftDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     frontRightDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
   }
 
-  public void configureDriveTrainControllersForSimpleMagic() {
-    super.configureDriveTrainControllersForSimpleMagic();
-  } // End configureDriveTrainControllersForSimpleMagic
+  @Override
+  public void setLeftVoltage(double voltage) {
+    frontLeftDriveTalonSRX.setVoltage(voltage);
+  }
+
+  @Override
+  public void setRightVoltage(double voltage) {
+    frontRightDriveTalonSRX.setVoltage(voltage);
+  }
 }

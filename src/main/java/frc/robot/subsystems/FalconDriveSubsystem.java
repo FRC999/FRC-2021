@@ -33,26 +33,20 @@ public class FalconDriveSubsystem extends DriveSubsystemBase {
     backRightDriveMotorController = backRightDriveTalonFX;
     drive = new DifferentialDrive(frontLeftDriveTalonFX, frontRightDriveTalonFX);
   }
- 
-
-  //public static DifferentialDrive drive = new DifferentialDrive(frontLeftDriveTalonFX, frontRightDriveTalonFX);
-  // No differential or arcade drive for falcons
 
   @Override
   public void configureEncoders() {
     //empty, because the default for the Falcon is to use the integrated controller
   }
 
-  /**
-   * Sets the talons to our preferred defaults
-   * We are going away from controller-groups, and back to master-slave
-   * Call this in robot-init: it preforms basic setup for ArcadeDrive
-   */
-  public void resetDriveTrainControllers() {
-	  super.resetDriveTrainControllers();
+  @Override
+  public void setLeftVoltage(double voltage) {
+    frontLeftDriveTalonFX.setVoltage(voltage);
   }
 
-  public void configureDriveTrainControllersForSimpleMagic(){
-    super.configureDriveTrainControllersForSimpleMagic();
-  } // End configureDriveTrainControllersForSimpleMagic
+  @Override
+  public void setRightVoltage(double voltage) {
+    frontRightDriveTalonFX.setVoltage(voltage);
+  }
+
 }

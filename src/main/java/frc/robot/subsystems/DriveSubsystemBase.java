@@ -15,13 +15,7 @@ import com.ctre.phoenix.motorcontrol.can.BaseTalon;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Units;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.DriveManuallyCommand;
 
@@ -35,22 +29,13 @@ public abstract class DriveSubsystemBase extends Subsystem {
   boolean wasOnTarget = false;
   int withinAcceptableErrorLoops = 0;
 
+  // Front controllers are masters
   static BaseTalon frontLeftDriveMotorController;
   static BaseTalon backLeftDriveMotorController;
   static BaseTalon frontRightDriveMotorController;
   static BaseTalon backRightDriveMotorController;
 
   public static DifferentialDrive drive;
-
-  DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(
-      Units.inchesToMeters(RobotMap.distanceBetweenWheels));
-
-  /** Note that DifferentialDriveOdometry contructor was revised since team 5190 posted their video
-   * The parameters listed here were gathered from WPI documentation as well as the document
-   * created by Team 8027. I also assume that the initial vector was zeroed properly in the Robot class.
-   */
-  DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(Robot.navXSubsystem.getHeading(),
-      new Pose2d(RobotMap.startingPoseX, RobotMap.startingPoseY, new Rotation2d()));
 
   DriveSubsystemBase() {
     super();
@@ -296,6 +281,10 @@ public abstract class DriveSubsystemBase extends Subsystem {
     frontRightDriveMotorController.setNeutralMode(NeutralMode.Brake);
     backRightDriveMotorController.setNeutralMode(NeutralMode.Brake);
   }
+
+  // setVoltage is a method of WPI speed controllers, not base talons
+  public abstract void setLeftVoltage(double voltage);
+  public abstract void setRightVoltage(double voltage);
 
   @Override
   public void initDefaultCommand() {
