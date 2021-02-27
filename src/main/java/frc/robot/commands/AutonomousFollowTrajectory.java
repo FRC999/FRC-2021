@@ -14,7 +14,6 @@ public class AutonomousFollowTrajectory extends Command {
     // Questionable whether anything will require kinematics but not drive, though
     requires(Robot.kinematicsController);
   }
-
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
@@ -23,6 +22,7 @@ public class AutonomousFollowTrajectory extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.kinematicsController.updateOdometer();
   }
 
   // Make this return true when this Command no longer needs to run execute()
