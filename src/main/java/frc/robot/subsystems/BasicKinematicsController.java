@@ -18,21 +18,21 @@ public class BasicKinematicsController extends Subsystem {
   // here. Call these from Commands.
   private DriveSubsystemBase driveSubsystem;
   private NavXSubsystem navX;
-
-  
-  DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(
-      Units.inchesToMeters(RobotMap.distanceBetweenWheels));
-
-  /** Note that DifferentialDriveOdometry contructor was revised since team 5190 posted their video
-   * The parameters listed here were gathered from WPI documentation as well as the document
-   * created by Team 8027. I also assume that the initial vector was zeroed properly in the Robot class.
-   */
-  DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(navX.getHeading(),
-      new Pose2d(RobotMap.startingPoseX, RobotMap.startingPoseY, new Rotation2d()));
+  private DifferentialDriveKinematics kinematics;
+  private DifferentialDriveOdometry odometry;
 
   public BasicKinematicsController(DriveSubsystemBase driveSubsystem, NavXSubsystem navXSubsystem){
     this.driveSubsystem = driveSubsystem;//Instance variable shadowed by local variable
     navX = navXSubsystem;
+    kinematics = new DifferentialDriveKinematics(
+      Units.inchesToMeters(RobotMap.distanceBetweenWheels));
+
+    /** Note that DifferentialDriveOdometry contructor was revised since team 5190 posted their video
+     * The parameters listed here were gathered from WPI documentation as well as the document
+     * created by Team 8027. I also assume that the initial vector was zeroed properly in the Robot class.
+     */
+    odometry = new DifferentialDriveOdometry(navX.getHeading(),
+      new Pose2d(RobotMap.startingPoseX, RobotMap.startingPoseY, new Rotation2d()));
   }
 
   @Override
