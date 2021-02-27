@@ -11,6 +11,9 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.controller.RamseteController;
@@ -31,6 +34,9 @@ public class BasicKinematicsController extends Subsystem {
 
   private PIDController leftPidController = null; //new PIDController(0, 0, 0);
   private PIDController rightPidController = null;
+
+  private double prevTime = 0;
+  private DifferentialDriveWheelSpeeds prevSpeeds = new DifferentialDriveWheelSpeeds();
 
   public BasicKinematicsController(DriveSubsystemBase driveSubsystem, NavXSubsystem navXSubsystem){
     this.driveSubsystem = driveSubsystem; //Instance variable shadowed by local variable
@@ -65,7 +71,14 @@ public class BasicKinematicsController extends Subsystem {
     return Units.inchesToMeters(encoderTics / RobotMap.encoderTicksPerInch);
   }
 
-
+  public void driveOnTrajectory(Trajectory trajectory, double curTime){
+    if(curTime<prevTime){
+      prevTime=0;
+      return;
+    }
+    
+  }
+  
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
