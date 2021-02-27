@@ -35,6 +35,21 @@ public class BasicKinematicsController extends Subsystem {
       new Pose2d(RobotMap.startingPoseX, RobotMap.startingPoseY, new Rotation2d()));
   }
 
+
+  
+  public void updateOdometer(){
+    driveSubsystem.getLeftEncoder();
+    Rotation2d gyroAngle = navX.getHeading();
+    double leftDistanceMeters = convertEncoderTicsToMeters(driveSubsystem.getLeftEncoder());
+    double rightDistanceMeters = convertEncoderTicsToMeters(driveSubsystem.getRightEncoder());
+    odometry.update(gyroAngle, leftDistanceMeters, rightDistanceMeters);
+  }
+
+  public double convertEncoderTicsToMeters(int encoderTics){
+    return Units.inchesToMeters(encoderTics / RobotMap.encoderTicksPerInch);
+  }
+
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

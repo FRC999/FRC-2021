@@ -81,8 +81,13 @@ public abstract class DriveSubsystemBase extends Subsystem {
     backRightDriveMotorController.setNeutralMode(NeutralMode.Coast);
   }
 
+  /** Get the number of tics moved by the left encoder */
   public int getLeftEncoder() {
     return frontLeftDriveMotorController.getSelectedSensorPosition();
+  }
+  /** Get the number of tics moved by the left encoder */
+  public int getRightEncoder() {
+    return frontRightDriveMotorController.getSelectedSensorPosition();
   }
 
   public int getLeftEncoderSpeed() {
@@ -91,10 +96,6 @@ public abstract class DriveSubsystemBase extends Subsystem {
 
   public int getRightEncoderSpeed() {
     return frontRightDriveMotorController.getSelectedSensorVelocity();
-  }
-
-  public int getRightEncoder() {
-    return frontRightDriveMotorController.getSelectedSensorPosition();
   }
 
   public void DriveTrainCoastMode() {
