@@ -60,7 +60,6 @@ public class BasicKinematicsController extends Subsystem {
   }
   
   public void updateOdometer(){
-    driveSubsystem.getLeftEncoder();
     Rotation2d gyroAngle = navX.getHeading();
     double leftDistanceMeters = convertEncoderTicsToMeters(driveSubsystem.getLeftEncoder());
     double rightDistanceMeters = convertEncoderTicsToMeters(driveSubsystem.getRightEncoder());
