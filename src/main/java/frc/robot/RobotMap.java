@@ -134,9 +134,6 @@ public class RobotMap {
   // The difference between the left and right side encoder values when the robot
   // is rotated 180 degrees
   public static int encoderUnitsPerRobotRotation = 38585;// thats the SUM of the two
-  public static int cruiseVelocity = 2250;
-  // MotionMagic curve smoothing parameter [0 - 8]
-  public static int acceleration = 2250;
   // Allowable error to exit movement methods
   public static int defaultAcceptableError = 1000;
   public static int neckMotor;
@@ -153,9 +150,6 @@ public class RobotMap {
   public final static int closedLoopPeriodMs = 1;
   // Motor neutral dead-band, set to the minimum 0.1%
   public final static double NeutralDeadband = 0.001;
-  // MotionMagic curve smoothing parameter [0 - 8]
-  public final static int smoothing = 3;
-  // MotionMagic curve smoothing parameter [0 - 8]
  
   public final static double encoderUnitsPerJEMotorRotation = 178;
 
@@ -173,12 +167,6 @@ public class RobotMap {
 	public final static Gains kGains_MotProf  = new Gains( 1.0, 0.0,  0.0, 1023.0/6800.0,  400,  1.00 );
   */
 
-  // Closed loop PID parameter values TODO: replace F values with measured values
-  public final static double P_0 = 0.75 * fullMotorOutput / encoderUnitsPerShaftRotation; // 75% motor output when
-                                                                                          // error = one rotation
-  public final static double I_0 = 0.005 * fullMotorOutput / encoderUnitsPerShaftRotation;
-  public final static double D_0 = .1;
-  public final static double F_0 = 0.227; // just a guesstimate
   public final static int Izone_0 = 500;
   public final static double PeakOutput_0 = 1;
 
@@ -256,6 +244,8 @@ public static final int hopperMotorPort = 0;
   // ---- End closed loop parameter constants ----
 
   public static void IAmFalconBot() {
+    // TODO: Drivetrain dependent values MUST be moved into their respective classes
+
     // How many encoder clicks per revolution (change to 2048 for falcon 500
     // encoders)
     encoderUnitsPerShaftRotation = 2048;
@@ -264,9 +254,6 @@ public static final int hopperMotorPort = 0;
     // The difference between the left and right side encoder values when the robot
     // is rotated 180 degrees
     encoderUnitsPerRobotRotation = 3925;// thats the SUM of the two (this is just a rough guess)
-    //these values are just guesses at the moment
-    cruiseVelocity = 2250;
-    acceleration = 2250;
     // Allowable error to exit movement methods
     defaultAcceptableError = 250;
 

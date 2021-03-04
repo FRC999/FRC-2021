@@ -29,6 +29,16 @@ public class DriveSubsystemFrankenbot extends DriveSubsystemBase {
 	  frontRightDriveMotorController = frontRightDriveTalonSRX;
     backRightDriveMotorController = backRightDriveTalonSRX;
     drive = new DifferentialDrive(frontLeftDriveTalonSRX, frontRightDriveTalonSRX);
+
+    talonPidP_Value0 = 0.75 * RobotMap.fullMotorOutput / RobotMap.encoderUnitsPerShaftRotation;
+    talonPidI_Value0 = 0.005 * RobotMap.fullMotorOutput / RobotMap.encoderUnitsPerShaftRotation;
+    talonPidD_Value0 = .1;
+    talonPidF_Value0 = 0.227; // TODO: Investigate more to see if we actually intend to use static FF's
+
+
+    talonPidCruiseVelocity =2250;
+    talonPidAcceleration =2250;
+    talonPidSmoothing = 3;
   }
 
   public void configureEncoders(){
