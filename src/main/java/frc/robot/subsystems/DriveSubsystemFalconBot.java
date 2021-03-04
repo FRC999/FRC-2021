@@ -15,14 +15,14 @@ import frc.robot.RobotMap;
 /**
  * Add your docs here.
  */
-public class FalconDriveSubsystem extends DriveSubsystemBase {
+public class DriveSubsystemFalconBot extends DriveSubsystemBase {
 
   static WPI_TalonFX frontLeftDriveTalonFX = new WPI_TalonFX(RobotMap.frontLeftDriveMotorControllerID);
   static WPI_TalonFX backLeftDriveTalonFX = new WPI_TalonFX(RobotMap.backLeftDriveMotorControllerID);
   static WPI_TalonFX frontRightDriveTalonFX = new WPI_TalonFX(RobotMap.frontRightDriveMotorControllerID);
   static WPI_TalonFX backRightDriveTalonFX = new WPI_TalonFX(RobotMap.backRightDriveMotorControllerID);
 
-  public FalconDriveSubsystem(){
+  public DriveSubsystemFalconBot(){
     RobotMap.IAmFalconBot();
 	  frontLeftDriveMotorController = frontLeftDriveTalonFX;
 	  backLeftDriveMotorController = backLeftDriveTalonFX;

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.TalonDriveSubsystem;
+import frc.robot.subsystems.DriveSubsystemFrankenbot;
 
 public class DriveTurnCommand extends Command {
   private int leftTarget;
@@ -39,7 +39,7 @@ public class DriveTurnCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    TalonDriveSubsystem.drive.setSafetyEnabled(false);
+    DriveSubsystemFrankenbot.drive.setSafetyEnabled(false);
     //NOTE: This is *not* configured to work with the NavX anymore: it is purely based on encoder tics
     //We could (and maybe should) rewrite it to use the NavX as an auxiliary input for more accuracy.
 
@@ -70,7 +70,7 @@ public class DriveTurnCommand extends Command {
   @Override
   protected void end() {
     System.out.println("Done turning.");
-    TalonDriveSubsystem.drive.setSafetyEnabled(true);
+    DriveSubsystemFrankenbot.drive.setSafetyEnabled(true);
   }
 
   // Called when another command which requires one or more of the same

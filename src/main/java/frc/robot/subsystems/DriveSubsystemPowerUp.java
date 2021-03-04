@@ -17,7 +17,7 @@ import frc.robot.RobotMap;
 /**
  * Add your docs here. TODO: Add docs
  */
-public class OldTalonDriveSubsystem extends DriveSubsystemBase {
+public class DriveSubsystemPowerUp extends DriveSubsystemBase {
   // Put methods for controlling this subsystem here. Call these from Commands.
   static final int frontLeftTalonID = -1;
   static final int frontRightTalonID = -1;
@@ -35,7 +35,7 @@ public class OldTalonDriveSubsystem extends DriveSubsystemBase {
 
   
 
-  public OldTalonDriveSubsystem(){
+  public DriveSubsystemPowerUp(){
 	  frontLeftDriveMotorController = frontLeftDriveTalonSRX;
 	  backLeftDriveMotorController = backLeftDriveTalonSRX;
 	  frontRightDriveMotorController = frontRightDriveTalonSRX;
