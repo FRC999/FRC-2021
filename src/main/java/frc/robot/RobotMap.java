@@ -208,7 +208,7 @@ public class RobotMap {
   public final static double potentiometerTicksPerDegreeY = 1;
   public final static double pixelsPerDegreeX = 12;  //based on lifecam having a 53.4 degree viewing angle and 640 horizontal pixels
   public final static double pixelsPerDegreeY = 15.2; //480 vertical pixels / 31.6 degree viewing angle
-
+  public final static int panSmoothing = 3;
 // END of pan pid code
 
 //Tilt Motor Pid Code
@@ -223,6 +223,7 @@ public class RobotMap {
     // Allowable error to exit movement methods
     public static int tiltDefaultAcceptableError = 2;
     public final static int PID_TILT = 0;
+    public final static int tiltSmoothing =3;
 
 
   // ---- Flat constants, you should not need to change these ----
