@@ -225,7 +225,7 @@ public class RobotMap {
   public final static double pixelsPerDegreeX = 12; // based on lifecam having a 53.4 degree viewing angle and 640
                                                     // horizontal pixels
   public final static double pixelsPerDegreeY = 15.2; // 480 vertical pixels / 31.6 degree viewing angle
-
+  public final static int panSmoothing = 3;
   // END of pan pid code
 
   // Tilt Motor Pid Code

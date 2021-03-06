@@ -63,5 +63,14 @@ public class DriveSubsystemPowerUp extends DriveSubsystemBase {
     frontLeftDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     frontRightDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
   }
+  
+  @Override
+  public void setLeftVoltage(double voltage) {
+    frontLeftDriveTalonSRX.setVoltage(voltage);
+  }
 
+  @Override
+  public void setRightVoltage(double voltage) {
+    frontRightDriveTalonSRX.setVoltage(voltage);
+  }
 }
