@@ -32,7 +32,7 @@ import java.util.function.Supplier;
  * and feedforward functionality, returning only the raw wheel speeds from the RAMSETE controller.
  */
 @SuppressWarnings("PMD.TooManyFields")
-public class RamseteCommand extends CommandBase {
+public class RamseteCommand extends Command {
   private  Timer timer = new Timer();
   private  boolean usePid;
   private  Trajectory trajectory;
@@ -199,8 +199,18 @@ public class RamseteCommand extends CommandBase {
   }
 
   @Override
-  public void end(boolean interrupted) {
+  public void end() {
     timer.stop();
+  }
+
+  protected void interrupted() {
+    end();
+  }
+
+  private void addRequirements(Subsystem[] subsys){
+    for(Subsystem sub : subsys){
+      requires(sub);
+    }
   }
 
   
