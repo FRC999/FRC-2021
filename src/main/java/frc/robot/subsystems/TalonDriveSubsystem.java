@@ -12,13 +12,14 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
+
 /**
  * Add your docs here. TODO: Add docs
  */
 public class TalonDriveSubsystem extends DriveSubsystemBase {
   // Put methods for controlling this subsystem here. Call these from Commands.
 
-  //For isOnTarget
+  // For isOnTarget
   boolean wasOnTarget = false;
   int withinAcceptableErrorLoops = 0;
 
@@ -27,29 +28,27 @@ public class TalonDriveSubsystem extends DriveSubsystemBase {
   static WPI_TalonSRX frontRightDriveTalonSRX = new WPI_TalonSRX(RobotMap.frontRightDriveMotorControllerID);
   static WPI_TalonSRX backRightDriveTalonSRX = new WPI_TalonSRX(RobotMap.backRightDriveMotorControllerID);
 
-  public TalonDriveSubsystem(){
-	  frontLeftDriveMotorController = frontLeftDriveTalonSRX;
-	  backLeftDriveMotorController = backLeftDriveTalonSRX;
-	  frontRightDriveMotorController = frontRightDriveTalonSRX;
+  public TalonDriveSubsystem() {
+    frontLeftDriveMotorController = frontLeftDriveTalonSRX;
+    backLeftDriveMotorController = backLeftDriveTalonSRX;
+    frontRightDriveMotorController = frontRightDriveTalonSRX;
     backRightDriveMotorController = backRightDriveTalonSRX;
     drive = new DifferentialDrive(frontLeftDriveTalonSRX, frontRightDriveTalonSRX);
+
   }
 
-  /**
-   * Sets the talons to our preferred defaults
-   * We are going away from controller-groups, and back to master-slave
-   * Call this in robot-init: it preforms basic setup for ArcadeDrive
-   */
-  public void resetDriveTrainControllers() {
-    super.resetDriveTrainControllers();
-  }
-
-  public void configureEncoders(){
+  public void configureEncoders() {
     frontLeftDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     frontRightDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
   }
 
-  public void configureDriveTrainControllersForSimpleMagic(){
-    super.configureDriveTrainControllersForSimpleMagic();
-  } // End configureDriveTrainControllersForSimpleMagic
+  @Override
+  public void setLeftVoltage(double voltage) {
+    frontLeftDriveTalonSRX.setVoltage(voltage);
+  }
+
+  @Override
+  public void setRightVoltage(double voltage) {
+    frontRightDriveTalonSRX.setVoltage(voltage);
+  }
 }

@@ -18,6 +18,7 @@ import frc.robot.commands.RealSmartAutoCommand;
 import frc.robot.commands.ShootAndRunAuto;
 import frc.robot.commands.ShootWithAcesCommand;
 import frc.robot.commands.ShooterVisionCommand;
+import frc.robot.subsystems.BasicKinematicsController;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ControlPanelSubsystem;
 import frc.robot.subsystems.DriveSubsystemBase;
@@ -32,7 +33,6 @@ import frc.robot.subsystems.UltrasonicSensorSubsystem;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -43,17 +43,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
   NetworkTable table;
   public static DriveSubsystemBase driveSubsystem;
+  public static BasicKinematicsController kinematicsController;
   public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public static SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
   public static NavXSubsystem navXSubsystem = new NavXSubsystem();
   public static UltrasonicSensorSubsystem ultrasonicSubsystem = new UltrasonicSensorSubsystem();
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  //public static ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
+  // public static ControlPanelSubsystem controlPanelSubsystem = new
+  // ControlPanelSubsystem();
   public static ShuffleboardSubsystem shuffleBoardSubsystem = new ShuffleboardSubsystem();
- // public static Command visionCommand = new ShooterVisionCommand();
+  // public static Command visionCommand = new ShooterVisionCommand();
 
-  
+
   public boolean TestBool = false;
   public static OI oi;
   Command autonomousCommand;
@@ -71,11 +73,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    
-    //Set up shuffleboard
-    shuffleBoardSubsystem.setupShuffleboard();
-    
 
+    // Set up shuffleboard
+    shuffleBoardSubsystem.setupShuffleboard();
 
     NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
     ntInst.startClientTeam(999);
@@ -84,17 +84,23 @@ public class Robot extends TimedRobot {
     testEntry.setDouble(10.5);
     System.out.println("Hit robotInit");
 
+    /**
+     * Zero Z axis; used in DriveSubsystembase to determine initial heading in
+     * Kinematics driving so, do it before running the contructor for that class
+     */
+    Robot.navXSubsystem.zeroYaw();
+
     DigitalInput falconBotSwitch = new DigitalInput(RobotMap.falconBotSwitchPortNumber);
     RobotMap.isFalconBot = true;// !falconBotSwitch.get();
-    System.out.println("falconBotSwitch = "+ RobotMap.isFalconBot);
-    if(RobotMap.isFalconBot){
+    System.out.println("falconBotSwitch = " + RobotMap.isFalconBot);
+    if (RobotMap.isFalconBot) {
       driveSubsystem = new FalconDriveSubsystem();
       RobotMap.isSplitStick = true;
-      // the IAmFalconBot method reset some RobotMap constants for the FalconBot chassis
+      // the IAmFalconBot method reset some RobotMap constants for the FalconBot
+      // chassis
       // but the call to it was moved into the FalconDriveSubsystem constructor
       System.out.println("We're a FALCON");
-    }
-    else{
+    } else {
       driveSubsystem = new TalonDriveSubsystem();
       System.out.println("We're a TALON");
     }
@@ -113,12 +119,15 @@ public class Robot extends TimedRobot {
 
     Robot.driveSubsystem.zeroDriveEncoders();
     Robot.driveSubsystem.driveTrainBrakeMode();
-    Robot.navXSubsystem.zeroYaw();
+
+    // Don't start kinematics untill we're ready
+    kinematicsController = new BasicKinematicsController(driveSubsystem, navXSubsystem);
+
+
     Robot.shooterSubsystem.configureShooterControllers();
     Robot.shooterSubsystem.configurePanMotorControllerForMagic();
-    //Robot.shooterSubsystem.zeroShooterEncoders();
-    //Robot.controlPanelSubsystem.resetMotorController();
-    
+    // Robot.shooterSubsystem.zeroShooterEncoders();
+    // Robot.controlPanelSubsystem.resetMotorController();
 
     oi = new OI();
   }
@@ -134,7 +143,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    //shooterSubsystem.getPanEncoder();
+    // shooterSubsystem.getPanEncoder();
     smartDashboardSubsystem.updateAllDisplays();
   }
 
@@ -146,8 +155,8 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     driveSubsystem.DriveTrainCoastMode();
-    //visionCommand.cancel();
-    //controlPanelSubsystem.stopTalon();
+    // visionCommand.cancel();
+    // controlPanelSubsystem.stopTalon();
   }
 
   @Override
@@ -169,7 +178,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    
+
     autonomousCommand = sendableCommandChooser.getSelected();
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
@@ -182,8 +191,8 @@ public class Robot extends TimedRobot {
     // schedule the autonomous command (example)
     if (autonomousCommand != null) {
       autonomousCommand.start();
-    }
-    else System.out.println("Auto is null.");
+    } else
+      System.out.println("Auto is null.");
   }
 
   /**
@@ -198,7 +207,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
 
     driveSubsystem.driveTrainBrakeMode();
-    
+
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -216,8 +225,8 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
     smartDashboardSubsystem.updateNavXValues();
     smartDashboardSubsystem.updateEncoderValue();
-    
-    //controlPanelSubsystem.putSeenColor();
+
+    // controlPanelSubsystem.putSeenColor();
   }
 
   /**
@@ -225,6 +234,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
-    
+
   }
 }
