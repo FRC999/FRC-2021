@@ -96,7 +96,7 @@ public class ShooterSubsystem extends Subsystem {
 
     panMotorController.configMotionAcceleration(RobotMap.panAcceleration, RobotMap.configureTimeoutMs);
     panMotorController.configMotionCruiseVelocity(RobotMap.panCruiseVelocity, RobotMap.configureTimeoutMs);
-    panMotorController.configMotionSCurveStrength(RobotMap.smoothing);
+    panMotorController.configMotionSCurveStrength(RobotMap.panSmoothing);
 
   } // End configureDriveTrainControllersForSimpleMagic
 
@@ -309,7 +309,7 @@ public void configureTiltMotorControllerForMagic(){
 
   tiltMotorController.configMotionAcceleration(RobotMap.tiltAcceleration, RobotMap.configureTimeoutMs);
   tiltMotorController.configMotionCruiseVelocity(RobotMap.tiltCruiseVelocity, RobotMap.configureTimeoutMs);
-  tiltMotorController.configMotionSCurveStrength(RobotMap.smoothing);
+  tiltMotorController.configMotionSCurveStrength(RobotMap.tiltSmoothing);
 
   } 
   

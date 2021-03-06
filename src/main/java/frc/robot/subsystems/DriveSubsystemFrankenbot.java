@@ -16,25 +16,30 @@ import frc.robot.RobotMap;
 /**
  * Add your docs here. TODO: Add docs
  */
-public class TalonDriveSubsystem extends DriveSubsystemBase {
+public class DriveSubsystemFrankenbot extends DriveSubsystemBase {
   // Put methods for controlling this subsystem here. Call these from Commands.
-
-  // For isOnTarget
-  boolean wasOnTarget = false;
-  int withinAcceptableErrorLoops = 0;
 
   static WPI_TalonSRX frontLeftDriveTalonSRX = new WPI_TalonSRX(RobotMap.frontLeftDriveMotorControllerID);
   static WPI_TalonSRX backLeftDriveTalonSRX = new WPI_TalonSRX(RobotMap.backLeftDriveMotorControllerID);
   static WPI_TalonSRX frontRightDriveTalonSRX = new WPI_TalonSRX(RobotMap.frontRightDriveMotorControllerID);
   static WPI_TalonSRX backRightDriveTalonSRX = new WPI_TalonSRX(RobotMap.backRightDriveMotorControllerID);
 
-  public TalonDriveSubsystem() {
-    frontLeftDriveMotorController = frontLeftDriveTalonSRX;
-    backLeftDriveMotorController = backLeftDriveTalonSRX;
-    frontRightDriveMotorController = frontRightDriveTalonSRX;
+  public DriveSubsystemFrankenbot(){
+	  frontLeftDriveMotorController = frontLeftDriveTalonSRX;
+	  backLeftDriveMotorController = backLeftDriveTalonSRX;
+	  frontRightDriveMotorController = frontRightDriveTalonSRX;
     backRightDriveMotorController = backRightDriveTalonSRX;
     drive = new DifferentialDrive(frontLeftDriveTalonSRX, frontRightDriveTalonSRX);
 
+    talonPidP_Value0 = 0.75 * RobotMap.fullMotorOutput / RobotMap.encoderUnitsPerShaftRotation;
+    talonPidI_Value0 = 0.005 * RobotMap.fullMotorOutput / RobotMap.encoderUnitsPerShaftRotation;
+    talonPidD_Value0 = .1;
+    talonPidF_Value0 = 0.227; // TODO: Investigate more to see if we actually intend to use static FF's
+
+
+    talonPidCruiseVelocity =2250;
+    talonPidAcceleration =2250;
+    talonPidSmoothing = 3;
   }
 
   public void configureEncoders() {
