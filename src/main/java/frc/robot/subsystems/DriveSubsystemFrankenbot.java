@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.RobotMap;
+
 /**
  * Add your docs here. TODO: Add docs
  */
@@ -41,9 +42,18 @@ public class DriveSubsystemFrankenbot extends DriveSubsystemBase {
     talonPidSmoothing = 3;
   }
 
-  public void configureEncoders(){
+  public void configureEncoders() {
     frontLeftDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     frontRightDriveMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
   }
 
+  @Override
+  public void setLeftVoltage(double voltage) {
+    frontLeftDriveTalonSRX.setVoltage(voltage);
+  }
+
+  @Override
+  public void setRightVoltage(double voltage) {
+    frontRightDriveTalonSRX.setVoltage(voltage);
+  }
 }

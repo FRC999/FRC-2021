@@ -42,13 +42,20 @@ public class DriveSubsystemFalconBot extends DriveSubsystemBase {
     talonPidAcceleration =2250;
     talonPidSmoothing = 3;
   }
- 
-
-  //public static DifferentialDrive drive = new DifferentialDrive(frontLeftDriveTalonFX, frontRightDriveTalonFX);
-  // No differential or arcade drive for falcons
 
   @Override
   public void configureEncoders() {
     //empty, because the default for the Falcon is to use the integrated controller
   }
+
+  @Override
+  public void setLeftVoltage(double voltage) {
+    frontLeftDriveTalonFX.setVoltage(voltage);
+  }
+
+  @Override
+  public void setRightVoltage(double voltage) {
+    frontRightDriveTalonFX.setVoltage(voltage);
+  }
+
 }
