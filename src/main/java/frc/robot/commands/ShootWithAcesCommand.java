@@ -28,7 +28,7 @@ public class ShootWithAcesCommand extends CommandGroup {
     // Command1 and Command2 will run in parallel.
     addSequential(new ShooterRunWheelCommand());
     addSequential(new WaitCommand(6));
-    addSequential(new IntakeMagazineInCommand());
+    //addSequential(new IntakeMagazineInCommand());
     addSequential(new IntakeLoaderUpCommand());
     addSequential(new WaitCommand(3));
     addSequential(new DriveSequentialForwardCommand(50));

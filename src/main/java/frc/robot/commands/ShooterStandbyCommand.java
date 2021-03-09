@@ -22,7 +22,7 @@ public class ShooterStandbyCommand extends Command {
   @Override
   protected void initialize() {
     Robot.shooterSubsystem.standby();
-    Robot.shooterSubsystem.pan(0);
+    Robot.shooterSubsystem.panStandby();
     Robot.shooterSubsystem.tiltStandby();
   }
 

@@ -18,7 +18,6 @@ import frc.robot.commands.RealSmartAutoCommand;
 import frc.robot.commands.ShootAndRunAuto;
 import frc.robot.commands.ShootWithAcesCommand;
 import frc.robot.commands.ShooterVisionCommand;
-import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ControlPanelSubsystem;
 import frc.robot.subsystems.DriveSubsystemBase;
 import frc.robot.subsystems.TalonDriveSubsystem;
@@ -28,7 +27,6 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
-import frc.robot.subsystems.UltrasonicSensorSubsystem;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -44,10 +42,8 @@ public class Robot extends TimedRobot {
   NetworkTable table;
   public static DriveSubsystemBase driveSubsystem;
   public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  public static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public static SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
   public static NavXSubsystem navXSubsystem = new NavXSubsystem();
-  public static UltrasonicSensorSubsystem ultrasonicSubsystem = new UltrasonicSensorSubsystem();
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   //public static ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
   public static ShuffleboardSubsystem shuffleBoardSubsystem = new ShuffleboardSubsystem();

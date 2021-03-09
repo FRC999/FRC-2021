@@ -39,32 +39,39 @@ public class OI {
   //turnsStick
 
   //Button Board
-// *** Temporary reasign buttons to Fang control
-  //Button climberSolenoidForward = new JoystickButton(buttonBox, 1);
-  //Button winchMotor = new JoystickButton(buttonBox, 2);
-  //Button climberSolenoidReverse = new JoystickButton(buttonBox, 3);
-  Button ShooterTiltUp10 = new JoystickButton(buttonBox, 1);
-  Button ShooterTiltToZero = new JoystickButton(buttonBox, 2);
-  Button ShooterTiltDown10 = new JoystickButton(buttonBox, 3);
+// *** Temporary reasign buttons for testing
+  Button IntakeInButton = new JoystickButton(buttonBox, 1);
+  Button IntakeOutButton = new JoystickButton(buttonBox, 2);
+  Button IntakeStandbyButton = new JoystickButton(buttonBox, 3);
+  Button IntakeUpButton = new JoystickButton(buttonBox, 4);
+  Button IntakeDownButton = new JoystickButton(buttonBox, 5);
+  Button ZeroFangsButton = new JoystickButton(buttonBox, 6);
+  Button LoaderUpButton = new JoystickButton(buttonBox, 7);
+  Button LoaderDownButton = new JoystickButton(buttonBox, 8);
+  Button LoaderStandbyButton = new JoystickButton(buttonBox, 9);
+  Button ShooterWheelOnButton = new JoystickButton(buttonBox, 10);
+  Button LoadAndShootButton = new JoystickButton(buttonBox, 11);
+  Button ShooterStandbyButton = new JoystickButton(buttonBox, 12);
+  
 // *** End Temporary Code
   
   //Button visionTilt = new JoystickButton(buttonBox, 2);
-  Button magazineInward = new JoystickButton(buttonBox, 4);
-  Button loaderUp = new JoystickButton(buttonBox, 5);
-  Button shooterMotor = new JoystickButton(buttonBox, 6);
-  Button magazineOutward = new JoystickButton(buttonBox, 7);
-  Button loaderDown = new JoystickButton(buttonBox, 8);
-  Button fangsFullyBack = new JoystickButton(buttonBox, 9);
-  Button visionTracking = new JoystickButton(buttonBox, 10);
-  Button fullShooter = new JoystickButton(buttonBox, 11); //loader + magazine + shooter
-  Button zeroTurret = new JoystickButton(buttonBox, 12);
+  //Button magazineInward = new JoystickButton(buttonBox, 4);
+  //Button loaderUp = new JoystickButton(buttonBox, 5);
+  //Button shooterMotor = new JoystickButton(buttonBox, 6);
+  //Button magazineOutward = new JoystickButton(buttonBox, 7);
+  //Button loaderDown = new JoystickButton(buttonBox, 8);
+  //Button fangsFullyBack = new JoystickButton(buttonBox, 9);
+  //Button visionTracking = new JoystickButton(buttonBox, 10);
+  //Button fullShooter = new JoystickButton(buttonBox, 11); //loader + magazine + shooter
+  //Button zeroTurret = new JoystickButton(buttonBox, 12);
   public OI() {
      // Setup All Commands Here
      
      //right Joystick
      runIntake.whileHeld(new IntakeInCommand());
      runIntake.whenReleased(new IntakeUpCommand());
-     intakeEject.whileHeld(new IntakeEject());
+     //intakeEject.whileHeld(new IntakeEject());
      //ShooterTiltSetpointButton.whileHeld(new ShooterTiltGoToSetpointCommand());
      ShooterTiltZeroButton.whileHeld(new ShooterTiltGoToZeroCommand());
      //Left Joystick
@@ -77,21 +84,32 @@ public class OI {
     //winchMotor.whileHeld(new ClimbWinchUpCommand());
     //climberSolenoidReverse.whenPressed(new ClimbRetractCommand());
 
-    ShooterTiltUp10.whileHeld(new ShooterTiltUp10Command());
-    ShooterTiltToZero.whileHeld(new ShooterTiltGoToZeroCommand());
-    ShooterTiltDown10.whileHeld(new ShooterTiltDown10Command());
+    //ShooterTiltUp10.whileHeld(new ShooterTiltUp10Command());
+    //ShooterTiltToZero.whileHeld(new ShooterTiltGoToZeroCommand());
+    //ShooterTiltDown10.whileHeld(new ShooterTiltDown10Command());
     
-    magazineInward.whileHeld(new IntakeMagazineInCommand());
-    loaderUp.whileHeld(new IntakeLoaderUpCommand());
-    shooterMotor.whileHeld(new ShooterRunWheelCommand());
-    magazineOutward.whileHeld(new IntakeMagazineInCommand());
-    loaderDown.whileHeld(new IntakeLoaderDownCommand());
-    fangsFullyBack.whenPressed(new ShooterTiltGoToSetpointCommand());
-    visionTracking.whenPressed(new ShooterVisionCommand());
+    //magazineInward.whileHeld(new IntakeMagazineInCommand());
+    LoaderUpButton.whileHeld(new IntakeLoaderUpCommand());
+    LoaderDownButton.whileHeld(new IntakeLoaderDownCommand());
+    LoaderStandbyButton.whileHeld(new IntakeStandbyCommand());
+    ShooterWheelOnButton.whileHeld(new ShooterRunWheelCommand());
+    IntakeDownButton.whileHeld(new IntakeDownCommand());
+    IntakeUpButton.whileHeld(new IntakeUpCommand());
+    IntakeInButton.whileHeld(new IntakeInCommand());
+    IntakeOutButton.whileHeld(new IntakeReverseCommand());
+    IntakeStandbyButton.whileHeld(new IntakeStandbyCommand());
+    LoadAndShootButton.whileHeld(new ShooterFullCommand());
+    ShooterStandbyButton.whileHeld(new ShooterAndLoaderStopCommand());
+    ZeroFangsButton.whileHeld(new ShooterZeroTiltCommand());
+
+
+
+    //fangsFullyBack.whenPressed(new ShooterTiltGoToSetpointCommand());
+    //visionTracking.whenPressed(new ShooterVisionCommand());
     visionTilt.whileHeld(new ShooterVisionTiltCommand());
-    fullShooter.whileHeld(new ShooterFullCommand());
+    //fullShooter.whileHeld(new ShooterFullCommand());
     turretButton.whileHeld(new ShooterPanManuallyCommand());
-    zeroTurret.whileHeld(new ShooterTurretCenterCommand());
+    //zeroTurret.whileHeld(new ShooterTurretCenterCommand());
     TiltManual.whileHeld(new ShooterTiltManuallyCommand());
     StatusReport.whileHeld(new StatusReport());
   }

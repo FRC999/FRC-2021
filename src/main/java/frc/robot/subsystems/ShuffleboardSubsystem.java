@@ -37,9 +37,6 @@ public class ShuffleboardSubsystem extends Subsystem {
   NetworkTableEntry leftSpeedEntry;
   NetworkTableEntry rightSpeedEntry;
 
-  ShuffleboardLayout wallFollowerLayout;
-  NetworkTableEntry wallFollowerPossibleEntry;
-
     public void setupShuffleboard(){
 
          ShuffleboardTab displays = Shuffleboard.getTab("Displays");
@@ -59,10 +56,6 @@ public class ShuffleboardSubsystem extends Subsystem {
 
         //Turret Rotation
         turretEntry = displays.add("Turret Rotation", 10).withWidget(BuiltInWidgets.kDial).withProperties(Map.of("min", 0, "max",360)).getEntry();
-
-        wallFollowerLayout = displays.getLayout("Wall Follower", BuiltInLayouts.kList).withSize(2,2).withPosition(4, 0);
-        //Can we activate wall follower?  If so, shows Green Light
-        // wallFollowerPossibleEntry = displays.getLayout("Wall Follower").add("Wall Follow Possible", false).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
 
     }
 
@@ -87,8 +80,6 @@ public class ShuffleboardSubsystem extends Subsystem {
         intakeCommands.add(new IntakeUpCommand());
         intakeCommands.add(new IntakeLoaderUpCommand());
         intakeCommands.add(new IntakeLoaderDownCommand());
-        intakeCommands.add(new IntakeMagazineInCommand());
-        intakeCommands.add(new IntakeMagazineOutCommand());   
         intakeCommands.add(new IntakeStandbyCommand());
 
       //Shooter Motors Test
@@ -111,7 +102,6 @@ public class ShuffleboardSubsystem extends Subsystem {
  
         driveCommands.add(new DriveManuallyCommand());
         driveCommands.add(new DriveStopCommand());
-        driveCommands.add(new DriveFollowWallCommand());
         driveCommands.add(new DriveZeroEncodersCommand());
  
         //Climber Test
@@ -122,11 +112,6 @@ public class ShuffleboardSubsystem extends Subsystem {
         .withPosition(6, 0);
    //  .withProperties(Map.of("Label position", "HIDDEN")); // hide labels for commands
  
-        climberCommands.add(new ClimbExtendCommand());
-        climberCommands.add(new ClimbRetractCommand());
-        climberCommands.add(new ClimbWinchUpCommand());
-        climberCommands.add(new ClimbWinchDownCommand());
-        climberCommands.add(new ClimbEndClimbCommand());
 
     }
 
@@ -135,7 +120,6 @@ public class ShuffleboardSubsystem extends Subsystem {
         rightSpeedEntry.setDouble(Robot.driveSubsystem.getRightEncoderSpeed());
         voltageEntry.setDouble(RobotController.getBatteryVoltage());
         turretEntry.setDouble(240);
-        //wallFollowerPossibleEntry.setBoolean(Robot.ultrasonicSubsystem.checkWallFollowerPossible());
     }
 
     public void initDefaultCommand() {
