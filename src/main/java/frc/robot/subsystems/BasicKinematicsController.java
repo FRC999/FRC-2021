@@ -29,37 +29,30 @@ public class BasicKinematicsController extends Subsystem {
   private RamseteController ramseteController = new RamseteController();
 
   // Values set to null to prevent accidental explosions / death
-  //                                    (which would be bad)
+  // (which would be bad)
   private SimpleMotorFeedforward feedforward = null;// new SimpleMotorFeedforward(0, 0, 0);
 
-  private PIDController leftPidController = null; //new PIDController(0, 0, 0);
-  private PIDController rightPidController = null;
+  private PIDController leftPidController = new PIDController(driveSubsystem.talonPidP_Value0,
+      driveSubsystem.talonPidI_Value0, driveSubsystem.talonPidD_Value0);
+  private PIDController rightPidController = new PIDController(driveSubsystem.talonPidP_Value0,
+      driveSubsystem.talonPidI_Value0, driveSubsystem.talonPidD_Value0);
 
-  private double prevTime = 0;
-  private DifferentialDriveWheelSpeeds prevSpeeds = new DifferentialDriveWheelSpeeds();
-
-  public BasicKinematicsController(DriveSubsystemBase driveSubsystem, NavXSubsystem navXSubsystem){
-    this.driveSubsystem = driveSubsystem; //Instance variable shadowed by local variable
+  public BasicKinematicsController(DriveSubsystemBase driveSubsystem, NavXSubsystem navXSubsystem) {
+    this.driveSubsystem = driveSubsystem; // Instance variable shadowed by local variable
     navX = navXSubsystem;
-    kinematics = new DifferentialDriveKinematics(
-      Units.inchesToMeters(RobotMap.distanceBetweenWheels));
+    kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(RobotMap.distanceBetweenWheels));
 
-    /** Note that DifferentialDriveOdometry contructor was revised since team 5190 posted their video
-     * The parameters listed here were gathered from WPI documentation as well as the document
-     * created by Team 8027. I also assume that the initial vector was zeroed properly in the Robot class.
+    /**
+     * Note that DifferentialDriveOdometry contructor was revised since team 5190
+     * posted their video The parameters listed here were gathered from WPI
+     * documentation as well as the document created by Team 8027. I also assume
+     * that the initial vector was zeroed properly in the Robot class.
      */
     odometry = new DifferentialDriveOdometry(navX.getHeading(),
-      new Pose2d(RobotMap.startingPoseX, RobotMap.startingPoseY, new Rotation2d()));
+        new Pose2d(RobotMap.startingPoseX, RobotMap.startingPoseY, new Rotation2d()));
   }
 
-  /**
-   * Gets the current Pose2d of the robot
-   */
-  public Pose2d getPosition(){
-    return odometry.getPoseMeters();
-  }
-  
-  public void updateOdometer(){
+  public void updateOdometer() {
     Rotation2d gyroAngle = navX.getHeading();
     double leftDistanceMeters = convertEncoderTicsToMeters(driveSubsystem.getLeftEncoder());
     double rightDistanceMeters = convertEncoderTicsToMeters(driveSubsystem.getRightEncoder());
@@ -70,17 +63,41 @@ public class BasicKinematicsController extends Subsystem {
     return Units.inchesToMeters(encoderTics / RobotMap.encoderTicksPerInch);
   }
 
-  public void driveOnTrajectory(Trajectory trajectory, double curTime){
-    if(curTime<prevTime){
-      prevTime=0;
-      return;
-    }
-    
+    /**
+   * Gets the current Pose2d of the robot
+   */
+  public Pose2d getPosition(){
+    return odometry.getPoseMeters();
+  }
+
+  public DifferentialDriveWheelSpeeds getWheelSpeeds(){
+    double leftSpeed = convertEncoderTicsToMeters(driveSubsystem.getLeftEncoderSpeed());
+    double rightSpeed = convertEncoderTicsToMeters(driveSubsystem.getRightEncoderSpeed());
+    return new DifferentialDriveWheelSpeeds(leftSpeed, rightSpeed);
   }
   
+  public RamseteController getRamseteController() {
+    return ramseteController;
+  }
+
+  public DifferentialDriveKinematics getKinematics() {
+    return kinematics;
+  }
+
+  public PIDController getRightPidController() {
+    return rightPidController;
+  }
+
+  public PIDController getLeftPidController() {
+    return leftPidController;
+  }
+
+  public SimpleMotorFeedforward getFeedforward() {
+    return feedforward;
+  }
+
   @Override
-  public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+  protected void initDefaultCommand() {
+    // Required method, does nothing
   }
 }
