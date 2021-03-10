@@ -19,7 +19,7 @@ import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 
 /** Add your docs here. */
-public class BasicKinematicsController extends Subsystem {
+public class NavigationControlSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private DriveSubsystemBase driveSubsystem;
@@ -37,7 +37,7 @@ public class BasicKinematicsController extends Subsystem {
   private PIDController rightPidController = new PIDController(driveSubsystem.talonPidP_Value0,
       driveSubsystem.talonPidI_Value0, driveSubsystem.talonPidD_Value0);
 
-  public BasicKinematicsController(DriveSubsystemBase driveSubsystem, NavXSubsystem navXSubsystem) {
+  public NavigationControlSubsystem(DriveSubsystemBase driveSubsystem, NavXSubsystem navXSubsystem) {
     this.driveSubsystem = driveSubsystem; // Instance variable shadowed by local variable
     navX = navXSubsystem;
     kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(RobotMap.distanceBetweenWheels));

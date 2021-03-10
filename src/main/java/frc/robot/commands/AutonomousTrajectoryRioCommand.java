@@ -7,13 +7,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import frc.robot.Robot;
-import frc.robot.subsystems.BasicKinematicsController;
+import frc.robot.subsystems.NavigationControlSubsystem;
 
 /** This form of the class runs all code on the RoboRIO*/
 public class AutonomousTrajectoryRioCommand extends RamseteCommandWpilib {
-    BasicKinematicsController navigation;
+    NavigationControlSubsystem navigation;
 
-    AutonomousTrajectoryRioCommand(Trajectory trajectory, BasicKinematicsController navigatorSubsystem){
+    AutonomousTrajectoryRioCommand(Trajectory trajectory, NavigationControlSubsystem navigatorSubsystem){
         super(
             trajectory, 
             () -> {return navigatorSubsystem.getPosition();}, // Lambda supplies pose for robot
