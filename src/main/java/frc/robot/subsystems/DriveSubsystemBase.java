@@ -33,6 +33,12 @@ public abstract class DriveSubsystemBase extends Subsystem {
 
   protected int talonPidAcceleration, talonPidCruiseVelocity, talonPidSmoothing;
 
+  /** 
+   *  These factors DO differ between robots
+   * TODO: Factor out of RobotMap
+   */
+  protected double distanceBetweenWheels, wheelCircumference;
+
   // Front controllers are masters
   static BaseTalon frontLeftDriveMotorController;
   static BaseTalon backLeftDriveMotorController;
@@ -42,7 +48,6 @@ public abstract class DriveSubsystemBase extends Subsystem {
   public static DifferentialDrive drive;
 
   DriveSubsystemBase() {
-    super();
     System.out.println("Made a DriveSubsystem");
   }
 
@@ -79,10 +84,7 @@ public abstract class DriveSubsystemBase extends Subsystem {
   public void zeroDriveEncoders() {
     frontLeftDriveMotorController.setSelectedSensorPosition(0);
     frontRightDriveMotorController.setSelectedSensorPosition(0);
-    frontLeftDriveMotorController.setNeutralMode(NeutralMode.Coast);
-    backLeftDriveMotorController.setNeutralMode(NeutralMode.Coast);
-    frontRightDriveMotorController.setNeutralMode(NeutralMode.Coast);
-    backRightDriveMotorController.setNeutralMode(NeutralMode.Coast);
+    driveTrainCoastMode(); // TODO: figure out why this was introduced in 2020
   }
 
   /** Get the number of tics moved by the left encoder */
@@ -102,7 +104,7 @@ public abstract class DriveSubsystemBase extends Subsystem {
     return frontRightDriveMotorController.getSelectedSensorVelocity();
   }
 
-  public void DriveTrainCoastMode() {
+  public void driveTrainCoastMode() {
     frontLeftDriveMotorController.setNeutralMode(NeutralMode.Coast);
     backLeftDriveMotorController.setNeutralMode(NeutralMode.Coast);
     frontRightDriveMotorController.setNeutralMode(NeutralMode.Coast);
@@ -284,7 +286,9 @@ public abstract class DriveSubsystemBase extends Subsystem {
     backRightDriveMotorController.setNeutralMode(NeutralMode.Brake);
   }
 
-  // setVoltage is a method of WPI speed controllers, not base talons
+  /**  
+   * setVoltage is a method of WPI speed controllers, not base talons
+   */
   public abstract void setLeftVoltage(double voltage);
   public abstract void setRightVoltage(double voltage);
 

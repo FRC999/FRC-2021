@@ -143,7 +143,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    driveSubsystem.DriveTrainCoastMode();
+    driveSubsystem.driveTrainCoastMode();
     // visionCommand.cancel();
     // controlPanelSubsystem.stopTalon();
   }

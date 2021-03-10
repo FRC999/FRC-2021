@@ -38,8 +38,8 @@ public class DriveSubsystemFalconBot extends DriveSubsystemBase {
     talonPidF_Value0 = 0.227; // TODO: Investigate more to see if we actually intend to use static FF's
 
     // Values are definitely guesses
-    talonPidCruiseVelocity =2250;
-    talonPidAcceleration =2250;
+    talonPidCruiseVelocity = 2250;
+    talonPidAcceleration = 2250;
     talonPidSmoothing = 3;
   }
 
