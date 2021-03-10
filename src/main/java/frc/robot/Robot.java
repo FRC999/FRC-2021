@@ -18,7 +18,7 @@ import frc.robot.commands.RealSmartAutoCommand;
 import frc.robot.commands.ShootAndRunAuto;
 import frc.robot.commands.ShootWithAcesCommand;
 import frc.robot.commands.ShooterVisionCommand;
-import frc.robot.subsystems.BasicKinematicsController;
+import frc.robot.subsystems.NavigationControlSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ControlPanelSubsystem;
 import frc.robot.subsystems.DriveSubsystemBase;
@@ -43,7 +43,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
   NetworkTable table;
   public static DriveSubsystemBase driveSubsystem;
-  public static BasicKinematicsController kinematicsController;
+  public static NavigationControlSubsystem navigationSubsystem;
   public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public static SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
@@ -113,7 +113,7 @@ public class Robot extends TimedRobot {
     Robot.driveSubsystem.driveTrainBrakeMode();
 
     // Don't start kinematics untill we're ready
-    kinematicsController = new BasicKinematicsController(driveSubsystem, navXSubsystem);
+    navigationSubsystem = new NavigationControlSubsystem(driveSubsystem, navXSubsystem);
 
 
     Robot.shooterSubsystem.configureShooterControllers();
