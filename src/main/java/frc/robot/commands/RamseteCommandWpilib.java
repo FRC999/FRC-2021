@@ -32,7 +32,7 @@ import java.util.function.Supplier;
  * and feedforward functionality, returning only the raw wheel speeds from the RAMSETE controller.
  */
 @SuppressWarnings("PMD.TooManyFields")
-public class RamseteCommand extends Command {
+public class RamseteCommandWpilib extends Command {
   private  Timer timer = new Timer();
   private  boolean usePid;
   private  Trajectory trajectory;
@@ -44,8 +44,8 @@ public class RamseteCommand extends Command {
   private  PIDController leftController;
   private  PIDController rightController;
   private  BiConsumer<Double, Double> outputVoltFunction;
-  private DifferentialDriveWheelSpeeds prevSpeeds;
-  private double prevTime;
+  private  DifferentialDriveWheelSpeeds prevSpeeds;
+  private  double prevTime;
 
   /**
    * Constructs a new RamseteCommand that, when executed, will follow the provided trajectory. PID
@@ -70,7 +70,7 @@ public class RamseteCommand extends Command {
    * @param requirements The subsystems to require.
    */
   @SuppressWarnings("PMD.ExcessiveParameterList")
-  public RamseteCommand(
+  public RamseteCommandWpilib(
       Trajectory trajectory,
       Supplier<Pose2d> pose,
       RamseteController controller,
@@ -109,7 +109,7 @@ public class RamseteCommand extends Command {
    * @param outputMetersPerSecond A function that consumes the computed left and right wheel speeds.
    * @param requirements The subsystems to require.
    */
-  public RamseteCommand(
+  public RamseteCommandWpilib(
       Trajectory trajectory,
       Supplier<Pose2d> pose,
       RamseteController follower,
