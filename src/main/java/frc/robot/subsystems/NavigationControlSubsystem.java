@@ -75,6 +75,16 @@ public class NavigationControlSubsystem extends Subsystem {
     double rightSpeed = convertEncoderTicsToMeters(driveSubsystem.getRightEncoderSpeed());
     return new DifferentialDriveWheelSpeeds(leftSpeed, rightSpeed);
   }
+
+  /**
+   * Use for RIO-based pid, sets the left- and right- motor voltages
+   * @param left Voltage for left motor, output from WPI PidController
+   * @param right Voltage for right motor, output from WPI PidController
+   */
+  public void setMotorVoltages(double left, double right){
+    driveSubsystem.setLeftVoltage(left);
+    driveSubsystem.setRightVoltage(right);
+  }
   
   public RamseteController getRamseteController() {
     return ramseteController;
