@@ -4,35 +4,32 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import frc.robot.Robot;
-import frc.robot.subsystems.NavigationControlSubsystem;
 
 /** This form of the class runs all code on the RoboRIO*/
 public class AutonomousTrajectoryRioCommand extends RamseteCommandWpilib {
-    NavigationControlSubsystem navigation;
 
-    AutonomousTrajectoryRioCommand(Trajectory trajectory, NavigationControlSubsystem navigatorSubsystem){
+    AutonomousTrajectoryRioCommand(Trajectory trajectory){
         super(
             trajectory, 
-            () -> {return navigatorSubsystem.getPosition();}, // Lambda supplies pose for robot
-            navigatorSubsystem.getRamseteController(), // Grab kinematics controller from Robot.java
-            navigatorSubsystem.getFeedforward(), 
-            navigatorSubsystem.getKinematics(), 
-            () -> {return navigatorSubsystem.getWheelSpeeds();}, 
-            navigatorSubsystem.getLeftPidController(), 
-            navigatorSubsystem.getRightPidController(), 
-            (Double leftVoltage, Double rightVoltage) -> {  // yes, I DO mean the object type.
-                System.out.println("hi");
-            }
+            () -> {return Robot.navigationSubsystem.getPosition();}, // Lambda supplies pose for robot
+            Robot.navigationSubsystem.getRamseteController(), // Grab kinematics controller from Robot.java
+            Robot.navigationSubsystem.getFeedforward(), 
+            Robot.navigationSubsystem.getKinematics(), 
+            () -> {return Robot.navigationSubsystem.getWheelSpeeds();}, 
+            Robot.navigationSubsystem.getLeftPidController(), 
+            Robot.navigationSubsystem.getRightPidController(), 
+            (Double left, Double right) -> {  // yes, I DO mean the object type.
+                Robot.navigationSubsystem.setMotorVoltages(left, right);
+            },
+            Robot.navigationSubsystem, Robot.driveSubsystem // Set requirements
         );
-        navigation = navigatorSubsystem;
 
     }
     
     public void execute(){
-        navigation.updateOdometer();
+        Robot.navigationSubsystem.updateOdometer();
         super.execute();
     }
 }
