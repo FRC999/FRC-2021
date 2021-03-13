@@ -27,7 +27,7 @@ public class IntakeSubsystem extends Subsystem {
   static WPI_VictorSPX loaderMotor1Controller = new WPI_VictorSPX(RobotMap.loaderMotor1ControllerID);
   static WPI_VictorSPX loaderMotor2Controller = new WPI_VictorSPX(RobotMap.loaderMotor2ControllerID);
 
-  public static DoubleSolenoid intakeSolenoid = new DoubleSolenoid(RobotMap.IntakeSolenoidForwardChannel,RobotMap.IntakeSolenoidReverseChannel);
+  //public static DoubleSolenoid intakeSolenoid = new DoubleSolenoid(RobotMap.IntakeSolenoidForwardChannel,RobotMap.IntakeSolenoidReverseChannel);
 
 
   public void standby(){
@@ -54,16 +54,16 @@ public class IntakeSubsystem extends Subsystem {
   }
 
   public void IntakeUp() {
-    intakeSolenoid.set(Value.kForward);
+    //intakeSolenoid.set(Value.kForward);
   }
 
   public void IntakeDown() {
-    intakeSolenoid.set(Value.kReverse);
+   // intakeSolenoid.set(Value.kReverse);
   }
 
   /** sets the intake solenoid (piston controller) to either its forward, reverse, or off states, using the enum DoubleSolenoid.Value's states kForward, kReverse, and kOff.*/
   public void SetIntakeSolenoid(DoubleSolenoid.Value val) {
-    intakeSolenoid.set(val);
+   // intakeSolenoid.set(val);
   }
 
   public void initDefaultCommand() {

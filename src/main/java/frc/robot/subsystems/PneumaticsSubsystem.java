@@ -17,18 +17,18 @@ import edu.wpi.first.wpilibj.Compressor;
 public class PneumaticsSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  Compressor compressor = new Compressor();
+  //Compressor compressor = new Compressor();
 
   public PneumaticsSubsystem() {
 
   }
 
   public void activateCompressor() {
-    compressor.setClosedLoopControl(true);
+     //compressor.setClosedLoopControl(true);
   }
 
   public void deactivateCompressor() {
-    compressor.setClosedLoopControl(false);
+  //  compressor.setClosedLoopControl(false);
   }
 
   @Override
