@@ -22,8 +22,8 @@ import frc.robot.subsystems.BasicKinematicsController;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ControlPanelSubsystem;
 import frc.robot.subsystems.DriveSubsystemBase;
-import frc.robot.subsystems.TalonDriveSubsystem;
-import frc.robot.subsystems.FalconDriveSubsystem;
+import frc.robot.subsystems.DriveSubsystemFrankenbot;
+import frc.robot.subsystems.DriveSubsystemFalconBot;
 import frc.robot.subsystems.NavXSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -90,22 +90,26 @@ public class Robot extends TimedRobot {
      */
     Robot.navXSubsystem.zeroYaw();
 
-    DigitalInput falconBotSwitch = new DigitalInput(RobotMap.falconBotSwitchPortNumber);
-    RobotMap.isFalconBot = false;// !falconBotSwitch.get();
-    System.out.println("falconBotSwitch = " + RobotMap.isFalconBot);
-    RobotMap.isSplitStick = false;
-    if (RobotMap.isFalconBot) {
-      driveSubsystem = new FalconDriveSubsystem();
+    //DigitalInput falconBotSwitch = new DigitalInput(RobotMap.falconBotSwitchPortNumber);
+    //RobotMap.isFalconBot = false;// !falconBotSwitch.get();
+    //System.out.println("falconBotSwitch = " + RobotMap.isFalconBot);
+    //RobotMap.isSplitStick = false;
+    //if (RobotMap.isFalconBot) {
+      //driveSubsystem = new FalconDriveSubsystem();
       // the IAmFalconBot method reset some RobotMap constants for the FalconBot
       // chassis
       // but the call to it was moved into the FalconDriveSubsystem constructor
-      System.out.println("We're a FALCON");
-    } else {
-      driveSubsystem = new TalonDriveSubsystem();
-      System.out.println("We're a TALON");
-    }
+      //System.out.println("We're a FALCON");
+    //} else {
+    //  driveSubsystem = new TalonDriveSubsystem();
+    //  System.out.println("We're a TALON");
+    //}
+    RobotMap.isFalconBot = true;
+    System.out.println("falconBotSwitch = "+ RobotMap.isFalconBot);
+    driveSubsystem = new DriveSubsystemFalconBot();
+    RobotMap.isSplitStick = true;
+    
     driveSubsystem.setDefaultCommand(new DriveManuallyCommand());
-    falconBotSwitch.close();
 
     sendableCommandChooser.addOption("Really Smart Auto", new RealSmartAutoCommand());
     sendableCommandChooser.addOption("Move Off Line", new MoveOffLineAuto());

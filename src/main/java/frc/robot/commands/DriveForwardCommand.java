@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.DriveSubsystemBase;
-import frc.robot.subsystems.TalonDriveSubsystem;
+import frc.robot.subsystems.DriveSubsystemFrankenbot;
 
 public class DriveForwardCommand extends Command {
   private int driveDistance;
@@ -60,7 +60,7 @@ public class DriveForwardCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    TalonDriveSubsystem.drive.setSafetyEnabled(true);
+    DriveSubsystemBase.drive.setSafetyEnabled(true);
   }
 
   // Called when another command which requires one or more of the same
