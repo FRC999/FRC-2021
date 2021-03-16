@@ -90,22 +90,10 @@ public class Robot extends TimedRobot {
      */
     Robot.navXSubsystem.zeroYaw();
 
-    //DigitalInput falconBotSwitch = new DigitalInput(RobotMap.falconBotSwitchPortNumber);
-    //RobotMap.isFalconBot = false;// !falconBotSwitch.get();
-    //System.out.println("falconBotSwitch = " + RobotMap.isFalconBot);
-    //RobotMap.isSplitStick = false;
-    //if (RobotMap.isFalconBot) {
-      //driveSubsystem = new FalconDriveSubsystem();
-      // the IAmFalconBot method reset some RobotMap constants for the FalconBot
-      // chassis
-      // but the call to it was moved into the FalconDriveSubsystem constructor
-      //System.out.println("We're a FALCON");
-    //} else {
-    //  driveSubsystem = new TalonDriveSubsystem();
-    //  System.out.println("We're a TALON");
-    //}
     RobotMap.isFalconBot = true;
     System.out.println("falconBotSwitch = "+ RobotMap.isFalconBot);
+
+    // Change to reflect current robot
     driveSubsystem = new DriveSubsystemFalconBot();
     RobotMap.isSplitStick = true;
     
