@@ -4,6 +4,11 @@
 
 package frc.robot.subsystems;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
@@ -14,6 +19,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.controller.RamseteController;
@@ -84,6 +90,18 @@ public class NavigationControlSubsystem extends Subsystem {
   public void setMotorVoltages(double left, double right){
     driveSubsystem.setLeftVoltage(left);
     driveSubsystem.setRightVoltage(right);
+  }
+
+  public Trajectory getTrajectory(String trajectoryName){
+    trajectoryName += ".json";
+    Trajectory trajectory = new Trajectory();
+    try {
+      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryName);
+      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    } catch (IOException ex) {
+      DriverStation.reportError("Unable to open trajectory: " + trajectoryName, ex.getStackTrace());
+    }
+    return trajectory;
   }
   
   public RamseteController getRamseteController() {
