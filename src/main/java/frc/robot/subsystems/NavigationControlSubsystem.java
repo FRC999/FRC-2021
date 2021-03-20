@@ -92,7 +92,7 @@ public class NavigationControlSubsystem extends Subsystem {
     driveSubsystem.setRightVoltage(right);
   }
 
-  public Trajectory getTrajectory(String trajectoryName){
+  public static Trajectory getTrajectory(String trajectoryName){
     trajectoryName += ".json";
     Trajectory trajectory = new Trajectory();
     try {

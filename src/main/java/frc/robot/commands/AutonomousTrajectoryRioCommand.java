@@ -6,7 +6,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import frc.robot.Robot;
-
+import frc.robot.subsystems.NavigationControlSubsystem;
+ 
 /** This form of the class runs all code on the RoboRIO*/
 public class AutonomousTrajectoryRioCommand extends RamseteCommandWpilib {
 
@@ -26,6 +27,9 @@ public class AutonomousTrajectoryRioCommand extends RamseteCommandWpilib {
             Robot.navigationSubsystem, Robot.driveSubsystem // Set requirements
         );
 
+    }
+    public AutonomousTrajectoryRioCommand(String alpha){
+        this(NavigationControlSubsystem.getTrajectory(alpha));
     }
     
     public void execute(){

@@ -25,6 +25,7 @@ public class OI {
   //RightJoystick
   Button runIntake = new JoystickButton(rightJoystick, 1);
   Button intakeEject = new JoystickButton(rightJoystick, 3);
+  Button runTrajectory = new JoystickButton(rightJoystick, 10);
   //Left Joystick
 
   //Button Board
@@ -40,6 +41,7 @@ public class OI {
   Button visionTracking = new JoystickButton(buttonBox, 10);
   Button fullShooter = new JoystickButton(buttonBox, 11); //loader + magazine + shooter
   Button zeroTurret = new JoystickButton(buttonBox, 12);
+
   
   public OI() {
      // Setup All Commands Here
@@ -48,6 +50,7 @@ public class OI {
      runIntake.whileHeld(new IntakeInCommand());
      runIntake.whenReleased(new IntakeUpCommand());
      intakeEject.whileHeld(new IntakeEject());
+     runTrajectory.whenPressed(new AutonomousTrajectoryRioCommand("TestTrajectory"));
      //Left Joystick
 
 
