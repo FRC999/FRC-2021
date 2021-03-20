@@ -40,7 +40,7 @@ public class IntakeSubsystem extends Subsystem {
   }
 
   public void loader(double motorSpeed){
-    loaderFrontMotorController.set(ControlMode.PercentOutput, motorSpeed);
+    loaderFrontMotorController.set(ControlMode.PercentOutput, -motorSpeed);
     loaderRearMotorController.set(ControlMode.PercentOutput, -motorSpeed);
   }
 

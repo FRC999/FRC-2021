@@ -24,10 +24,10 @@ public class RobotMap {
   
 
   // Drivetrain Motor Controllers
-  public final static int frontLeftDriveMotorControllerID = 1;
-  public final static int backLeftDriveMotorControllerID = 2;
-  public final static int frontRightDriveMotorControllerID = 3;
-  public final static int backRightDriveMotorControllerID = 4;
+  public final static int frontLeftDriveMotorControllerID = 4;
+  public final static int backLeftDriveMotorControllerID = 3;
+  public final static int frontRightDriveMotorControllerID = 2;
+  public final static int backRightDriveMotorControllerID = 1;
 
   // Intake motor controllers
   public final static int intakeMotorControllerID = 12;
@@ -49,9 +49,12 @@ public class RobotMap {
   public final static int shooterYResolution = 240; 
   public final static int shooterResolutionAcceptableError = 10;
   public  static double shooterPanSpeed = -.1;
-  public static int shooterPanMotorEncoderFrontVal = 2270;
-  public static double shooterEstimatedPos90PanEncoderVal = 3250;
-  public static double shooterEstimatedNeg90PanEncoderVal = 1300;
+  //public static int shooterPanMotorEncoderFrontVal = 2270;
+  //public static double shooterEstimatedPos90PanEncoderVal = 3250;
+  //public static double shooterEstimatedNeg90PanEncoderVal = 1300;
+  public static int shooterPanMotorEncoderFrontVal = 2816;
+  public static double shooterEstimatedPos90PanEncoderVal = 3796;
+  public static double shooterEstimatedNeg90PanEncoderVal = 1856;
 
 
   public static int shooterTiltMotorTicksPerRotation = 1024;
@@ -91,9 +94,11 @@ public class RobotMap {
  */
 
   //single stick setup
-  public final static int drivestickPort = OI.driveStickPort;
-  public final static int turnStickPort = OI.turnStickPort;
-  public final static int buttonBoxPort = OI.copilotPort;
+  //public final static int drivestickPort = OI.driveStickPort;
+  //public final static int turnStickPort = OI.turnStickPort;
+  //public final static int buttonBoxPort = OI.copilotPort;
+  
+  //Deadband values
   public final static double deadbandX = 0.1;
   public final static double deadbandY = 0.1;
   public final static double deadbandZ = 0.1;

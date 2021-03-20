@@ -363,7 +363,7 @@ public void zeroTiltPot() {
   public void testPanTurret(){
     //System.out.println("Testing PAN");
     double maxSpeed = 0.25; 
-    double output = (Robot.oi.driveStick.getZ()*1) * maxSpeed;
+    double output = (Robot.oi.turnStick.getZ()*1) * maxSpeed;
     panMotorController.set(ControlMode.PercentOutput, output);
   }
 
