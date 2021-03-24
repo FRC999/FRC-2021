@@ -14,9 +14,6 @@ package frc.robot;
  * floating around.
  */
 public class RobotMap {
-  // For example to map the left and right motors, you could define the
-  // following variables to use with your drivetrain subsystem.
-
   // Autonomous constants
   public static int robotLength = 18;
   public static int robotWidth = 33;
@@ -61,7 +58,7 @@ public class RobotMap {
   public final static int shooterXResolution = 640;
   public final static int shooterYResolution = 240; 
   public final static int shooterResolutionAcceptableError = 10;
-  public  static double shooterPanSpeed = -.1;
+  public final static double shooterPanSpeed = -.1;
   //public static int shooterPanMotorEncoderFrontVal = 2270;
   //public static double shooterEstimatedPos90PanEncoderVal = 3250;
   //public static double shooterEstimatedNeg90PanEncoderVal = 1300;
@@ -131,14 +128,10 @@ public class RobotMap {
   public static boolean isFalconBot;
   public static boolean isSplitStick;
 
-  // How many encoder clicks per revolution (change to 2048 for falcon 500
-  // encoders)
-  public static int encoderUnitsPerShaftRotation = 4096;
   // The difference between the left and right side encoder values when the robot
   // is rotated 180 degrees
-  public static int encoderUnitsPerRobotRotation = 38585;// thats the SUM of the two
   // Allowable error to exit movement methods
-  public static int defaultAcceptableError = 1000;
+  public static int defaultAcceptableError = 250;
   public static int neckMotor;
 
 
@@ -156,6 +149,7 @@ public class RobotMap {
   public final static int Izone_0 = 500;
   public final static double PeakOutput_0 = 1;
 
+  /* Must be ported to new DriveSubsystem archetecture for use
   // Closed loop Aux PID parameter values
   public final static double P_1 = 0.75 * fullMotorOutput / encoderUnitsPerShaftRotation; 
   // 75% motor output when error = one rotation
@@ -164,6 +158,7 @@ public class RobotMap {
   public final static double F_1 = 0.227; // just a guesstimate
   public final static int Izone_1 = 500;
   public final static double PeakOutput_1 = 1;
+*/
 
   // Closed loop PAN PID parameter values 
   // Modified for Closed loop position control
@@ -188,20 +183,20 @@ public class RobotMap {
 
 
   // Allowable error to exit movement methods
-  public static int tiltDefaultAcceptableError = 10;
+  public final static int tiltDefaultAcceptableError = 10;
   
   // MotionMagic curve smoothing parameter [0 - 8]
   public final static int tiltSmoothing =3;
 
-  public static int tiltCruiseVelocity = 50;
-  public static int tiltAcceleration = 50;
+  public final static int tiltCruiseVelocity = 50;
+  public final static int tiltAcceleration = 50;
 
 
   // Allowable error to exit vision tracking movement methods
-  public static int allowableLeft = ((RobotMap.shooterXResolution / 2) - (RobotMap.shooterResolutionAcceptableError));
-  public static int allowableRight = ((RobotMap.shooterXResolution / 2) + (RobotMap.shooterResolutionAcceptableError));
-  public static int allowableBelow = ((RobotMap.shooterYResolution / 2) - (RobotMap.shooterResolutionAcceptableError));
-  public static int allowableAbove = ((RobotMap.shooterYResolution / 2) + (RobotMap.shooterResolutionAcceptableError));
+  public final static int allowableLeft = ((RobotMap.shooterXResolution / 2) - (RobotMap.shooterResolutionAcceptableError));
+  public final static int allowableRight = ((RobotMap.shooterXResolution / 2) + (RobotMap.shooterResolutionAcceptableError));
+  public final static int allowableBelow = ((RobotMap.shooterYResolution / 2) - (RobotMap.shooterResolutionAcceptableError));
+  public final static int allowableAbove = ((RobotMap.shooterYResolution / 2) + (RobotMap.shooterResolutionAcceptableError));
 
   public final static double encoderTicksPerDegreeX = 11;  // for Turret Encoder
   public final static double potentiometerTicksPerDegreeY = 1; // TODO check this value
@@ -211,39 +206,5 @@ public class RobotMap {
   /**
    * Talon PID methods often demand slot ID's, so we need to do this :(
    */
-  public static int SLOT_0 = 0;
-
-
-
-  public static void IAmFalconBot() {
-    // TODO: Drivetrain dependent values MUST be moved into their respective classes
-
-    // How many encoder clicks per revolution (change to 2048 for falcon 500
-    // encoders)
-    encoderUnitsPerShaftRotation = 2048;
-    // with 6 in wheels estimate 10 feet = 13038 encoder ticks
-
-    // The difference between the left and right side encoder values when the robot
-    // is rotated 180 degrees
-    encoderUnitsPerRobotRotation = 3925;// thats the SUM of the two (this is just a rough guess)
-    // Allowable error to exit movement methods
-    defaultAcceptableError = 250;
-
-    shooterPanMotorEncoderTicksPerRotation = 3977;
-    //TODO: may need to be negative if turns the wrong way
-    shooterPanSpeed = .5;
-
-    shooterTiltMotorTicksPerRotation = 1024;   //Analog potentiometer 1024 units per rotation.
-    tiltFangsUpperLimit = 730; //Measured Value
-    tiltFangsLowerLimit = -5; //Measured Value
-
-    //For Encoders: 10 FT = 149083 Encoder units
-    //1 FT = 14908 Units
-    //1 Inch = 1242 Units
-    encoderTicksPerInch = 1242;
-    robotLength = 35;
-    robotWidth = 23;
-
-    System.out.println("I AM FALCONBOT! CACAW! CACAAAAAWWWWW!");
-  }
+  public final static int SLOT_0 = 0;
 }

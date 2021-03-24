@@ -23,17 +23,22 @@ public class DriveSubsystemFalconBot extends DriveSubsystemBase {
   static WPI_TalonFX backRightDriveTalonFX = new WPI_TalonFX(RobotMap.backRightDriveMotorControllerID);
 
   public DriveSubsystemFalconBot(){
-    RobotMap.IAmFalconBot();
 	  frontLeftDriveMotorController = frontLeftDriveTalonFX;
 	  backLeftDriveMotorController = backLeftDriveTalonFX;
 	  frontRightDriveMotorController = frontRightDriveTalonFX;
     backRightDriveMotorController = backRightDriveTalonFX;
     drive = new DifferentialDrive(frontLeftDriveTalonFX, frontRightDriveTalonFX);
 
+    encoderUnitsPerShaftRotation = 2048;
+    encoderUnitsPerRobotRotation = 3925;// thats the SUM of the two (this is just a rough guess)
+    // distanceBetweenWheels = ????; //TODO: Measure
+    robotLength = 35;
+    robotWidth = 23;
+
 
     // TODO: Determine if these values pulled from RobotMap are for falcon or talon bot
-    talonPidP_Value0 = 0.75 * RobotMap.fullMotorOutput / RobotMap.encoderUnitsPerShaftRotation;
-    talonPidI_Value0 = 0.005 * RobotMap.fullMotorOutput / RobotMap.encoderUnitsPerShaftRotation;
+    talonPidP_Value0 = 0.75 * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
+    talonPidI_Value0 = 0.005 * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
     talonPidD_Value0 = .1;
     talonPidF_Value0 = 0.227; // TODO: Investigate more to see if we actually intend to use static FF's
 

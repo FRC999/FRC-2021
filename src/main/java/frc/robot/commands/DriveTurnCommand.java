@@ -10,7 +10,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 import frc.robot.subsystems.DriveSubsystemFrankenbot;
 
 public class DriveTurnCommand extends Command {
@@ -32,8 +31,8 @@ public class DriveTurnCommand extends Command {
     requires(Robot.driveSubsystem);
     requires(Robot.navXSubsystem);
     turnDegrees = degrees;
-    leftAddEncoder = (int) Math.round(RobotMap.encoderUnitsPerRobotRotation * turnDegrees / 360);
-    rightAddEncoder = (int) Math.round(RobotMap.encoderUnitsPerRobotRotation * turnDegrees / 360);
+    leftAddEncoder = (int) Math.round(Robot.driveSubsystem.encoderUnitsPerRobotRotation * turnDegrees / 360);
+    rightAddEncoder = (int) Math.round(Robot.driveSubsystem.encoderUnitsPerRobotRotation * turnDegrees / 360);
   }
 
   // Called just before this Command runs the first time

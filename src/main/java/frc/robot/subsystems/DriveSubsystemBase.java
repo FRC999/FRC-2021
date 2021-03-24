@@ -33,11 +33,22 @@ public abstract class DriveSubsystemBase extends Subsystem {
 
   protected int talonPidAcceleration, talonPidCruiseVelocity, talonPidSmoothing;
 
+  /**
+   * Number of encoder units required to rotate wheels once
+   */
+  public int encoderUnitsPerShaftRotation;
+
+  /**
+   * Total difference between left and right encoders 
+   * following a 180 degree rotation
+   */
+  public int encoderUnitsPerRobotRotation;
+
   /** 
    *  These factors DO differ between robots
-   * TODO: Factor out of RobotMap
+   * Values are in inches.  TODO: Verify measurments, use metric (?)
    */
-  protected double distanceBetweenWheels, wheelCircumference;
+  public double distanceBetweenWheels, wheelCircumference, robotLength, robotWidth;
 
   // Front controllers are masters
   static BaseTalon frontLeftDriveMotorController;
@@ -196,7 +207,7 @@ public abstract class DriveSubsystemBase extends Subsystem {
     frontLeftDriveMotorController.config_IntegralZone(RobotMap.SLOT_0, RobotMap.Izone_0, RobotMap.configureTimeoutMs);
     frontLeftDriveMotorController.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0,
         RobotMap.configureTimeoutMs);
-    frontLeftDriveMotorController.configAllowableClosedloopError(RobotMap.SLOT_0, 0, RobotMap.configureTimeoutMs);
+    frontLeftDriveMotorController.configAllowableClosedloopError(RobotMap.SLOT_0, RobotMap.defaultAcceptableError, RobotMap.configureTimeoutMs);
 
     frontRightDriveMotorController.config_kP(RobotMap.SLOT_0, talonPidP_Value0, RobotMap.configureTimeoutMs);
     frontRightDriveMotorController.config_kI(RobotMap.SLOT_0, talonPidI_Value0, RobotMap.configureTimeoutMs);
