@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
-public class ShooterTiltGoToSetpointCommand extends Command {
-  public ShooterTiltGoToSetpointCommand() {
+public class ShooterTiltGoToZeroCommand extends Command {
+  public ShooterTiltGoToZeroCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.shooterSubsystem);
@@ -21,29 +21,24 @@ public class ShooterTiltGoToSetpointCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.shooterSubsystem.configureTiltMotorControllerForPosition();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.shooterSubsystem.tiltGoToSetpoint(RobotMap.tiltFangsMiddle);
+    Robot.shooterSubsystem.tiltGoToSetpoint(0);;
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-   // if (Robot.shooterSubsystem.getTiltPot() >= 200 + RobotMap.tiltDefaultAcceptableError && Robot.shooterSubsystem.getTiltPot() <= 200 - RobotMap.tiltDefaultAcceptableError) {
-   //   return true;
-   // } else {
-      return false;
-   // }
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.shooterSubsystem.tiltStandby();
+    Robot.shooterSubsystem.standby();
   }
 
   // Called when another command which requires one or more of the same

@@ -11,33 +11,33 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
-public class ShooterTiltGoToSetpointCommand extends Command {
-  public ShooterTiltGoToSetpointCommand() {
+public class ShooterTiltUp10Command extends Command {
+  public ShooterTiltUp10Command() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.shooterSubsystem);
   }
 
+  public static int setpoint = 0;
+
+
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.shooterSubsystem.configureTiltMotorControllerForPosition();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.shooterSubsystem.tiltGoToSetpoint(RobotMap.tiltFangsMiddle);
+    //System.out.println("TILTING UP");
+    setpoint = Robot.shooterSubsystem.getTiltPot() +10;
+    Robot.shooterSubsystem.tiltGoToSetpoint(setpoint);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-   // if (Robot.shooterSubsystem.getTiltPot() >= 200 + RobotMap.tiltDefaultAcceptableError && Robot.shooterSubsystem.getTiltPot() <= 200 - RobotMap.tiltDefaultAcceptableError) {
-   //   return true;
-   // } else {
       return false;
-   // }
   }
 
   // Called once after isFinished returns true

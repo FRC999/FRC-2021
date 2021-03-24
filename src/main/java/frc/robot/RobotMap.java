@@ -59,20 +59,22 @@ public class RobotMap {
 
   // shooter constants
   /* TODO: get a more accurate value for this */
-  // public final static int shooterPanMotorEncoderTicksPerRotation = 3977;
-  public static int shooterPanMotorEncoderTicksPerRotation = 178;
-  public final static int shooterXResolution = 320;
-  public final static int shooterYResolution = 240;
-  public final static int shooterResolutionAcceptableError = 15;
-  public static double shooterPanSpeed = -.1;
-  public static double shooterPanMotorEncoderFrontVal = 2250;
-  public static double shooterEstimatedPos90PanEncoderVal = 3021;
-  public static double shooterEstimatedNeg90PanEncoderVal = 1178;
+  //public final static int shooterPanMotorEncoderTicksPerRotation = 3977;
+  public  static int shooterPanMotorEncoderTicksPerRotation = 178;
+  public final static int shooterXResolution = 640;
+  public final static int shooterYResolution = 240; 
+  public final static int shooterResolutionAcceptableError = 10;
+  public  static double shooterPanSpeed = -.1;
+  public static int shooterPanMotorEncoderFrontVal = 2270;
+  public static double shooterEstimatedPos90PanEncoderVal = 3250;
+  public static double shooterEstimatedNeg90PanEncoderVal = 1300;
 
-  public static int shooterTiltMotorTicksPerRotation = 178;
-  public static double shooterTiltMotorTicksPerDegree = .5;
-  public static double tiltFangsUpperLimit = 140; // 0
-  public static double tiltFangsLowerLimit = -570; // -281.8
+
+  public static int shooterTiltMotorTicksPerRotation = 1024;
+  public static double shooterTiltMotorTicksPerDegree = 360 / shooterTiltMotorTicksPerRotation; // 360 deg / 1024 ticks
+  public static double tiltFangsUpperLimit = 730; //
+  public static double tiltFangsLowerLimit = 0; // 
+  public static int tiltFangsMiddle = 200;
 
   public static int minYTiltPixel = 400;
   public static int maxYTiltPixel = 250;
@@ -98,10 +100,20 @@ public class RobotMap {
   // Climber constants
   public final static int climberMotorControllerID = 13;
 
+  //TODO: cleanup
   // Driver Input Devices
-  public final static int leftJoystickPort = 0;
-  public final static int buttonBoxPort = 1;
-  public final static int rightJoystickPort = 2;
+ 
+  /*
+  //dual stick setup
+  public final static int driveStickPort = OI.drivestickPort;
+  public final static int buttonBoxPort = OI.copilot;
+  public final static int rightJoystickPort = OI.turnStick;
+ */
+
+  //single stick setup
+  public final static int drivestickPort = OI.driveStickPort;
+  public final static int turnStickPort = OI.turnStickPort;
+  public final static int buttonBoxPort = OI.copilotPort;
   public final static double deadbandX = 0.1;
   public final static double deadbandY = 0.1;
   public final static double deadbandZ = 0.1;
@@ -111,7 +123,7 @@ public class RobotMap {
   public static int ColorWheelSolenoidReverseChannel = 1;
   public static int IntakeSolenoidForwardChannel = 5;
   public static int IntakeSolenoidReverseChannel = 3;
-  public static int climberSolenoidForwardChannel = 3;
+  public static int climberSolenoidForwardChannel = 4;
   public static int climberSolenoidReverseChannel = 2;
 
   // ULTRASONIC CONSTANTS
@@ -164,23 +176,20 @@ public class RobotMap {
   // Motor neutral dead-band, set to the minimum 0.1%
   public final static double NeutralDeadband = 0.001;
 
+//TODO: determine if needed
   public final static double encoderUnitsPerJEMotorRotation = 178;
 
-  /**
-   * ------- EXAMPLE OF SOME GAINS SETTINGS FOR OTHER ROBOTS ------ PID Gains may
-   * have to be adjusted based on the responsiveness of control loop. kF: 1023
-   * represents output value to Talon at 100%, 6800 represents Velocity units at
-   * 100% output Not all set of Gains are used in this project and may be removed
-   * as desired.
+  /** ------- EXAMPLE OF SOME GAINS SETTINGS FOR OTHER ROBOTS ------
+	 * PID Gains may have to be adjusted based on the responsiveness of control loop.
+     * kF: 1023 represents output value to Talon at 100%, 6800 represents Velocity units at 100% output
+     * Not all set of Gains are used in this project and may be removed as desired.
    * 
-   * kP kI kD kF Iz PeakOut
-   */
+	 * 	                                    	        		  kP   kI   kD   kF               Iz    PeakOut */
   /*
-   * public final static Gains kGains_Distance = new Gains( 0.1, 0.0, 0.0, 0.0,
-   * 100, 0.50 ); public final static Gains kGains_Turning = new Gains( 2.0, 0.0,
-   * 4.0, 0.0, 200, 1.00 ); public final static Gains kGains_Velocity = new Gains(
-   * 0.1, 0.0, 20.0, 1023.0/6800.0, 300, 0.50 ); public final static Gains
-   * kGains_MotProf = new Gains( 1.0, 0.0, 0.0, 1023.0/6800.0, 400, 1.00 );
+	public final static Gains kGains_Distance = new Gains( 0.1, 0.0,  0.0, 0.0,            100,  0.50 );
+	public final static Gains kGains_Turning  = new Gains( 2.0, 0.0,  4.0, 0.0,            200,  1.00 );
+	public final static Gains kGains_Velocity = new Gains( 0.1, 0.0, 20.0, 1023.0/6800.0,  300,  0.50 );
+	public final static Gains kGains_MotProf  = new Gains( 1.0, 0.0,  0.0, 1023.0/6800.0,  400,  1.00 );
    */
 
   public final static int Izone_0 = 500;
@@ -195,54 +204,54 @@ public class RobotMap {
   public final static int Izone_1 = 500;
   public final static double PeakOutput_1 = 1;
 
-  // Ultrasonic Open loop PID parameter values TODO: replace F values with
-  // measured values
+  // Ultrasonic Open loop PID parameter values TODO: replace F values with measured values
   public final static double P_U = 0.01;
   public final static double I_U = 0.0;
   public final static double D_U = 0;
   public final static double F_U = 0.01; // just a guesstimate
+  
+  // Closed loop PAN PID parameter values 
+  // Modified for Closed loop position control
+  public final static int PID_PAN = 0;
+  public final static double P_PAN = 1.5;
+  public final static double I_PAN = 0.0002;
+  public final static double D_PAN = 15;
+  public final static double F_PAN = 0; // set to zero for position closed loop
+  // Allowable error to exit movement methods
+  public static int panDefaultAcceptableError = 1;
+public static int panAcceleration = 50;
+public final static int panSmoothing = 3;
 
-  // Closed loop PAN PID parameter values TODO: replace F values with measured
-  // values
-  public final static double P_PAN = 0.2;
-  public final static double I_PAN = 0.01;
-  public final static double D_PAN = .01;
-  public final static double F_PAN = 0; // just a guesstimate
-  public final static int Izone_PAN = 500;
-  public static int panCruiseVelocity = 50;
+  // Closed loop TILT PID parameter values 
+  // Modified for Closed loop position control
+  public final static int PID_TILT = 0;
+  public final static double P_TILT = 10;
+  public final static double I_TILT = 0.04;
+  public final static double D_TILT = 01;
+  public final static double F_TILT = 0; // set to zero for position closed loop 
+  // Allowable error to exit movement methods
+  public static int tiltDefaultAcceptableError = 10;
+
+  public final static int tiltSmoothing =3;
+
+// MotionMagic curve smoothing parameter [0 - 8]
+public static int tiltCruiseVelocity = 50;
+    public static int tiltAcceleration = 50;
+
+
+  // Allowable error to exit vision tracking movement methods
   public static int allowableLeft = ((RobotMap.shooterXResolution / 2) - (RobotMap.shooterResolutionAcceptableError));
   public static int allowableRight = ((RobotMap.shooterXResolution / 2) + (RobotMap.shooterResolutionAcceptableError));
-
   public static int allowableBelow = ((RobotMap.shooterYResolution / 2) - (RobotMap.shooterResolutionAcceptableError));
   public static int allowableAbove = ((RobotMap.shooterYResolution / 2) + (RobotMap.shooterResolutionAcceptableError));
 
-  // MotionMagic curve smoothing parameter [0 - 8]
-  public static int panAcceleration = 50;
-  // Allowable error to exit movement methods
-  public static int panDefaultAcceptableError = 10;
-  public final static int PID_PAN = 0;
-  public final static double encoderTicksPerDegreeX = 0.25; // for Johnson Encoder
-  // public final static double encoderTicksPerDegreeX = 11; // for Turret Encoder
-  public final static double potentiometerTicksPerDegreeY = 1;
-  public final static double pixelsPerDegreeX = 12; // based on lifecam having a 53.4 degree viewing angle and 640
-                                                    // horizontal pixels
-  public final static double pixelsPerDegreeY = 15.2; // 480 vertical pixels / 31.6 degree viewing angle
-  public final static int panSmoothing = 3;
-  // END of pan pid code
 
-  // Tilt Motor Pid Code
-  public final static double P_TILT = 0.01;
-  public final static double I_TILT = 0.1;
-  public final static double D_TILT = .01;
-  public final static double F_TILT = 0.1; // just a guesstimate
-  public final static int Izone_TILT = 500;
-  public static int tiltCruiseVelocity = 50;
-  // MotionMagic curve smoothing parameter [0 - 8]
-  public static int tiltAcceleration = 50;
-  // Allowable error to exit movement methods
-  public static int tiltDefaultAcceptableError = 2;
-  public final static int PID_TILT = 0;
-  public final static int tiltSmoothing =3;
+  public final static double encoderTicksPerDegreeX = 11;  // for Turret Encoder
+  public final static double potentiometerTicksPerDegreeY = 1; // TODO check this value
+  public final static double pixelsPerDegreeX = 12;  //based on lifecam having a 53.4 degree viewing angle and 640 horizontal pixels
+  public final static double pixelsPerDegreeY = 15.2; //480 vertical pixels / 31.6 degree viewing angle
+
+
 
   // ---- Flat constants, you should not need to change these ----
   // We allow either a 0 or 1 when selecting an ordinal for remote devices [You
@@ -277,16 +286,18 @@ public class RobotMap {
     defaultAcceptableError = 250;
 
     shooterPanMotorEncoderTicksPerRotation = 3977;
-    // TODO: may need to be negative if turns the wrong way
-    shooterPanSpeed = 1;
+    //TODO: may need to be negative if turns the wrong way
+    shooterPanSpeed = .5;
 
-    shooterTiltMotorTicksPerRotation = 1024; // Analog potentiometer 1024 units per rotation.
-    tiltFangsUpperLimit = 720; // Random Value
-    tiltFangsLowerLimit = 0; // Random Value
 
-    // For Encoders: 10 FT = 149083 Encoder units
-    // 1 FT = 14908 Units
-    // 1 Inch = 1242 Units
+    shooterTiltMotorTicksPerRotation = 1024;   //Analog potentiometer 1024 units per rotation.
+    tiltFangsUpperLimit = 730; //Measured Value
+    tiltFangsLowerLimit = -5; //Measured Value
+
+
+    //For Encoders: 10 FT = 149083 Encoder units
+    //1 FT = 14908 Units
+    //1 Inch = 1242 Units
     encoderTicksPerInch = 1242;
     robotLength = 35;
     robotWidth = 23;

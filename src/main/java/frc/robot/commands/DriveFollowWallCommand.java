@@ -45,7 +45,7 @@ public class DriveFollowWallCommand extends Command {
     // calculate PID value
     double PIDOutput = UltrasonicPID.calculate(filteredDistance);
     // read joystick
-    double move = Robot.oi.leftJoystick.getY() * -1; // inverts sign for Y axis
+    double move = Robot.oi.driveStick.getY() * -1; // inverts sign for Y axis
     if (move == 0) {
       PIDOutput *= -1;
     }

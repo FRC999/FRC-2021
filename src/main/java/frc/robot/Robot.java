@@ -117,9 +117,10 @@ public class Robot extends TimedRobot {
 
 
     Robot.shooterSubsystem.configureShooterControllers();
-    Robot.shooterSubsystem.configurePanMotorControllerForMagic();
-    // Robot.shooterSubsystem.zeroShooterEncoders();
-    // Robot.controlPanelSubsystem.resetMotorController();
+    Robot.shooterSubsystem.configurePanMotorControllerForPosition();
+    Robot.shooterSubsystem.configureTiltMotorControllerForPosition();
+    Robot.shooterSubsystem.zeroTiltPot();
+    
 
     oi = new OI();
   }
