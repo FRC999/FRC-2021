@@ -82,6 +82,7 @@ public class RobotMap {
   public static double distMaxTilt = 10;
   public static double distMinTilt = 25;
 
+
   // Control panel constants
   // TODO: Get actual motor ID
   public static final int diskSpinnerMotorControllerID = 20;
@@ -140,7 +141,7 @@ public class RobotMap {
   public static int defaultAcceptableError = 1000;
   public static int neckMotor;
 
-  
+
   // Closed loop constants
   // How long we wait for a configuration change to happen before we give up and
   // report a failure in milliseconds
@@ -206,6 +207,12 @@ public class RobotMap {
   public final static double potentiometerTicksPerDegreeY = 1; // TODO check this value
   public final static double pixelsPerDegreeX = 12;  //based on lifecam having a 53.4 degree viewing angle and 640 horizontal pixels
   public final static double pixelsPerDegreeY = 15.2; //480 vertical pixels / 31.6 degree viewing angle
+
+  /**
+   * Talon PID methods often demand slot ID's, so we need to do this :(
+   */
+  public static int SLOT_0 = 0;
+
 
 
   public static void IAmFalconBot() {

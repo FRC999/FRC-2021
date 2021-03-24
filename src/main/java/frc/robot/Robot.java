@@ -22,18 +22,15 @@ import frc.robot.commands.RealSmartAutoCommand;
 import frc.robot.commands.ShootWithAcesCommand;
 import frc.robot.commands.ShooterVisionCommand;
 import frc.robot.subsystems.NavigationControlSubsystem;
-import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ControlPanelSubsystem;
 import frc.robot.subsystems.DriveSubsystemBase;
 import frc.robot.subsystems.DriveSubsystemFrankenbot;
 import frc.robot.subsystems.DriveSubsystemFalconBot;
 import frc.robot.subsystems.NavXSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.NavXSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
-import frc.robot.subsystems.TalonDriveSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -95,6 +92,7 @@ public class Robot extends TimedRobot {
 
     // Change to reflect current robot
     driveSubsystem = new DriveSubsystemFalconBot();
+    System.out.println("Type of drive subsystem: " + driveSubsystem.getClass());
     RobotMap.isSplitStick = true;
     
     driveSubsystem.setDefaultCommand(new DriveManuallyCommand());
