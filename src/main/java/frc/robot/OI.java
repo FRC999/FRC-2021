@@ -23,11 +23,21 @@ public class OI {
   public static int copilotPort = 1;
   public static int turnStickPort = 2;
 
-  //RightJoystick
-  Button runIntake = new JoystickButton(rightJoystick, 1);
-  Button intakeEject = new JoystickButton(rightJoystick, 3);
-  Button runTrajectory = new JoystickButton(rightJoystick, 10);
-  //Left Joystick
+  public Joystick driveStick = new Joystick(driveStickPort);
+  public Joystick turnStick = new Joystick(turnStickPort);
+  public Joystick buttonBox = new Joystick(copilotPort);
+
+  //driveStick
+  Button runIntake = new JoystickButton(driveStick, 1);
+  Button turretButton = new JoystickButton(driveStick, 2);
+  Button intakeEject = new JoystickButton(driveStick, 3);
+  Button visionTilt = new JoystickButton(driveStick, 5);
+  Button ShooterTiltZeroButton = new JoystickButton(driveStick, 6); 
+  Button TiltManual = new JoystickButton(driveStick,7);
+  Button runTrajectory = new JoystickButton(driveStick,10);
+  Button StatusReport = new JoystickButton(driveStick,11);
+  //int turret = new turnStick.getPov();
+  //turnsStick
 
   //Button Board
 // *** Temporary reasign buttons to Fang control
@@ -49,8 +59,6 @@ public class OI {
   Button visionTracking = new JoystickButton(buttonBox, 10);
   Button fullShooter = new JoystickButton(buttonBox, 11); //loader + magazine + shooter
   Button zeroTurret = new JoystickButton(buttonBox, 12);
-
-  
   public OI() {
      // Setup All Commands Here
      
