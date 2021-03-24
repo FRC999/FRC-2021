@@ -22,7 +22,7 @@ public class ShooterFullCommand extends CommandGroup {
 
     addSequential(new ShooterRunWheelCommand());
     addSequential(new WaitCommand(3));
-    addSequential(new IntakeMagazineInCommand());
+    //addSequential(new IntakeMagazineInCommand());
     addSequential(new IntakeLoaderUpCommand());
 
     

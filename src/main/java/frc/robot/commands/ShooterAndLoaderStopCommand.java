@@ -5,22 +5,26 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ClimbRetractCommand extends Command {
-  public ClimbRetractCommand() {
+
+public class ShooterAndLoaderStopCommand extends Command {
+  public ShooterAndLoaderStopCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.climberSubsystem);
+    requires(Robot.intakeSubsystem);
+    requires(Robot.shooterSubsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.climberSubsystem.retract();
+Robot.intakeSubsystem.standby();
+Robot.shooterSubsystem.standby();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -31,13 +35,12 @@ public class ClimbRetractCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.climberSubsystem.standby();
   }
 
   // Called when another command which requires one or more of the same

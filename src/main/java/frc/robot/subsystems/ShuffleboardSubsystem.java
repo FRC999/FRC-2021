@@ -9,16 +9,29 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.shuffleboard.*;
-
-import frc.robot.commands.*;
-import frc.robot.Robot;
-
 import java.util.Map;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import frc.robot.Robot;
+import frc.robot.commands.DriveManuallyCommand;
+import frc.robot.commands.DriveStopCommand;
+import frc.robot.commands.DriveZeroEncodersCommand;
+import frc.robot.commands.IntakeInCommand;
+import frc.robot.commands.IntakeLoaderDownCommand;
+import frc.robot.commands.IntakeLoaderUpCommand;
+import frc.robot.commands.IntakeReverseCommand;
+import frc.robot.commands.IntakeStandbyCommand;
+import frc.robot.commands.IntakeUpCommand;
+import frc.robot.commands.ShooterCenterOnVisionCrybabyCommand;
+import frc.robot.commands.ShooterPanManuallyCommand;
+import frc.robot.commands.ShuffleboardSetupCommand;
 
 /**
  * Shuffleboard (show info as widgets and get driving camera feeds from Pi) (Jack and Peter)
@@ -36,9 +49,6 @@ public class ShuffleboardSubsystem extends Subsystem {
   ShuffleboardLayout speedometerLayout;
   NetworkTableEntry leftSpeedEntry;
   NetworkTableEntry rightSpeedEntry;
-
-  ShuffleboardLayout wallFollowerLayout;
-  NetworkTableEntry wallFollowerPossibleEntry;
 
     public void setupShuffleboard(){
 
@@ -59,10 +69,6 @@ public class ShuffleboardSubsystem extends Subsystem {
 
         //Turret Rotation
         turretEntry = displays.add("Turret Rotation", 10).withWidget(BuiltInWidgets.kDial).withProperties(Map.of("min", 0, "max",360)).getEntry();
-
-        wallFollowerLayout = displays.getLayout("Wall Follower", BuiltInLayouts.kList).withSize(2,2).withPosition(4, 0);
-        //Can we activate wall follower?  If so, shows Green Light
-        // wallFollowerPossibleEntry = displays.getLayout("Wall Follower").add("Wall Follow Possible", false).withWidget(BuiltInWidgets.kBooleanBox).getEntry();
 
     }
 
@@ -87,8 +93,6 @@ public class ShuffleboardSubsystem extends Subsystem {
         intakeCommands.add(new IntakeUpCommand());
         intakeCommands.add(new IntakeLoaderUpCommand());
         intakeCommands.add(new IntakeLoaderDownCommand());
-        intakeCommands.add(new IntakeMagazineInCommand());
-        intakeCommands.add(new IntakeMagazineOutCommand());   
         intakeCommands.add(new IntakeStandbyCommand());
 
       //Shooter Motors Test
@@ -111,22 +115,16 @@ public class ShuffleboardSubsystem extends Subsystem {
  
         driveCommands.add(new DriveManuallyCommand());
         driveCommands.add(new DriveStopCommand());
-        driveCommands.add(new DriveFollowWallCommand());
         driveCommands.add(new DriveZeroEncodersCommand());
  
         //Climber Test
 
-        ShuffleboardLayout climberCommands = Shuffleboard.getTab("Test Commands")
-        .getLayout("Climber", BuiltInLayouts.kList)
-        .withSize(2, 4)
-        .withPosition(6, 0);
+       // ShuffleboardLayout climberCommands = Shuffleboard.getTab("Test Commands")
+       // .getLayout("Climber", BuiltInLayouts.kList)
+       // .withSize(2, 4)
+       // .withPosition(6, 0);
    //  .withProperties(Map.of("Label position", "HIDDEN")); // hide labels for commands
  
-        climberCommands.add(new ClimbExtendCommand());
-        climberCommands.add(new ClimbRetractCommand());
-        climberCommands.add(new ClimbWinchUpCommand());
-        climberCommands.add(new ClimbWinchDownCommand());
-        climberCommands.add(new ClimbEndClimbCommand());
 
     }
 
@@ -135,7 +133,6 @@ public class ShuffleboardSubsystem extends Subsystem {
         rightSpeedEntry.setDouble(Robot.driveSubsystem.getRightEncoderSpeed());
         voltageEntry.setDouble(RobotController.getBatteryVoltage());
         turretEntry.setDouble(240);
-        //wallFollowerPossibleEntry.setBoolean(Robot.ultrasonicSubsystem.checkWallFollowerPossible());
     }
 
     public void initDefaultCommand() {

@@ -10,7 +10,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterTurretCenterCommand extends Command {
   /**for now, would only work within a 180 degree range; needs testing */

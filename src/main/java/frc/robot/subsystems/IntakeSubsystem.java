@@ -21,11 +21,9 @@ public class IntakeSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  static WPI_VictorSPX magazineRightMotorController = new WPI_VictorSPX(RobotMap.magazineRightMotorControllerID);
-  static WPI_TalonSRX magazineLeftMotorController = new WPI_TalonSRX(RobotMap.magazineLeftMotorControllerID);
   static WPI_VictorSPX intakeMotorController = new WPI_VictorSPX(RobotMap.intakeMotorControllerID);
-  static WPI_VictorSPX loaderMotor1Controller = new WPI_VictorSPX(RobotMap.loaderMotor1ControllerID);
-  static WPI_VictorSPX loaderMotor2Controller = new WPI_VictorSPX(RobotMap.loaderMotor2ControllerID);
+  static WPI_TalonSRX loaderFrontMotorController = new WPI_TalonSRX(RobotMap.loaderFrontMotorControllerID);
+  static WPI_VictorSPX loaderRearMotorController = new WPI_VictorSPX(RobotMap.loaderRearMotorControllerID);
 
   public static DoubleSolenoid intakeSolenoid;
 
@@ -36,25 +34,18 @@ public class IntakeSubsystem extends Subsystem {
   }
 
   public void standby(){
-    magazineLeftMotorController.set(ControlMode.PercentOutput, 0);
-    magazineRightMotorController.set(ControlMode.PercentOutput, 0);
     intakeMotorController.set(ControlMode.PercentOutput, 0);
-    loaderMotor1Controller.set(ControlMode.PercentOutput, 0);
-    loaderMotor2Controller.set(ControlMode.PercentOutput, 0);
+    loaderFrontMotorController.set(ControlMode.PercentOutput, 0);
+    loaderRearMotorController.set(ControlMode.PercentOutput, 0);
   }
 
   public void intake(double motorSpeed){
     intakeMotorController.set(ControlMode.PercentOutput, motorSpeed);
   }
 
-  public void magazine(double motorSpeed){
-    magazineLeftMotorController.set(ControlMode.PercentOutput, -motorSpeed);
-    magazineRightMotorController.set(ControlMode.PercentOutput, -motorSpeed);
-  }
-
   public void loader(double motorSpeed){
-    loaderMotor1Controller.set(ControlMode.PercentOutput, -motorSpeed);
-    loaderMotor2Controller.set(ControlMode.PercentOutput, -motorSpeed);
+    loaderFrontMotorController.set(ControlMode.PercentOutput, -motorSpeed);
+    loaderRearMotorController.set(ControlMode.PercentOutput, -motorSpeed);
   }
 
   public void IntakeUp() {

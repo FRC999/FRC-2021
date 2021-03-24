@@ -9,7 +9,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterStandbyCommand extends Command {
   public ShooterStandbyCommand() {
@@ -22,7 +21,7 @@ public class ShooterStandbyCommand extends Command {
   @Override
   protected void initialize() {
     Robot.shooterSubsystem.standby();
-    Robot.shooterSubsystem.pan(0);
+    Robot.shooterSubsystem.panStandby();
     Robot.shooterSubsystem.tiltStandby();
   }
 

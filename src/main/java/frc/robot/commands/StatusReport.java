@@ -21,6 +21,12 @@ public class StatusReport extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("PAN : " + Robot.shooterSubsystem.getPanEncoder());
+    System.out.println("TILT : " + Robot.shooterSubsystem.getTiltPot());
+    System.out.println("Vision X: " + Robot.shooterSubsystem.getX());
+    System.out.println("Vision Y: " + Robot.shooterSubsystem.getY());
+
+
   }
 
   // Called repeatedly when this Command is scheduled to run

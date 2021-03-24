@@ -7,15 +7,18 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.MoveOffLineAuto;
 import frc.robot.commands.RealSmartAutoCommand;
-import frc.robot.commands.ShootAndRunAuto;
 import frc.robot.commands.ShootWithAcesCommand;
 import frc.robot.commands.ShooterVisionCommand;
 import frc.robot.subsystems.NavigationControlSubsystem;
@@ -26,12 +29,11 @@ import frc.robot.subsystems.DriveSubsystemFrankenbot;
 import frc.robot.subsystems.DriveSubsystemFalconBot;
 import frc.robot.subsystems.NavXSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.NavXSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
-import frc.robot.subsystems.UltrasonicSensorSubsystem;
-import edu.wpi.first.networktables.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.TalonDriveSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -45,10 +47,8 @@ public class Robot extends TimedRobot {
   public static DriveSubsystemBase driveSubsystem;
   public static NavigationControlSubsystem navigationSubsystem;
   public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  public static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public static SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
   public static NavXSubsystem navXSubsystem = new NavXSubsystem();
-  public static UltrasonicSensorSubsystem ultrasonicSubsystem = new UltrasonicSensorSubsystem();
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   // public static ControlPanelSubsystem controlPanelSubsystem = new
   // ControlPanelSubsystem();
