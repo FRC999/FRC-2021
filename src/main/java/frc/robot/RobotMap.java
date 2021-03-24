@@ -219,8 +219,9 @@ public class RobotMap {
   public final static double F_PAN = 0; // set to zero for position closed loop
   // Allowable error to exit movement methods
   public static int panDefaultAcceptableError = 1;
-public static int panAcceleration = 50;
-public final static int panSmoothing = 3;
+  public static int panAcceleration = 50;
+  public static int panCruiseVelocity = 50;
+  public final static int panSmoothing = 3;
 
   // Closed loop TILT PID parameter values 
   // Modified for Closed loop position control
@@ -231,12 +232,12 @@ public final static int panSmoothing = 3;
   public final static double F_TILT = 0; // set to zero for position closed loop 
   // Allowable error to exit movement methods
   public static int tiltDefaultAcceptableError = 10;
-
+  
+  // MotionMagic curve smoothing parameter [0 - 8]
   public final static int tiltSmoothing =3;
 
-// MotionMagic curve smoothing parameter [0 - 8]
-public static int tiltCruiseVelocity = 50;
-    public static int tiltAcceleration = 50;
+  public static int tiltCruiseVelocity = 50;
+  public static int tiltAcceleration = 50;
 
 
   // Allowable error to exit vision tracking movement methods
