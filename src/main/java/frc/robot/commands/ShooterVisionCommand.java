@@ -108,9 +108,10 @@ else {Robot.shooterSubsystem.shoot(0);}
   protected boolean isFinished() {
     boolean state = false;
     if (counter >= counterNum) {
-      System.out.println("FINISHED TRACKING");
-      state = true;
-    }
+      //System.out.println("FINISHED TRACKING");
+        //state = true;
+    }  state = false;
+  
     return state;
   }
 

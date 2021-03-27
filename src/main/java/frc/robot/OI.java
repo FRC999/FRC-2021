@@ -1,4 +1,4 @@
-/*----------------------------------------------------------------------------*/
+`/*----------------------------------------------------------------------------*/
 /* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
@@ -38,7 +38,11 @@ public class OI {
   Button runTrajectory = new JoystickButton(driveStick,10);
   //int turret = new turnStick.getPov();
   Button ZeroFangsButton = new JoystickButton(driveStick, 8); 
+  Button ShooterStayOnButton = new JoystickButton(driveStick, 10); 
+  Button DriveForwardButton = new JoystickButton(driveStick, 11); 
+  Button DriveBackwardButton = new JoystickButton(driveStick, 12); 
   //Button StatusReport = new JoystickButton(driveStick,11);
+  
 
   //turnsStick
   Button ShooterWheelOnButton = new JoystickButton(turnStick, 1);
@@ -106,6 +110,8 @@ public class OI {
     LoaderDownButton.whileHeld(new IntakeLoaderDownCommand());
     //LoaderStandbyButton.whileHeld(new IntakeStandbyCommand());
     ShooterWheelOnButton.whileHeld(new ShooterRunWheelCommand());
+    ShooterWheelOnButton.whenReleased(new ShooterStandbyCommand());
+    ShooterStayOnButton.whenPressed(new ShooterRunWheelCommand());
     IntakeDownButton.whileHeld(new IntakeDownCommand());
     IntakeUpButton.whileHeld(new IntakeUpCommand());
     IntakeInButton.whileHeld(new IntakeInCommand());
@@ -119,6 +125,8 @@ public class OI {
 
     //fangsFullyBack.whenPressed(new ShooterTiltGoToSetpointCommand());
     visionTracking.whenPressed(new ShooterVisionCommand());
+    DriveForwardButton.whenPressed(new DriveForwardCommand(100800*2));
+    DriveBackwardButton.whenPressed(new DriveForwardCommand(-100800*2));
     //visionTilt.whileHeld(new ShooterVisionTiltCommand());
     //fullShooter.whileHeld(new ShooterFullCommand());
     turretButton.whileHeld(new ShooterPanManuallyCommand());

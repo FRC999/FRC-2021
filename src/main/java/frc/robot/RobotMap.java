@@ -72,6 +72,8 @@ public class RobotMap {
   public static double tiltFangsUpperLimit = 730; //
   public static double tiltFangsLowerLimit = 0; // 
   public static int tiltFangsMiddle = 200;
+  public static int tiltFangs10Feet = 700;
+
 
   public static int minYTiltPixel = 400;
   public static int maxYTiltPixel = 250;
@@ -151,11 +153,11 @@ public class RobotMap {
 
   /* Must be ported to new DriveSubsystem archetecture for use
   // Closed loop Aux PID parameter values
-  public final static double P_1 = 0.75 * fullMotorOutput / encoderUnitsPerShaftRotation; 
+  public final static double P_1 = 2.0 * fullMotorOutput / encoderUnitsPerShaftRotation; 
   // 75% motor output when error = one rotation
   public final static double I_1 = 0.005 * fullMotorOutput / encoderUnitsPerShaftRotation;
   public final static double D_1 = 0.1;
-  public final static double F_1 = 0.227; // just a guesstimate
+  public final static double F_1 = 2.8; // just a guesstimate
   public final static int Izone_1 = 500;
   public final static double PeakOutput_1 = 1;
 */
@@ -183,7 +185,7 @@ public class RobotMap {
 
 
   // Allowable error to exit movement methods
-  public final static int tiltDefaultAcceptableError = 10;
+  public final static int tiltDefaultAcceptableError = 2;
   
   // MotionMagic curve smoothing parameter [0 - 8]
   public final static int tiltSmoothing =3;
