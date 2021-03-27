@@ -39,7 +39,7 @@ public class OI {
   //int turret = new turnStick.getPov();
   Button ZeroFangsButton = new JoystickButton(driveStick, 8); 
   Button ShooterStayOnButton = new JoystickButton(driveStick, 10); 
-  Button Drive`ForwardButton = new JoystickButton(driveStick, 11); 
+  Button DriveForwardButton = new JoystickButton(driveStick, 11); 
   Button DriveBackwardButton = new JoystickButton(driveStick, 12); 
   //Button StatusReport = new JoystickButton(driveStick,11);
   
