@@ -111,7 +111,7 @@ public class Robot extends TimedRobot {
     Robot.driveSubsystem.driveTrainBrakeMode();
 
     // Don't start kinematics untill we're ready
-    navigationSubsystem = new NavigationControlSubsystem(driveSubsystem, navXSubsystem);
+    //navigationSubsystem = new NavigationControlSubsystem(driveSubsystem, navXSubsystem);
 
 
     Robot.shooterSubsystem.configureShooterControllers();

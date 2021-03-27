@@ -1,4 +1,4 @@
-`/*----------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
 /* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
@@ -35,7 +35,7 @@ public class OI {
   Button visionTracking = new JoystickButton(driveStick, 5);
   Button zeroTurret = new JoystickButton(driveStick, 6);
   Button TiltManual = new JoystickButton(driveStick,7);
-  Button runTrajectory = new JoystickButton(driveStick,10);
+ //Button runTrajectory = new JoystickButton(driveStick,10);
   //int turret = new turnStick.getPov();
   Button ZeroFangsButton = new JoystickButton(driveStick, 8); 
   Button ShooterStayOnButton = new JoystickButton(driveStick, 10); 
@@ -90,7 +90,7 @@ public class OI {
      //intakeEject.whileHeld(new IntakeEject());
      ShooterTiltSetpointButton.whileHeld(new ShooterTiltGoToSetpointCommand());
      ShooterTiltZeroButton.whileHeld(new ShooterTiltGoToZeroCommand());
-     runTrajectory.whenPressed(new AutonomousTrajectoryRioCommand("TestTrajectory"));
+     //runTrajectory.whenPressed(new AutonomousTrajectoryRioCommand("TestTrajectory"));
      //Left Joystick
 
 
