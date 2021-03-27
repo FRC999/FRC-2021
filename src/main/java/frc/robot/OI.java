@@ -36,7 +36,11 @@ public class OI {
   Button zeroTurret = new JoystickButton(driveStick, 6);
   Button TiltManual = new JoystickButton(driveStick,7);
   Button ZeroFangsButton = new JoystickButton(driveStick, 8); 
+  Button ShooterStayOnButton = new JoystickButton(driveStick, 10); 
+  Button DriveForwardButton = new JoystickButton(driveStick, 11); 
+  Button DriveBackwardButton = new JoystickButton(driveStick, 12); 
   //Button StatusReport = new JoystickButton(driveStick,11);
+  
 
   //turnsStick
   Button ShooterWheelOnButton = new JoystickButton(turnStick, 1);
@@ -99,10 +103,12 @@ public class OI {
     //ShooterTiltDown10.whileHeld(new ShooterTiltDown10Command());
     
     //magazineInward.whileHeld(new IntakeMagazineInCommand());
-    LoaderUpButton.whileHeld(new IntakeLoaderUpCommand());
+    LoaderUpButton.whileHeld(new IntakeLoaderPulseCommand());
     LoaderDownButton.whileHeld(new IntakeLoaderDownCommand());
     //LoaderStandbyButton.whileHeld(new IntakeStandbyCommand());
     ShooterWheelOnButton.whileHeld(new ShooterRunWheelCommand());
+    ShooterWheelOnButton.whenReleased(new ShooterStandbyCommand());
+    ShooterStayOnButton.whenPressed(new ShooterRunWheelCommand());
     IntakeDownButton.whileHeld(new IntakeDownCommand());
     IntakeUpButton.whileHeld(new IntakeUpCommand());
     IntakeInButton.whileHeld(new IntakeInCommand());
@@ -116,6 +122,8 @@ public class OI {
 
     //fangsFullyBack.whenPressed(new ShooterTiltGoToSetpointCommand());
     visionTracking.whenPressed(new ShooterVisionCommand());
+    DriveForwardButton.whenPressed(new DriveForwardCommand(100800*2));
+    DriveBackwardButton.whenPressed(new DriveForwardCommand(-100800*2));
     //visionTilt.whileHeld(new ShooterVisionTiltCommand());
     //fullShooter.whileHeld(new ShooterFullCommand());
     turretButton.whileHeld(new ShooterPanManuallyCommand());

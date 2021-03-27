@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.ShooterStandbyCommand;
+import frc.robot.commands.ShooterVisionCommand;
 
 public class ShooterSubsystem extends Subsystem {
 
@@ -96,8 +97,8 @@ public class ShooterSubsystem extends Subsystem {
     * Max out the peak output (for all modes).  
     * However you can limit the output of a given PID object with configClosedLoopPeakOutput().
     */
-    tiltMotorController.configPeakOutputForward(+1.0, RobotMap.configureTimeoutMs);
-    tiltMotorController.configPeakOutputReverse(-1.0, RobotMap.configureTimeoutMs);
+    tiltMotorController.configPeakOutputForward(+0.5, RobotMap.configureTimeoutMs);
+    tiltMotorController.configPeakOutputReverse(-0.5, RobotMap.configureTimeoutMs);
     tiltMotorController.configNominalOutputForward(0, RobotMap.configureTimeoutMs);
     tiltMotorController.configNominalOutputReverse(0, RobotMap.configureTimeoutMs);
 
@@ -380,7 +381,8 @@ public void zeroTiltPot() {
 
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new ShooterStandbyCommand());
+    //setDefaultCommand(new ShooterStandbyCommand());
+    //setDefaultCommand(new ShooterVisionCommand());
   }
 
 }

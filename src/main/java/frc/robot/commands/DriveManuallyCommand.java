@@ -12,6 +12,7 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 public class DriveManuallyCommand extends Command {
+   static double turnAdjust = 0.6;
 
   public DriveManuallyCommand() {
     // Use requires() here to declare subsystem dependencies
@@ -39,7 +40,7 @@ public class DriveManuallyCommand extends Command {
       turn = Robot.oi.driveStick.getX();
      }
     //double turn = Robot.oi.driveStick.getX();
-    Robot.driveSubsystem.manualDrive(move, turn);
+    Robot.driveSubsystem.manualDrive(move, turn * turnAdjust);
     Robot.smartDashboardSubsystem.updateEncoderValue();
   }
 
