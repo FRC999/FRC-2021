@@ -30,6 +30,7 @@ public class AutonomousTrajectoryRioCommand extends RamseteCommandWpilib {
     }
     public AutonomousTrajectoryRioCommand(String alpha){
         this(NavigationControlSubsystem.getTrajectory(alpha));
+        System.out.println("starting trajectory");
     }
     
     public void execute(){

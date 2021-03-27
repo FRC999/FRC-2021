@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.AutonomousTrajectoryRioCommand;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.MoveOffLineAuto;
 import frc.robot.commands.RealSmartAutoCommand;
@@ -91,7 +92,7 @@ public class Robot extends TimedRobot {
     System.out.println("falconBotSwitch = "+ RobotMap.isFalconBot);
 
     // Change to reflect current robot
-    driveSubsystem = new DriveSubsystemFalconBot();
+    driveSubsystem = new DriveSubsystemFrankenbot();
     System.out.println("Type of drive subsystem: " + driveSubsystem.getClass());
     RobotMap.isSplitStick = true;
     
@@ -99,7 +100,6 @@ public class Robot extends TimedRobot {
 
     sendableCommandChooser.addOption("Really Smart Auto", new RealSmartAutoCommand());
     sendableCommandChooser.addOption("Move Off Line", new MoveOffLineAuto());
-    sendableCommandChooser.setDefaultOption("Hello Alan!", new ShootWithAcesCommand());
 
     SmartDashboard.putData("auto chooser", sendableCommandChooser);
     Robot.driveSubsystem.resetDriveTrainControllers();
@@ -121,6 +121,7 @@ public class Robot extends TimedRobot {
     
 
     oi = new OI();
+    sendableCommandChooser.setDefaultOption("Hello Alan!", new AutonomousTrajectoryRioCommand("TestTrajectory"));
   }
 
   /**

@@ -35,7 +35,7 @@ public class OI {
   Button visionTracking = new JoystickButton(driveStick, 5);
   Button zeroTurret = new JoystickButton(driveStick, 6);
   Button TiltManual = new JoystickButton(driveStick,7);
-  Button runTrajectory = new JoystickButton(driveStick,10);
+  Button runTrajectory = new JoystickButton(driveStick,11)   ;
   //int turret = new turnStick.getPov();
   Button ZeroFangsButton = new JoystickButton(driveStick, 8); 
   Button ShooterStayOnButton = new JoystickButton(driveStick, 10); 

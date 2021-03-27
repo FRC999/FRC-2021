@@ -97,11 +97,16 @@ public class NavigationControlSubsystem extends Subsystem {
   public static Trajectory getTrajectory(String trajectoryName){
     trajectoryName += ".json";
     Trajectory trajectory = new Trajectory();
+    Path trajectoryPath;
+    System.out.println(Filesystem.getDeployDirectory().toPath());
+    trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryName);
+    System.out.println("ol mcodonald");
     try {
-      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryName);
+      trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryName);
       trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
     } catch (IOException ex) {
       DriverStation.reportError("Unable to open trajectory: " + trajectoryName, ex.getStackTrace());
+      System.out.println(trajectoryPath);
     }
     return trajectory;
   }
