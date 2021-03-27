@@ -381,7 +381,7 @@ public void zeroTiltPot() {
 
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    //setDefaultCommand(new ShooterStandbyCommand());
+    setDefaultCommand(new ShooterStandbyCommand());
     //setDefaultCommand(new ShooterVisionCommand());
   }
 

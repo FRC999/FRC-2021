@@ -103,7 +103,7 @@ public class OI {
     //ShooterTiltDown10.whileHeld(new ShooterTiltDown10Command());
     
     //magazineInward.whileHeld(new IntakeMagazineInCommand());
-    LoaderUpButton.whileHeld(new IntakeLoaderPulseCommand());
+    LoaderUpButton.whileHeld(new IntakeLoaderUpCommand());
     LoaderDownButton.whileHeld(new IntakeLoaderDownCommand());
     //LoaderStandbyButton.whileHeld(new IntakeStandbyCommand());
     ShooterWheelOnButton.whileHeld(new ShooterRunWheelCommand());
