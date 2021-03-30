@@ -10,10 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
 import frc.robot.subsystems.DriveSubsystemBase;
-import frc.robot.subsystems.DriveSubsystemFrankenbot;
-
 public class DriveForwardCommand extends Command {
   private int driveDistance;
 
@@ -38,7 +35,6 @@ public class DriveForwardCommand extends Command {
     rightTarget = driveDistance + rEncoder;
     Robot.driveSubsystem.simpleMotionMagic(leftTarget, rightTarget);
     
-    SmartDashboard.putNumber("Encoder ticks per inch", RobotMap.encoderTicksPerInch);
     SmartDashboard.putNumber("Drive Distance", driveDistance);
     SmartDashboard.putNumber("leftTarget",leftTarget);
     SmartDashboard.putNumber("RightTarget", rightTarget);

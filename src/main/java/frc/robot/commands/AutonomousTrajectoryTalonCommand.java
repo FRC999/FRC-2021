@@ -18,7 +18,7 @@ public class AutonomousTrajectoryTalonCommand extends RamseteCommandWpilib {
             Robot.navigationSubsystem.getRamseteController(), // Grab kinematics controller from Robot.java
             Robot.navigationSubsystem.getKinematics(), 
             (Double left, Double right) -> { // yes, I DO mean the object type.
-                Robot.navigationSubsystem.setMotorSpeeds(left, right);
+                Robot.driveSubsystem.velocityPid(left, right);
             }, 
             Robot.navigationSubsystem, Robot.driveSubsystem // Set requirements
         );

@@ -68,7 +68,11 @@ public class NavigationControlSubsystem extends Subsystem {
   }
 
   public double convertEncoderTicsToMeters(int encoderTics){
-    return Units.inchesToMeters(encoderTics / RobotMap.encoderTicksPerInch);
+    return Units.inchesToMeters(encoderTics / driveSubsystem.encoderUnitsPerShaftRotation);
+  }
+
+  public double convertMetersToEncoderTics(double meters){
+    return Units.metersToInches(meters)*RobotMap.encoderTicksPerInch;
   }
 
     /**
@@ -92,6 +96,24 @@ public class NavigationControlSubsystem extends Subsystem {
   public void setMotorVoltages(double left, double right){
     driveSubsystem.setLeftVoltage(left);
     driveSubsystem.setRightVoltage(right);
+  }
+
+  /**
+   * This attempts to drive the wheels to reach the given velocities
+   * @param leftSpeedMeters speed of left side in meters per second
+   * @param rightSpeedMeters speed of right side in meters per second
+   */
+  public void setMotorSpeeds(double leftSpeedMeters, double rightSpeedMeters){
+    /**
+     * While encoder positions must be ints, velocities can be doubles
+     * Let's use doubles for that bit of extra precision
+     */
+    double leftSpeedTics, rightSpeedTics; 
+
+
+
+
+    driveSubsystem.velocityPid(leftSpeedTics, rightSpeedTics);
   }
 
   public static Trajectory getTrajectory(String trajectoryName){
@@ -135,7 +157,4 @@ public class NavigationControlSubsystem extends Subsystem {
   protected void initDefaultCommand() {
     // Required method, does nothing
   }
-
-public void setMotorSpeeds(Double left, Double right) {
-}
 }

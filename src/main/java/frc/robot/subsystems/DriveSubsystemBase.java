@@ -245,6 +245,16 @@ public abstract class DriveSubsystemBase extends Subsystem {
     frontLeftDriveMotorController.set(ControlMode.MotionMagic, leftEncoderVal);
     frontRightDriveMotorController.set(ControlMode.MotionMagic, rightEncoderVal);
   }
+  
+  /**
+   * This attempts to drive the wheels to reach the given velocities
+   * @param leftSpeedTics speed of left side in encoder tics per 100ms
+   * @param rightSpeedTics speed of right side in encoder tics per 100ms
+   */
+  public void velocityPid(double leftSpeedTics, double rightSpeedTics){
+    frontLeftDriveMotorController.set(ControlMode.Velocity, leftSpeedTics);
+    frontRightDriveMotorController.set(ControlMode.Velocity, rightSpeedTics);
+  }
 
   public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget) {
     // stuff parameters and call again (-200 is an impossible heading)
@@ -297,8 +307,18 @@ public abstract class DriveSubsystemBase extends Subsystem {
     backRightDriveMotorController.setNeutralMode(NeutralMode.Brake);
   }
 
+  /**
+   * This gets the number of encoder tics in a given inch
+   * @return encoder tics in double form, for precision(tm)
+   */
+  public double getEncoderTicksPerInch(){
+    // tics per rotation / number of inches per rotation
+    return encoderUnitsPerShaftRotation / Math.PI * 2 * wheelCircumference;
+  }
+
   /**  
    * setVoltage is a method of WPI speed controllers, not base talons
+   * While a generic set can work, it's a bit more effort
    */
   public abstract void setLeftVoltage(double voltage);
   public abstract void setRightVoltage(double voltage);
