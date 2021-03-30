@@ -39,6 +39,7 @@ public class AutonomousTrajectoryRioCommand extends RamseteCommandWpilib {
     
     public void execute(){
         Robot.navigationSubsystem.updateOdometer();
+        Robot.driveSubsystem.feed();
         super.execute();
     }
 }

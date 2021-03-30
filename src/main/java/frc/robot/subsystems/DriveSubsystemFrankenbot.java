@@ -36,7 +36,7 @@ public class DriveSubsystemFrankenbot extends DriveSubsystemBase {
     distanceBetweenWheels = 30;
     robotLength = 18;
     robotWidth = 33;
-    // wheelCircumference = ???? //TODO: Measure
+    wheelCircumference = 4; //TODO: Measure
 
     talonPidP_Value0 = 0.75 * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
     talonPidI_Value0 = 0.005 * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
