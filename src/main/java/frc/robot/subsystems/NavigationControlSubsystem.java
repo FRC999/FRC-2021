@@ -109,9 +109,12 @@ public class NavigationControlSubsystem extends Subsystem {
      * Let's use doubles for that bit of extra precision
      */
     double leftSpeedTics, rightSpeedTics; 
+    leftSpeedTics = convertMetersToEncoderTics(leftSpeedMeters);
+    rightSpeedTics = convertMetersToEncoderTics(rightSpeedMeters);
 
-
-
+    //Speeds need to be in tics per 100ms
+    leftSpeedTics /= 10;
+    rightSpeedTics /= 10;
 
     driveSubsystem.velocityPid(leftSpeedTics, rightSpeedTics);
   }

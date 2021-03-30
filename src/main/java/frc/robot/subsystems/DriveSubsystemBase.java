@@ -46,7 +46,7 @@ public abstract class DriveSubsystemBase extends Subsystem {
 
   /** 
    *  These factors DO differ between robots
-   * Values are in inches.  TODO: Verify measurments, use metric (?)
+   * Values are in inches.  TODO: Verify measurments, consider metric (?)
    */
   public double distanceBetweenWheels, wheelCircumference, robotLength, robotWidth;
 
