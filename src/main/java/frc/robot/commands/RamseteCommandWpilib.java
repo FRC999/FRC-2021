@@ -81,17 +81,17 @@ public class RamseteCommandWpilib extends Command {
       PIDController rightController,
       BiConsumer<Double, Double> outputVolts,
       Subsystem... requirements) {
-    trajectory = requireNonNullParam(trajectory, "trajectory", "RamseteCommand");
-    pose = requireNonNullParam(pose, "pose", "RamseteCommand");
-    ramsetController = requireNonNullParam(controller, "controller", "RamseteCommand");
-    feedForwardController = feedforward;
-    kinematics = requireNonNullParam(kinematics, "kinematics", "RamseteCommand");
-    currentSpeeds = requireNonNullParam(wheelSpeeds, "wheelSpeeds", "RamseteCommand");
-    leftController = requireNonNullParam(leftController, "leftController", "RamseteCommand");
-    rightController = requireNonNullParam(rightController, "rightController", "RamseteCommand");
-    outputVoltFunction = requireNonNullParam(outputVolts, "outputVolts", "RamseteCommand");
+    this.trajectory = requireNonNullParam(trajectory, "trajectory", "RamseteCommand");
+    this.pose = requireNonNullParam(pose, "pose", "RamseteCommand");
+    this.ramsetController = requireNonNullParam(controller, "controller", "RamseteCommand");
+    this.feedForwardController = feedforward;
+    this.kinematics = requireNonNullParam(kinematics, "kinematics", "RamseteCommand");
+    this.currentSpeeds = requireNonNullParam(wheelSpeeds, "wheelSpeeds", "RamseteCommand");
+    this.leftController = requireNonNullParam(leftController, "leftController", "RamseteCommand");
+    this.rightController = requireNonNullParam(rightController, "rightController", "RamseteCommand");
+    this.outputVoltFunction = requireNonNullParam(outputVolts, "outputVolts", "RamseteCommand");
 
-    usePid = true;
+    this.usePid = true;
 
     addRequirements(requirements);
   }
@@ -116,18 +116,18 @@ public class RamseteCommandWpilib extends Command {
       DifferentialDriveKinematics kinematics,
       BiConsumer<Double, Double> outputMetersPerSecond,
       Subsystem... requirements) {
-    trajectory = requireNonNullParam(trajectory, "trajectory", "RamseteCommand");
-    pose = requireNonNullParam(pose, "pose", "RamseteCommand");
-    follower = requireNonNullParam(follower, "follower", "RamseteCommand");
-    kinematics = requireNonNullParam(kinematics, "kinematics", "RamseteCommand");
-    outputVoltFunction = requireNonNullParam(outputMetersPerSecond, "output", "RamseteCommand");
+    this.trajectory = requireNonNullParam(trajectory, "trajectory", "RamseteCommand");
+    this.pose = requireNonNullParam(pose, "pose", "RamseteCommand");
+    this.ramsetController = requireNonNullParam(follower, "follower", "RamseteCommand");
+    this.kinematics = requireNonNullParam(kinematics, "kinematics", "RamseteCommand");
+    this.outputVoltFunction = requireNonNullParam(outputMetersPerSecond, "output", "RamseteCommand");
 
-    feedForwardController = null;
-    currentSpeeds = null;
-    leftController = null;
-    rightController = null;
+    this.feedForwardController = null;
+    this.currentSpeeds = null;
+    this.leftController = null;
+    this.rightController = null;
 
-    usePid = false;
+    this.usePid = false;
 
     addRequirements(requirements);
   }
@@ -135,6 +135,7 @@ public class RamseteCommandWpilib extends Command {
   @Override
   public void initialize() {
     prevTime = -1;
+    System.out.println(trajectory);
     var initialState = trajectory.sample(0);
     prevSpeeds =
         kinematics.toWheelSpeeds(
