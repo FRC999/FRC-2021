@@ -34,9 +34,7 @@ public class NavigationControlSubsystem extends Subsystem {
   private DifferentialDriveOdometry odometry;
   private RamseteController ramseteController = new RamseteController();
 
-  // Values set to null to prevent accidental explosions / death
-  // (which would be bad)
-  private SimpleMotorFeedforward feedforward = null;// new SimpleMotorFeedforward(0, 0, 0);
+  private SimpleMotorFeedforward feedforward;
 
   private PIDController leftPidController;
   private PIDController rightPidController;
@@ -49,6 +47,9 @@ public class NavigationControlSubsystem extends Subsystem {
       driveSubsystem.talonPidI_Value0, driveSubsystem.talonPidD_Value0);
     rightPidController = new PIDController(driveSubsystem.talonPidP_Value0,
       driveSubsystem.talonPidI_Value0, driveSubsystem.talonPidD_Value0);
+
+    feedforward = new SimpleMotorFeedforward(driveSubsystem.feedForwardStatic, 
+      driveSubsystem.feedForwardVelocity, driveSubsystem.feedForwardAcceleration);
 
     /**
      * Note that DifferentialDriveOdometry contructor was revised since team 5190

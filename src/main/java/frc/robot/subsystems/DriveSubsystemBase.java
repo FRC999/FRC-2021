@@ -31,6 +31,8 @@ public abstract class DriveSubsystemBase extends Subsystem {
 
   protected double talonPidP_Value0, talonPidI_Value0, talonPidD_Value0, talonPidF_Value0;
 
+  protected double feedForwardStatic, feedForwardVelocity, feedForwardAcceleration;
+
   protected int talonPidAcceleration, talonPidCruiseVelocity, talonPidSmoothing;
 
   /**

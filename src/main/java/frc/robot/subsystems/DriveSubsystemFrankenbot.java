@@ -47,6 +47,10 @@ public class DriveSubsystemFrankenbot extends DriveSubsystemBase {
     talonPidCruiseVelocity = 2250;
     talonPidAcceleration = 2250;
     talonPidSmoothing = 3;
+
+    feedForwardStatic = 0.834;
+    feedForwardVelocity = 0.816;
+    feedForwardAcceleration = 0.0574;
   }
 
   public void configureEncoders() {
