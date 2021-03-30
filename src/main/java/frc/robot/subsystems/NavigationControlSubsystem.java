@@ -135,4 +135,7 @@ public class NavigationControlSubsystem extends Subsystem {
   protected void initDefaultCommand() {
     // Required method, does nothing
   }
+
+public void setMotorSpeeds(Double left, Double right) {
+}
 }

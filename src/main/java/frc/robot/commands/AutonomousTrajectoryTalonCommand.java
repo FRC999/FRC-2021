@@ -9,32 +9,24 @@ import frc.robot.Robot;
 import frc.robot.subsystems.NavigationControlSubsystem;
  
 /** This form of the class runs all code on the RoboRIO*/
-public class AutonomousTrajectoryRioCommand extends RamseteCommandWpilib {
+public class AutonomousTrajectoryTalonCommand extends RamseteCommandWpilib {
 
-    AutonomousTrajectoryRioCommand(Trajectory trajectory){
+    AutonomousTrajectoryTalonCommand(Trajectory trajectory) {
         super(
             trajectory, 
             () -> {return Robot.navigationSubsystem.getPosition();}, // Lambda supplies pose for robot
             Robot.navigationSubsystem.getRamseteController(), // Grab kinematics controller from Robot.java
-            Robot.navigationSubsystem.getFeedforward(), 
             Robot.navigationSubsystem.getKinematics(), 
-            () -> {return Robot.navigationSubsystem.getWheelSpeeds();}, 
-            Robot.navigationSubsystem.getLeftPidController(), 
-            Robot.navigationSubsystem.getRightPidController(), 
-            (Double left, Double right) -> {  // yes, I DO mean the object type.
-                Robot.navigationSubsystem.setMotorVoltages(left, right);
-            },
+            (Double left, Double right) -> { // yes, I DO mean the object type.
+                Robot.navigationSubsystem.setMotorSpeeds(left, right);
+            }, 
             Robot.navigationSubsystem, Robot.driveSubsystem // Set requirements
         );
-
     }
-    public AutonomousTrajectoryRioCommand(String alpha){
+
+    public AutonomousTrajectoryTalonCommand(String alpha) {
         this(NavigationControlSubsystem.getTrajectory(alpha));
         System.out.println("initalized trajectory command");
-    }
-
-    public void initialize(){
-        super.initialize();
     }
     
     public void execute(){
