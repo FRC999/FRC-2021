@@ -39,10 +39,10 @@ public class DriveSubsystemFalconBot extends DriveSubsystemBase {
     talonPidP_Value0 = 2 * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
     talonPidI_Value0 = 0.005 * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
     talonPidD_Value0 = .15;
-    talonPidF_Value0 = 2.7; // TODO: Investigate more to see if we actually intend to use static FF's
-
-    talonPidCruiseVelocity = 2250 * 5;
-    talonPidAcceleration = 2250 *2;
+    talonPidF_Value0 = 2.7; 
+    
+    talonPidCruiseVelocity = 2250 * 4;
+    talonPidAcceleration = 2250 *1;
     talonPidSmoothing = 3;
   }
 
