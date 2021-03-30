@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 //
 
@@ -126,9 +127,9 @@ public class ShootAndRunAuto extends CommandGroup {
       /* Robot positions itself for game start*/
       addSequential(new DriveSequentialForwardCommand(-10));
       addSequential(new DriveSequentialTurnCommand(-90));
-      addSequential(new DriveSequentialForwardCommand(RobotMap.robotLength));
+      addSequential(new DriveSequentialForwardCommand(Robot.driveSubsystem.robotLength));
       addSequential(new DriveSequentialTurnCommand(-90));
-      addSequential(new DriveSequentialForwardCommand(RobotMap.robotLength));
+      addSequential(new DriveSequentialForwardCommand(Robot.driveSubsystem.robotLength));
 
     } else {
       /* Continues positioning */
@@ -143,9 +144,9 @@ public class ShootAndRunAuto extends CommandGroup {
       /* Robot positions itself for game start*/
       addSequential(new DriveSequentialForwardCommand(-10));
       addSequential(new DriveSequentialTurnCommand(90));
-      addSequential(new DriveSequentialForwardCommand(RobotMap.robotLength));
+      addSequential(new DriveSequentialForwardCommand(Robot.driveSubsystem.robotLength));
       addSequential(new DriveSequentialTurnCommand(90));
-      addSequential(new DriveSequentialForwardCommand(RobotMap.robotLength));
+      addSequential(new DriveSequentialForwardCommand(Robot.driveSubsystem.robotLength));
     }
   }
 

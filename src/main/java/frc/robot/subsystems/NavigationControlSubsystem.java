@@ -68,11 +68,11 @@ public class NavigationControlSubsystem extends Subsystem {
   }
 
   public double convertEncoderTicsToMeters(int encoderTics){
-    return Units.inchesToMeters(encoderTics / driveSubsystem.encoderUnitsPerShaftRotation);
+    return Units.inchesToMeters(encoderTics / driveSubsystem.getEncoderTicksPerInch());
   }
 
   public double convertMetersToEncoderTics(double meters){
-    return Units.metersToInches(meters)*RobotMap.encoderTicksPerInch;
+    return Units.metersToInches(meters)*driveSubsystem.getEncoderTicksPerInch();
   }
 
     /**

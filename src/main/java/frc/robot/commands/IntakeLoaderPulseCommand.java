@@ -10,8 +10,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.IntakeSubsystem;
-
 public class IntakeLoaderPulseCommand extends Command {
   public Boolean loaderOn = true;
   public IntakeLoaderPulseCommand() {

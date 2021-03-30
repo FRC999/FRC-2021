@@ -15,9 +15,9 @@ package frc.robot;
  */
 public class RobotMap {
   // Autonomous constants
-  public static int robotLength = 18;
-  public static int robotWidth = 33;
-  public static int encoderTicksPerInch = 326;
+  //public static int robotLength = 18;
+  //public static int robotWidth = 33;
+  //public static int encoderTicksPerInch = 326;
 
   public static boolean enablePneumatics = false;
 
