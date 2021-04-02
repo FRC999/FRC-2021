@@ -30,11 +30,12 @@ public abstract class DriveSubsystemBase extends Subsystem {
   int withinAcceptableErrorLoops = 0;
 
   protected double talonPidP_Value0, talonPidI_Value0, talonPidD_Value0, talonPidF_Value0;
+  protected double MMtalonPidP_Value0, MMtalonPidI_Value0, MMtalonPidD_Value0, MMtalonPidF_Value0;
 
   protected double feedForwardStatic, feedForwardVelocity, feedForwardAcceleration;
 
   protected int talonPidAcceleration, talonPidCruiseVelocity, talonPidSmoothing;
-
+  protected int MMtalonPidAcceleration, MMtalonPidCruiseVelocity, MMtalonPidSmoothing;
   /**
    * Number of encoder units required to rotate wheels once
    */
@@ -203,19 +204,19 @@ public abstract class DriveSubsystemBase extends Subsystem {
     frontRightDriveMotorController.configNominalOutputReverse(0, RobotMap.configureTimeoutMs);
 
     /* FPID Gains for each side of drivetrain */
-    frontLeftDriveMotorController.config_kP(RobotMap.SLOT_0, talonPidP_Value0, RobotMap.configureTimeoutMs);
-    frontLeftDriveMotorController.config_kI(RobotMap.SLOT_0, talonPidI_Value0, RobotMap.configureTimeoutMs);
-    frontLeftDriveMotorController.config_kD(RobotMap.SLOT_0, talonPidD_Value0, RobotMap.configureTimeoutMs);
-    frontLeftDriveMotorController.config_kF(RobotMap.SLOT_0, talonPidF_Value0, RobotMap.configureTimeoutMs);
+    frontLeftDriveMotorController.config_kP(RobotMap.SLOT_0, MMtalonPidP_Value0, RobotMap.configureTimeoutMs);
+    frontLeftDriveMotorController.config_kI(RobotMap.SLOT_0, MMtalonPidI_Value0, RobotMap.configureTimeoutMs);
+    frontLeftDriveMotorController.config_kD(RobotMap.SLOT_0, MMtalonPidD_Value0, RobotMap.configureTimeoutMs);
+    frontLeftDriveMotorController.config_kF(RobotMap.SLOT_0, MMtalonPidF_Value0, RobotMap.configureTimeoutMs);
     frontLeftDriveMotorController.config_IntegralZone(RobotMap.SLOT_0, RobotMap.Izone_0, RobotMap.configureTimeoutMs);
     frontLeftDriveMotorController.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0,
         RobotMap.configureTimeoutMs);
     frontLeftDriveMotorController.configAllowableClosedloopError(RobotMap.SLOT_0, 5, RobotMap.configureTimeoutMs);
 
-    frontRightDriveMotorController.config_kP(RobotMap.SLOT_0, talonPidP_Value0, RobotMap.configureTimeoutMs);
-    frontRightDriveMotorController.config_kI(RobotMap.SLOT_0, talonPidI_Value0, RobotMap.configureTimeoutMs);
-    frontRightDriveMotorController.config_kD(RobotMap.SLOT_0, talonPidD_Value0, RobotMap.configureTimeoutMs);
-    frontRightDriveMotorController.config_kF(RobotMap.SLOT_0, talonPidF_Value0, RobotMap.configureTimeoutMs);
+    frontRightDriveMotorController.config_kP(RobotMap.SLOT_0, MMtalonPidP_Value0, RobotMap.configureTimeoutMs);
+    frontRightDriveMotorController.config_kI(RobotMap.SLOT_0, MMtalonPidI_Value0, RobotMap.configureTimeoutMs);
+    frontRightDriveMotorController.config_kD(RobotMap.SLOT_0, MMtalonPidD_Value0, RobotMap.configureTimeoutMs);
+    frontRightDriveMotorController.config_kF(RobotMap.SLOT_0, MMtalonPidF_Value0, RobotMap.configureTimeoutMs);
     frontRightDriveMotorController.config_IntegralZone(RobotMap.SLOT_0, RobotMap.Izone_0, RobotMap.configureTimeoutMs);
     frontRightDriveMotorController.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0,
         RobotMap.configureTimeoutMs);
@@ -233,13 +234,13 @@ public abstract class DriveSubsystemBase extends Subsystem {
     /* Motion Magic Configurations */
 
     /**Need to replace numbers with real measured values for acceleration and cruise vel. */
-    frontLeftDriveMotorController.configMotionAcceleration(talonPidAcceleration, RobotMap.configureTimeoutMs);
-      frontLeftDriveMotorController.configMotionCruiseVelocity(talonPidCruiseVelocity, RobotMap.configureTimeoutMs);
-      frontLeftDriveMotorController.configMotionSCurveStrength(talonPidSmoothing);
+    frontLeftDriveMotorController.configMotionAcceleration(MMtalonPidAcceleration, RobotMap.configureTimeoutMs);
+      frontLeftDriveMotorController.configMotionCruiseVelocity(MMtalonPidCruiseVelocity, RobotMap.configureTimeoutMs);
+      frontLeftDriveMotorController.configMotionSCurveStrength(MMtalonPidSmoothing);
 
-    frontRightDriveMotorController.configMotionAcceleration(talonPidAcceleration, RobotMap.configureTimeoutMs);
-      frontRightDriveMotorController.configMotionCruiseVelocity(talonPidCruiseVelocity, RobotMap.configureTimeoutMs);
-      frontRightDriveMotorController.configMotionSCurveStrength(talonPidSmoothing);
+    frontRightDriveMotorController.configMotionAcceleration(MMtalonPidAcceleration, RobotMap.configureTimeoutMs);
+      frontRightDriveMotorController.configMotionCruiseVelocity(MMtalonPidCruiseVelocity, RobotMap.configureTimeoutMs);
+      frontRightDriveMotorController.configMotionSCurveStrength(MMtalonPidSmoothing);
 
   } // End configureDriveTrainControllersForSimpleMagic
 
