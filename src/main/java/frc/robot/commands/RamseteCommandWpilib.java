@@ -165,7 +165,7 @@ public class RamseteCommandWpilib extends Command {
     DifferentialDriveWheelSpeeds targetWheelSpeeds =
         kinematics.toWheelSpeeds(
             ramsetController.calculate(pose.get(), trajectory.sample(curTime)));
-            System.out.println("pose: "+ pose.get() );
+            //System.out.println("pose: "+ pose.get() );
    
     var leftSpeedSetpoint = targetWheelSpeeds.leftMetersPerSecond;
     var rightSpeedSetpoint = targetWheelSpeeds.rightMetersPerSecond;
