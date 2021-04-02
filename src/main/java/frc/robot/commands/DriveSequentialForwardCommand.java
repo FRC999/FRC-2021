@@ -21,7 +21,7 @@ public class DriveSequentialForwardCommand extends CommandGroup {
     // addSequential(new Command2());
     // these will run in order.
     addSequential(new WaitCommand(.1));
-    addSequential(new DriveForwardCommand((int) (inches * Robot.driveSubsystem.encoderUnitsPerInch)));
+    addSequential(new DriveForwardCommand((int) (inches * Robot.driveSubsystem.getEncoderTicksPerInch())));
     addSequential(new DriveTurnCommand(45));
     addSequential(new DriveStopCommand());
     // To run multiple commands at the same time,

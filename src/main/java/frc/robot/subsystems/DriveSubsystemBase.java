@@ -47,9 +47,6 @@ public abstract class DriveSubsystemBase extends Subsystem {
    */
   public int encoderUnitsPerRobotRotation;
 
-  // drivetrain encoder units per inch
-  public int encoderUnitsPerInch;
-
   /** 
    *  These factors DO differ between robots
    * Values are in inches.  TODO: Verify measurments, consider metric (?)

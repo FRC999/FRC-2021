@@ -19,7 +19,7 @@ public class DriveForwardCommand extends Command {
 
   public DriveForwardCommand(int distance) {
     requires(Robot.driveSubsystem);
-    driveDistance = distance * Robot.driveSubsystem.encoderUnitsPerInch;
+    driveDistance =  (int) (distance * Robot.driveSubsystem.getEncoderTicksPerInch());
     //System.out.println("Distance: " + distance);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);

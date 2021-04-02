@@ -21,9 +21,6 @@ public class RobotMap {
 
   public static boolean enablePneumatics = true;
 
-  public static double distanceBetweenWheels = 20; // inches (need to be converted to SI units as needed); used in
-                                                   // kinematic driving
-
   /**
    * Starting positions along the field. SI units. The X is a distance from the
    * edge along the long end of the field, and Y is a distance from the edge along

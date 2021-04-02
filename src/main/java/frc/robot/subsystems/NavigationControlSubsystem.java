@@ -42,7 +42,7 @@ public class NavigationControlSubsystem extends Subsystem {
   public NavigationControlSubsystem(DriveSubsystemBase driveSubsystem, NavXSubsystem navXSubsystem) {
     this.driveSubsystem = driveSubsystem; // Instance variable shadowed by local variable
     navX = navXSubsystem;
-    kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(RobotMap.distanceBetweenWheels));
+    kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(driveSubsystem.distanceBetweenWheels));
     leftPidController = new PIDController(driveSubsystem.talonPidP_Value0,
       driveSubsystem.talonPidI_Value0, driveSubsystem.talonPidD_Value0);
     rightPidController = new PIDController(driveSubsystem.talonPidP_Value0,

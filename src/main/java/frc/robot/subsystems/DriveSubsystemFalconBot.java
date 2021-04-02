@@ -31,9 +31,8 @@ public class DriveSubsystemFalconBot extends DriveSubsystemBase {
 
     encoderUnitsPerShaftRotation = 2048;
     encoderUnitsPerRobotRotation = 80700;// thats the SUM of the two (this is just a rough guess
-    encoderUnitsPerInch = 1203;
-    // distanceBetweenWheels = ????; //TODO: Measure
-    // wheelCircumference = ???? //TODO: Measure
+    distanceBetweenWheels = 20;
+    wheelCircumference = Math.PI*6;
     robotLength = 35;
     robotWidth = 23;
 
