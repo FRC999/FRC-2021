@@ -8,22 +8,36 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
-import frc.robot.Robot;
 
-public class DriveSequentialForwardCommand extends CommandGroup {
+public class AutoSlalomPathCommandGroup extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public DriveSequentialForwardCommand(double inches) {
+  public AutoSlalomPathCommandGroup() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
-    addSequential(new WaitCommand(.1));
-    addSequential(new DriveForwardCommand((int) (inches * Robot.driveSubsystem.encoderUnitsPerInch)));
-    addSequential(new DriveTurnCommand(45));
-    addSequential(new DriveStopCommand());
+   addSequential(new DriveTurnCommand(-45));
+   addSequential(new DriveForwardCommand(106));
+   addSequential(new DriveTurnCommand(45));
+   addSequential(new DriveForwardCommand(104));
+   addSequential(new DriveTurnCommand(45));
+   addSequential(new DriveForwardCommand(106));
+   addSequential(new DriveTurnCommand(-45));
+   addSequential(new DriveForwardCommand(58));
+   addSequential(new DriveTurnCommand(-45));
+   addSequential(new DriveForwardCommand(50));
+   addSequential(new DriveTurnCommand(-45));
+   addSequential(new DriveForwardCommand(100));
+   addSequential(new DriveTurnCommand(45));
+   addSequential(new DriveForwardCommand(124));
+   addSequential(new DriveTurnCommand(45));
+   addSequential(new DriveForwardCommand(100));
+   addSequential(new DriveTurnCommand(-45));
+   addSequential(new DriveForwardCommand(24));
+   addSequential(new DriveStopCommand());
+
     // To run multiple commands at the same time,
     // use addParallel()
     // e.g. addParallel(new Command1());
@@ -35,11 +49,5 @@ public class DriveSequentialForwardCommand extends CommandGroup {
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
-  }
-
-  public DriveSequentialForwardCommand(double start, double end){
-    addSequential(new WaitCommand(.1));
-    addSequential(new DriveForwardCommand((int) Math.round(Math.abs(end - start) * Robot.driveSubsystem.getEncoderTicksPerInch())));
-    addSequential(new DriveStopCommand());
   }
 }

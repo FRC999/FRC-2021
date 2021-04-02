@@ -35,7 +35,7 @@ public class OI {
   Button visionTracking = new JoystickButton(driveStick, 5);
   Button zeroTurret = new JoystickButton(driveStick, 6);
   Button TiltManual = new JoystickButton(driveStick,7);
-  Button runTrajectory = new JoystickButton(driveStick,11)   ;
+  //Button runTrajectory = new JoystickButton(driveStick,11)   ;
   //int turret = new turnStick.getPov();
   Button ZeroFangsButton = new JoystickButton(driveStick, 8); 
   Button ShooterStayOnButton = new JoystickButton(driveStick, 10); 
@@ -51,6 +51,9 @@ public class OI {
   Button LoaderDownButton = new JoystickButton(turnStick, 4);
   Button ShooterTiltSetpointButton = new JoystickButton(turnStick, 5);
   Button ShooterTiltZeroButton = new JoystickButton(turnStick, 6);
+  Button AutoSlalomButton = new JoystickButton(turnStick, 9);
+  Button AutoTest1Button = new JoystickButton(turnStick, 11);
+  Button AutoTest2Button = new JoystickButton(turnStick, 12);
  // Button ZeroFangsButton = new JoystickButton(turnStick, 7);
  
 
@@ -61,7 +64,7 @@ public class OI {
   //Button IntakeStandbyButton = new JoystickButton(buttonBox, 3);
 //  Button IntakeUpButton = new JoystickButton(buttonBox, 4);
 //  Button IntakeDownButton = new JoystickButton(buttonBox, 5);
- // Button ZeroFangsButton = new JoystickButton(buttonBox, 6);
+  Button ZeroYawButton = new JoystickButton(turnStick, 10);
  // Button LoaderUpButton = new JoystickButton(buttonBox, 7);
  // Button LoaderDownButton = new JoystickButton(buttonBox, 8);
   //Button LoaderStandbyButton = new JoystickButton(buttonBox, 9);
@@ -90,7 +93,12 @@ public class OI {
      //intakeEject.whileHeld(new IntakeEject());
      ShooterTiltSetpointButton.whileHeld(new ShooterTiltGoToSetpointCommand());
      ShooterTiltZeroButton.whileHeld(new ShooterTiltGoToZeroCommand());
-     runTrajectory.whenPressed(new AutonomousTrajectoryRioCommand("TestTrajectory"));
+     //runTrajectory.whenPressed(new AutonomousTrajectoryRioCommand("TestTrajectory"));
+     AutoSlalomButton.whenPressed(new AutoSlalomPathCommandGroup());
+     AutoTest1Button.whenPressed(new DriveTurnCommand(-45));
+     AutoTest2Button.whenPressed(new DriveTurnCommand(45));
+     ZeroYawButton.whenPressed( new NavXZeroYawCommand());
+
      //Left Joystick
 
 
@@ -125,8 +133,8 @@ public class OI {
 
     //fangsFullyBack.whenPressed(new ShooterTiltGoToSetpointCommand());
     visionTracking.whenPressed(new ShooterVisionCommand());
-    DriveForwardButton.whenPressed(new DriveForwardCommand(100800*2));
-    DriveBackwardButton.whenPressed(new DriveForwardCommand(-100800*2));
+    DriveForwardButton.whenPressed(new DriveForwardCommand(100800));
+    DriveBackwardButton.whenPressed(new DriveForwardCommand(-100800));
     //visionTilt.whileHeld(new ShooterVisionTiltCommand());
     //fullShooter.whileHeld(new ShooterFullCommand());
     turretButton.whileHeld(new ShooterPanManuallyCommand());

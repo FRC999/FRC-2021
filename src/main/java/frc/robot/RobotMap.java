@@ -19,9 +19,9 @@ public class RobotMap {
   //public static int robotWidth = 33;
   //public static int encoderTicksPerInch = 326;
 
-  public static boolean enablePneumatics = false;
+  public static boolean enablePneumatics = true;
 
-  public static double distanceBetweenWheels = 30; // inches (need to be converted to SI units as needed); used in
+  public static double distanceBetweenWheels = 20; // inches (need to be converted to SI units as needed); used in
                                                    // kinematic driving
 
   /**

@@ -41,10 +41,14 @@ public abstract class DriveSubsystemBase extends Subsystem {
   public int encoderUnitsPerShaftRotation;
 
   /**
-   * Total difference between left and right encoders 
-   * following a 180 degree rotation
+   * Average between left and right encoders 
+   * following a 360 degree rotation
+   * manually adjusted for drivetrain backlash
    */
   public int encoderUnitsPerRobotRotation;
+
+  // drivetrain encoder units per inch
+  public int encoderUnitsPerInch;
 
   /** 
    *  These factors DO differ between robots
@@ -209,7 +213,7 @@ public abstract class DriveSubsystemBase extends Subsystem {
     frontLeftDriveMotorController.config_IntegralZone(RobotMap.SLOT_0, RobotMap.Izone_0, RobotMap.configureTimeoutMs);
     frontLeftDriveMotorController.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0,
         RobotMap.configureTimeoutMs);
-    frontLeftDriveMotorController.configAllowableClosedloopError(RobotMap.SLOT_0, RobotMap.defaultAcceptableError, RobotMap.configureTimeoutMs);
+    frontLeftDriveMotorController.configAllowableClosedloopError(RobotMap.SLOT_0, 5, RobotMap.configureTimeoutMs);
 
     frontRightDriveMotorController.config_kP(RobotMap.SLOT_0, talonPidP_Value0, RobotMap.configureTimeoutMs);
     frontRightDriveMotorController.config_kI(RobotMap.SLOT_0, talonPidI_Value0, RobotMap.configureTimeoutMs);
@@ -218,7 +222,7 @@ public abstract class DriveSubsystemBase extends Subsystem {
     frontRightDriveMotorController.config_IntegralZone(RobotMap.SLOT_0, RobotMap.Izone_0, RobotMap.configureTimeoutMs);
     frontRightDriveMotorController.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0,
         RobotMap.configureTimeoutMs);
-    frontRightDriveMotorController.configAllowableClosedloopError(RobotMap.SLOT_0, 0, RobotMap.configureTimeoutMs);
+    frontRightDriveMotorController.configAllowableClosedloopError(RobotMap.SLOT_0, 5, RobotMap.configureTimeoutMs);
 
     /**
      * 1ms per loop. PID loop can be slowed down if need be. For example, - if
@@ -269,7 +273,7 @@ public abstract class DriveSubsystemBase extends Subsystem {
     int rightError = Math.abs(rightEncoderTarget - getRightEncoder());
     SmartDashboard.putNumber("Error L", leftError);
     SmartDashboard.putNumber("Error R", rightError);
-    if (leftError <= acceptableError && rightError <= acceptableError) {
+    if ((leftError <= acceptableError) && (rightError <= acceptableError)) {
       if (wasOnTarget) {
         return true;
       }

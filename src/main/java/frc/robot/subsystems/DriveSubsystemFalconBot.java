@@ -30,20 +30,32 @@ public class DriveSubsystemFalconBot extends DriveSubsystemBase {
     drive = new DifferentialDrive(frontLeftDriveTalonFX, frontRightDriveTalonFX);
 
     encoderUnitsPerShaftRotation = 2048;
-    encoderUnitsPerRobotRotation = 3925;// thats the SUM of the two (this is just a rough guess)
+    encoderUnitsPerRobotRotation = 80700;// thats the SUM of the two (this is just a rough guess
+    encoderUnitsPerInch = 1203;
     // distanceBetweenWheels = ????; //TODO: Measure
     // wheelCircumference = ???? //TODO: Measure
     robotLength = 35;
     robotWidth = 23;
 
 
-    talonPidP_Value0 = 2 * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
-    talonPidI_Value0 = 0.005 * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
-    talonPidD_Value0 = .15;
-    talonPidF_Value0 = 2.7; 
+    talonPidP_Value0 = 0.141 * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
+    talonPidI_Value0 = 0.00 * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
+    talonPidD_Value0 = 0;
     
-    talonPidCruiseVelocity = 2250 * 4;
-    talonPidAcceleration = 2250 *1;
+
+    //FtalonPidP_Value0 = 0.75 * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
+   // FtalonPidI_Value0 = 0.005 * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
+   // FtalonPidD_Value0 = .025;
+  //  FtalonPidF_Value0 = 1.7; 
+    
+    feedForwardStatic = 0.566;
+    feedForwardVelocity = 0.0272;
+    feedForwardAcceleration = 0.00308;
+
+    //talonPidCruiseVelocity = 2250 * 4;
+    talonPidCruiseVelocity = 2250*5;
+    talonPidAcceleration = 2250 *2;
+   // talonPidAcceleration = 1125 *1;
     talonPidSmoothing = 3;
   }
 

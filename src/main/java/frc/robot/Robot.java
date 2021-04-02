@@ -92,7 +92,11 @@ public class Robot extends TimedRobot {
     System.out.println("falconBotSwitch = "+ RobotMap.isFalconBot);
 
     // Change to reflect current robot
-    driveSubsystem = new DriveSubsystemFrankenbot();
+    if (RobotMap.isFalconBot){
+      driveSubsystem = new DriveSubsystemFalconBot();      
+    }else{
+      driveSubsystem = new DriveSubsystemFrankenbot();
+    }
     System.out.println("Type of drive subsystem: " + driveSubsystem.getClass());
     RobotMap.isSplitStick = true;
     
