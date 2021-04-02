@@ -49,9 +49,9 @@ public abstract class DriveSubsystemBase extends Subsystem {
 
   /** 
    *  These factors DO differ between robots
-   * Values are in inches.  TODO: Verify measurments, consider metric (?)
+   * Values are in inches. TODO: Consider metric
    */
-  public double distanceBetweenWheels, wheelCircumference, robotLength, robotWidth;
+  public double distanceBetweenWheels, wheelDiameter, robotLength, robotWidth;
 
   // Front controllers are masters
   static BaseTalon frontLeftDriveMotorController;
@@ -316,7 +316,7 @@ public abstract class DriveSubsystemBase extends Subsystem {
    */
   public double getEncoderTicksPerInch(){
     // tics per rotation / number of inches per rotation
-    return encoderUnitsPerShaftRotation / Math.PI * 2 * wheelCircumference;
+    return encoderUnitsPerShaftRotation / (wheelDiameter*Math.PI);
   }
 
   /**  

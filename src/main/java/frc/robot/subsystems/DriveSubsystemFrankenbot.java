@@ -36,13 +36,12 @@ public class DriveSubsystemFrankenbot extends DriveSubsystemBase {
     distanceBetweenWheels = 30;
     robotLength = 18;
     robotWidth = 33;
-    wheelCircumference = 4; //TODO: Measure
+    wheelDiameter = 4;
 
     talonPidP_Value0 = 0.75 * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
     talonPidI_Value0 = 0.005 * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
     talonPidD_Value0 = .1;
-    talonPidF_Value0 = 0.227; // TODO: Investigate more to see if we actually intend to use static FF's
-
+    talonPidF_Value0 = 0.227; 
 
     talonPidCruiseVelocity = 2250;
     talonPidAcceleration = 2250;

@@ -32,7 +32,7 @@ public class DriveSubsystemFalconBot extends DriveSubsystemBase {
     encoderUnitsPerShaftRotation = 2048;
     encoderUnitsPerRobotRotation = 80700;// thats the SUM of the two (this is just a rough guess
     distanceBetweenWheels = 20;
-    wheelCircumference = Math.PI*6;
+    wheelDiameter = 6;
     robotLength = 35;
     robotWidth = 23;
 
@@ -41,20 +41,12 @@ public class DriveSubsystemFalconBot extends DriveSubsystemBase {
     talonPidI_Value0 = 0.00 * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
     talonPidD_Value0 = 0;
     
-
-    //FtalonPidP_Value0 = 0.75 * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
-   // FtalonPidI_Value0 = 0.005 * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
-   // FtalonPidD_Value0 = .025;
-  //  FtalonPidF_Value0 = 1.7; 
-    
     feedForwardStatic = 0.566;
     feedForwardVelocity = 0.0272;
     feedForwardAcceleration = 0.00308;
 
-    //talonPidCruiseVelocity = 2250 * 4;
     talonPidCruiseVelocity = 2250*5;
     talonPidAcceleration = 2250 *2;
-   // talonPidAcceleration = 1125 *1;
     talonPidSmoothing = 3;
   }
 
