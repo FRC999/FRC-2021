@@ -8,33 +8,49 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.Robot;
 
 public class AutoSlalomPathCommandGroup extends CommandGroup {
+  private static double targetAngle = 0;
   /**
    * Add your docs here.
    */
   public AutoSlalomPathCommandGroup() {
+   
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
-   addSequential(new DriveTurnCommand(-45));
-   addSequential(new DriveForwardCommand(106));
-   addSequential(new DriveTurnCommand(45));
+
+    //DriveForwardCommand arguments are in inches
+    //DriveTurnCommand wants arguments in relative angle cw = pos, ccw = neg
+    targetAngle = -45;
+    addSequential(new DriveTurnCommand(targetAngle));
+    addSequential(new DriveForwardCommand(106));
+    //targetAngle = (current heading - desired heading)*-1
+    targetAngle = (Robot.navXSubsystem.getYaw()-(0))*-1;
+    addSequential(new DriveTurnCommand(targetAngle));
    addSequential(new DriveForwardCommand(104));
-   addSequential(new DriveTurnCommand(45));
+   targetAngle = (Robot.navXSubsystem.getYaw()-(45))*-1;
+   addSequential(new DriveTurnCommand(targetAngle));
    addSequential(new DriveForwardCommand(106));
-   addSequential(new DriveTurnCommand(-45));
+   targetAngle = (Robot.navXSubsystem.getYaw()-(-45))*-1;
+   addSequential(new DriveTurnCommand(targetAngle));
    addSequential(new DriveForwardCommand(58));
-   addSequential(new DriveTurnCommand(-45));
+   targetAngle = (Robot.navXSubsystem.getYaw()-(-135))*-1;
+   addSequential(new DriveTurnCommand(targetAngle));
    addSequential(new DriveForwardCommand(50));
-   addSequential(new DriveTurnCommand(-45));
+   targetAngle = (Robot.navXSubsystem.getYaw()-(-225))*-1;
+   addSequential(new DriveTurnCommand(targetAngle));
    addSequential(new DriveForwardCommand(100));
-   addSequential(new DriveTurnCommand(45));
+   targetAngle = (Robot.navXSubsystem.getYaw()-(-180))*-1;
+   addSequential(new DriveTurnCommand(targetAngle));
    addSequential(new DriveForwardCommand(124));
-   addSequential(new DriveTurnCommand(45));
+   targetAngle = (Robot.navXSubsystem.getYaw()-(-135))*-1;
+   addSequential(new DriveTurnCommand(targetAngle));
    addSequential(new DriveForwardCommand(100));
-   addSequential(new DriveTurnCommand(-45));
+   targetAngle = (Robot.navXSubsystem.getYaw()-(-180))*-1;
+   addSequential(new DriveTurnCommand(-targetAngle));
    addSequential(new DriveForwardCommand(24));
    addSequential(new DriveStopCommand());
 
