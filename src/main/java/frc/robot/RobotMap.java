@@ -31,10 +31,10 @@ public class RobotMap {
   public final static double startingPoseY = 13.5;
 
   // Drivetrain Motor Controllers
-  public final static int frontLeftDriveMotorControllerID = 4;
-  public final static int backLeftDriveMotorControllerID = 3;
-  public final static int frontRightDriveMotorControllerID = 2;
-  public final static int backRightDriveMotorControllerID = 1;
+  public final static int frontLeftDriveMotorControllerID = 3;
+  public final static int backLeftDriveMotorControllerID = 4;
+  public final static int frontRightDriveMotorControllerID = 1;
+  public final static int backRightDriveMotorControllerID = 2;
 
   // Intake motor controllers
   public final static int intakeMotorControllerID = 12;
@@ -124,7 +124,6 @@ public class RobotMap {
 
 
   public static int falconBotSwitchPortNumber = 0;
-  public static boolean isFalconBot;
   public static boolean isSplitStick;
 
   // The difference between the left and right side encoder values when the robot
@@ -206,4 +205,6 @@ public class RobotMap {
    * Talon PID methods often demand slot ID's, so we need to do this :(
    */
   public final static int SLOT_0 = 0;
+
+  public static final boolean enableShooter = false;
 }

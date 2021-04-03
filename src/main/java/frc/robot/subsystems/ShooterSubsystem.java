@@ -27,13 +27,9 @@ public class ShooterSubsystem extends Subsystem {
     shooterMotorController.configFactoryDefault();
     panMotorController.configFactoryDefault();
 
-    if (RobotMap.isFalconBot) {
-      panMotorController.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
-      panMotorController.configFeedbackNotContinuous(true, RobotMap.configureTimeoutMs);
-    } else {
-      panMotorController.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-      panMotorController.setSelectedSensorPosition(0);
-    }
+    panMotorController.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
+    panMotorController.configFeedbackNotContinuous(true, RobotMap.configureTimeoutMs);
+    
 
     tiltMotorController.configFactoryDefault();
     tiltMotorController.configSelectedFeedbackSensor(FeedbackDevice.Analog);

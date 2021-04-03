@@ -88,15 +88,9 @@ public class Robot extends TimedRobot {
      */
     Robot.navXSubsystem.zeroYaw();
 
-    RobotMap.isFalconBot = true;
-    System.out.println("falconBotSwitch = "+ RobotMap.isFalconBot);
-
     // Change to reflect current robot
-    if (RobotMap.isFalconBot){
-      driveSubsystem = new DriveSubsystemFalconBot();      
-    }else{
-      driveSubsystem = new DriveSubsystemFrankenbot();
-    }
+    driveSubsystem = new DriveSubsystemFrankenbot();
+    
     System.out.println("Type of drive subsystem: " + driveSubsystem.getClass());
     RobotMap.isSplitStick = true;
     
@@ -117,11 +111,12 @@ public class Robot extends TimedRobot {
     // Don't start kinematics untill we're ready
     navigationSubsystem = new NavigationControlSubsystem(driveSubsystem, navXSubsystem);
 
-
-    Robot.shooterSubsystem.configureShooterControllers();
-    Robot.shooterSubsystem.configurePanMotorControllerForPosition();
-    Robot.shooterSubsystem.configureTiltMotorControllerForPosition();
-    Robot.shooterSubsystem.zeroTiltPot();
+    if(RobotMap.enableShooter){
+      Robot.shooterSubsystem.configureShooterControllers();
+      Robot.shooterSubsystem.configurePanMotorControllerForPosition();
+      Robot.shooterSubsystem.configureTiltMotorControllerForPosition();
+      Robot.shooterSubsystem.zeroTiltPot();
+    }
     
 
     oi = new OI();

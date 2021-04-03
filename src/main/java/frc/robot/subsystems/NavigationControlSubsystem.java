@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.util.Units;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 
@@ -65,6 +66,7 @@ public class NavigationControlSubsystem extends Subsystem {
     Rotation2d gyroAngle = navX.getHeading();
     double leftDistanceMeters = convertEncoderTicsToMeters(driveSubsystem.getLeftEncoder());
     double rightDistanceMeters = convertEncoderTicsToMeters(driveSubsystem.getRightEncoder());
+    Robot.smartDashboardSubsystem.updateMeterPrint(driveSubsystem.getLeftEncoder(), driveSubsystem.getRightEncoder());
     System.out.println(leftDistanceMeters);
     odometry.update(gyroAngle, leftDistanceMeters, rightDistanceMeters);
   }

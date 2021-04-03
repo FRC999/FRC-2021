@@ -89,6 +89,12 @@ public class SmartDashboardSubsystem extends Subsystem {
     SmartDashboard.putNumber("battery voltage", RobotController.getBatteryVoltage());
   }
 
+  public void updateMeterPrint(double left, double right){
+    SmartDashboard.putNumber("left m", left);
+    SmartDashboard.putNumber("right m", right);
+
+  }
+
   public void updateAllDisplays() {
     updateNavXValues();
     updateUltrasonicValues();
