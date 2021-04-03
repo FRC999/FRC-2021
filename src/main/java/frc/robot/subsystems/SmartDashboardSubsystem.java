@@ -30,6 +30,10 @@ public class SmartDashboardSubsystem extends Subsystem {
     // Set the default command for a subsystem here.
   }
 
+  public void updatePoseDisplay(){
+    SmartDashboard.putString("Pose", Robot.navigationSubsystem.getPosition().toString());
+  }
+
   public void updateShooterValues() {
     SmartDashboard.putString("Target Side", Robot.shooterSubsystem.whichSide());
     //SmartDashboard.putNumber("Tilt Encoder", Robot.shooterSubsystem.gettiltEncoder());

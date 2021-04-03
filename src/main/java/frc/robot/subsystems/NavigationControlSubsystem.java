@@ -65,6 +65,7 @@ public class NavigationControlSubsystem extends Subsystem {
     Rotation2d gyroAngle = navX.getHeading();
     double leftDistanceMeters = convertEncoderTicsToMeters(driveSubsystem.getLeftEncoder());
     double rightDistanceMeters = convertEncoderTicsToMeters(driveSubsystem.getRightEncoder());
+    System.out.println(leftDistanceMeters);
     odometry.update(gyroAngle, leftDistanceMeters, rightDistanceMeters);
   }
 
