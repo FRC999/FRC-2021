@@ -138,7 +138,6 @@ public class Robot extends TimedRobot {
     // shooterSubsystem.getPanEncoder();
     smartDashboardSubsystem.updateAllDisplays();
     navigationSubsystem.updateOdometer();
-    System.out.println(navigationSubsystem.getPosition());
     smartDashboardSubsystem.updatePoseDisplay();
   }
 

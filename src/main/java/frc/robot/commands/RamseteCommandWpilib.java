@@ -135,7 +135,6 @@ public class RamseteCommandWpilib extends Command {
   @Override
   public void initialize() {
     prevTime = -1;
-    System.out.println(trajectory);
     var initialState = trajectory.sample(0);
     prevSpeeds =
         kinematics.toWheelSpeeds(
@@ -161,6 +160,10 @@ public class RamseteCommandWpilib extends Command {
       prevTime = curTime;
       return;
     }
+
+    System.out.println("Current Location: " + pose.get())
+    System.out.println("Target Location: " + trajectory.sample(curTime))
+
 
     DifferentialDriveWheelSpeeds targetWheelSpeeds =
         kinematics.toWheelSpeeds(
