@@ -121,8 +121,8 @@ public class Robot extends TimedRobot {
 
     oi = new OI();
     sendableCommandChooser.addOption("OffOrigin",  new AutonomousTrajectoryRioCommand("OffOrigin.wpilib"));
-    sendableCommandChooser.setDefaultOption("Forward", new AutonomousTrajectoryRioCommand("10ftForward.wpilib"));
-  }
+    sendableCommandChooser.setDefaultOption("TestPath1s", new AutonomousTrajectoryRioCommand("TestPath1.wpilib"));
+  }       
 
   /**
    * This function is called every robot packet, no matter the mode. Use this for

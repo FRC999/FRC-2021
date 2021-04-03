@@ -34,8 +34,8 @@ public class AutonomousTrajectoryRioCommand extends RamseteCommandWpilib {
     }
 
     public void initialize(){
-        super.initialize();
         Robot.navigationSubsystem.zeroPose();
+        super.initialize();
     }
     
     public void execute(){

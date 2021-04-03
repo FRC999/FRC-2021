@@ -63,7 +63,10 @@ public class NavigationControlSubsystem extends Subsystem {
   }
 
   public void zeroPose(){
-    odometry.resetPosition(new Pose2d(RobotMap.startingPoseX, RobotMap.startingPoseY, new Rotation2d()), navX.getHeading());
+    System.out.println(getPosition());
+    System.out.println("Zeroing pose");
+    odometry = new DifferentialDriveOdometry(navX.getHeading(),new Pose2d(0,0, new Rotation2d()));
+    System.out.println(getPosition());
   }
 
   public void updateOdometer() {
