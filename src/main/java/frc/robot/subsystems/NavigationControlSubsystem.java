@@ -66,7 +66,8 @@ public class NavigationControlSubsystem extends Subsystem {
     Rotation2d gyroAngle = navX.getHeading();
     double leftDistanceMeters = convertEncoderTicsToMeters(driveSubsystem.getLeftEncoder());
     double rightDistanceMeters = convertEncoderTicsToMeters(driveSubsystem.getRightEncoder());
-    Robot.smartDashboardSubsystem.updateMeterPrint(driveSubsystem.getLeftEncoder(), driveSubsystem.getRightEncoder());
+    Robot.smartDashboardSubsystem.updateMeterPrint(leftDistanceMeters, rightDistanceMeters
+    );
     System.out.println(leftDistanceMeters);
     odometry.update(gyroAngle, leftDistanceMeters, rightDistanceMeters);
   }
