@@ -55,7 +55,7 @@ public class DriveSubsystemFalconBot extends DriveSubsystemBase {
     MMtalonPidD_Value0 = 0.1;
     MMtalonPidF_Value0 = 2.8;
     
-    MMtalonPidCruiseVelocity = 2250*5;
+    MMtalonPidCruiseVelocity = 2250*2;
     MMtalonPidAcceleration = 2250 *2;
     MMtalonPidSmoothing = 3;
   

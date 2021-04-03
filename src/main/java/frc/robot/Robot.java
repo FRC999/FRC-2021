@@ -125,7 +125,7 @@ public class Robot extends TimedRobot {
     
 
     oi = new OI();
-    sendableCommandChooser.setDefaultOption("Hello Alan!", new AutonomousTrajectoryRioCommand("TestTrajectory"));
+    sendableCommandChooser.setDefaultOption("Hello Alan!", new AutonomousTrajectoryRioCommand("TestPath1.wpilib"));
   }
 
   /**
