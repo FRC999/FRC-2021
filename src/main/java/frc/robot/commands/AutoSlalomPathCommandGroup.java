@@ -17,11 +17,6 @@ public class AutoSlalomPathCommandGroup extends CommandGroup {
    */
   public AutoSlalomPathCommandGroup() {
    
-    // Add Commands here:
-    // e.g. addSequential(new Command1());
-    // addSequential(new Command2());
-    // these will run in order.
-
     //DriveForwardCommand arguments are in inches
     //DriveTurnCommand wants arguments in relative angle cw = pos, ccw = neg
     targetAngle = -45;
@@ -53,6 +48,36 @@ public class AutoSlalomPathCommandGroup extends CommandGroup {
     addSequential(new DriveTurnCommand(-targetAngle));
     addSequential(new DriveForwardCommand(24));
     addSequential(new DriveStopCommand());
+
+     //***Relative turning based on encoder readings ..No heading corrections */
+    //DriveForwardCommand arguments are in inches
+    //DriveTurnCommand wants arguments in relative angle cw = pos, ccw = neg
+/** 
+    addSequential(new DriveTurnCommand(-45));
+    addSequential(new DriveForwardCommand(106));
+    addSequential(new DriveTurnCommand(45));
+    addSequential(new DriveForwardCommand(104));
+    addSequential(new DriveTurnCommand(45));
+    addSequential(new DriveForwardCommand(106));
+    addSequential(new DriveTurnCommand(-90));
+    addSequential(new DriveForwardCommand(58));
+    addSequential(new DriveTurnCommand(-90));
+    addSequential(new DriveForwardCommand(50));
+    addSequential(new DriveTurnCommand(-90));
+    addSequential(new DriveForwardCommand(100));
+    addSequential(new DriveTurnCommand(45));
+    addSequential(new DriveForwardCommand(124));
+    addSequential(new DriveTurnCommand(45));
+    addSequential(new DriveForwardCommand(100));
+    addSequential(new DriveTurnCommand(-45));
+    addSequential(new DriveForwardCommand(24));
+    addSequential(new DriveStopCommand());
+*/
+   
+    // Add Commands here:
+    // e.g. addSequential(new Command1());
+    // addSequential(new Command2());
+    // these will run in order.
 
     // To run multiple commands at the same time,
     // use addParallel()
