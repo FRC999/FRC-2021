@@ -27,8 +27,8 @@ public class RobotMap {
    * the short end distance 5.0, 13.5 in 2020/2021 games mean 5 meters along the
    * long side and in the center along the short end
    */
-  public final static double startingPoseX = 5.0;
-  public final static double startingPoseY = 13.5;
+  public final static double startingPoseX = 4.162;
+  public final static double startingPoseY = 7.0;
 
   // Drivetrain Motor Controllers
   public final static int frontLeftDriveMotorControllerID = 3;

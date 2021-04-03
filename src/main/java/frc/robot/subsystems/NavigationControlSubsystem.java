@@ -59,7 +59,7 @@ public class NavigationControlSubsystem extends Subsystem {
      * that the initial vector was zeroed properly in the Robot class.
      */
     odometry = new DifferentialDriveOdometry(navX.getHeading(),
-        new Pose2d(0, 0, new Rotation2d()));
+        new Pose2d(RobotMap.startingPoseX, RobotMap.startingPoseY, new Rotation2d()));
   }
 
   public void zeroPose(){
