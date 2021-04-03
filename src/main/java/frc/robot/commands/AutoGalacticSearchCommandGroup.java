@@ -20,6 +20,8 @@ public class AutoGalacticSearchCommandGroup extends CommandGroup {
 
     //DriveForwardCommand arguments are in inches
     //DriveTurnCommand wants arguments in relative angle cw = pos, ccw = neg
+    addSequential(new IntakeDownCommand());
+    addSequential(new IntakeInCommand());
     targetAngle = 90;
     addSequential(new DriveForwardCommand(60));
     //targetAngle = (current heading - desired heading)*-1
@@ -37,18 +39,20 @@ public class AutoGalacticSearchCommandGroup extends CommandGroup {
     targetAngle = (Robot.navXSubsystem.getYaw()-(-62))*-1;
     addSequential(new DriveTurnCommand(targetAngle));
     addSequential(new DriveForwardCommand(67));
-    targetAngle = (Robot.navXSubsystem.getYaw()-(0))*-1;
+    targetAngle = (Robot.navXSubsystem.getYaw()-(-90))*-1;
     addSequential(new DriveTurnCommand(targetAngle));
     addSequential(new DriveForwardCommand(30));
     targetAngle = (Robot.navXSubsystem.getYaw()-(45))*-1;
     addSequential(new DriveTurnCommand(targetAngle));
-    addSequential(new DriveForwardCommand(140));
+    addSequential(new DriveForwardCommand(191));
     addSequential(new DriveStopCommand());
 
      //***Relative turning based on encoder readings ..No heading corrections */
     //DriveForwardCommand arguments are in inches
     //DriveTurnCommand wants arguments in relative angle cw = pos, ccw = neg
 /** 
+    addSequential(new IntakeDownCommand());
+    addSequential(new IntakeInCommand());
     addSequential(new DriveForwardCommand(60));
     addSequential(new DriveTurnCommand(90));
     addSequential(new DriveForwardCommand(30));
@@ -60,10 +64,10 @@ public class AutoGalacticSearchCommandGroup extends CommandGroup {
     addSequential(new DriveForwardCommand(32));
     addSequential(new DriveTurnCommand(28));
     addSequential(new DriveForwardCommand(67));
-    addSequential(new DriveTurnCommand(62));
+    addSequential(new DriveTurnCommand(-28));
     addSequential(new DriveForwardCommand(30));
-    addSequential(new DriveTurnCommand(45));
-    addSequential(new DriveForwardCommand(140));
+    addSequential(new DriveTurnCommand(135));
+    addSequential(new DriveForwardCommand(191));
     addSequential(new DriveStopCommand());
 */
    
