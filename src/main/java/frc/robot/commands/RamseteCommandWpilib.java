@@ -161,8 +161,8 @@ public class RamseteCommandWpilib extends Command {
       return;
     }
 
-    System.out.println("Current Location: " + pose.get())
-    System.out.println("Target Location: " + trajectory.sample(curTime))
+    System.out.println("Current Location: " + pose.get());
+    System.out.println("Target Location: " + trajectory.sample(curTime));
 
 
     DifferentialDriveWheelSpeeds targetWheelSpeeds =
