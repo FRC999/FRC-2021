@@ -120,7 +120,8 @@ public class Robot extends TimedRobot {
     
 
     oi = new OI();
-    sendableCommandChooser.setDefaultOption("Hello Alan!", new AutonomousTrajectoryRioCommand("TestPath1.wpilib"));
+    sendableCommandChooser.addOption("OffOrigin",  new AutonomousTrajectoryRioCommand("OffOrigin.wpilib"));
+    sendableCommandChooser.setDefaultOption("Forward", new AutonomousTrajectoryRioCommand("10ftForward.wpilib"));
   }
 
   /**
