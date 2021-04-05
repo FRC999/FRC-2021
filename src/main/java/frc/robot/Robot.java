@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AutonomousTrajectoryRioCommand;
+import frc.robot.commands.AutonomousTrajectorySlalomRioCommand;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.MoveOffLineAuto;
 import frc.robot.commands.RealSmartAutoCommand;
@@ -89,7 +90,7 @@ public class Robot extends TimedRobot {
     Robot.navXSubsystem.zeroYaw();
 
     // Change to reflect current robot
-    driveSubsystem = new DriveSubsystemFrankenbot();
+    driveSubsystem = new DriveSubsystemFalconBot();
     
     System.out.println("Type of drive subsystem: " + driveSubsystem.getClass());
     RobotMap.isSplitStick = true;
