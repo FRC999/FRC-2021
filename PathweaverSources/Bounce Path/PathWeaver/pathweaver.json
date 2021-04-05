@@ -3,7 +3,7 @@
   "exportUnit": "Always Meters",
   "maxVelocity": 5.0,
   "maxAcceleration": 2.0,
-  "wheelBase": 2.5,
-  "gameName": "Barrel Racing Path",
-  "outputDir": "../../../src/main/deploy"
+  "wheelBase": 2.0,
+  "gameName": "Bounce Path",
+  "outputDir": "../../src/main/deploy"
 }
