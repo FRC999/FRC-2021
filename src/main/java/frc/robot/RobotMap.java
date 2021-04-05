@@ -27,11 +27,9 @@ public class RobotMap {
    * the short end distance 5.0, 13.5 in 2020/2021 games mean 5 meters along the
    * long side and in the center along the short end
    */
-  public static double startingPoseX, startingPoseY;
-
-  startingPoseX = 0.9144;
+  public static double startingPoseX = 0.9144;
   // Note that the Slalom path requires a different value
-  startingPoseY = 2.286;
+  public static double startingPoseY = 2.286;
 
   // Drivetrain Motor Controllers
   public final static int frontLeftDriveMotorControllerID = 3;
