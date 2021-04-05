@@ -137,7 +137,6 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     // shooterSubsystem.getPanEncoder();
     smartDashboardSubsystem.updateAllDisplays();
-    navigationSubsystem.updateOdometer();
     smartDashboardSubsystem.updatePoseDisplay();
   }
 

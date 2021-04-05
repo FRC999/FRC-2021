@@ -55,26 +55,36 @@ public class NavigationControlSubsystem extends Subsystem {
     /**
      * Note that DifferentialDriveOdometry contructor was revised since team 5190
      * posted their video The parameters listed here were gathered from WPI
-     * documentation as well as the document created by Team 8027. I also assume
-     * that the initial vector was zeroed properly in the Robot class.
+     * documentation as well as the document created by Team 8027. 
+     * 
+     * The initial heading of the navX need not be zeroed for this to function.
      */
     odometry = new DifferentialDriveOdometry(navX.getHeading(),
         new Pose2d(RobotMap.startingPoseX, RobotMap.startingPoseY, new Rotation2d()));
   }
-
+  /**
+   * Return robot pose to starting position (as set in RobotMap)
+   * Note that we face due east by default, and that there is not currently a lever
+   * to change that.
+   */
   public void zeroPose(){
-    System.out.println(getPosition());
-    System.out.println("Zeroing pose");
-    odometry = new DifferentialDriveOdometry(navX.getHeading(),new Pose2d(0,0, new Rotation2d()));
-    System.out.println(getPosition());
+    /**
+     * This method of odometry assumes that encoders are zeroed.  That fact is 
+     * documented, but your author missed it in his rush, and wasted precious time
+     * trying to debug it.
+     */
+    odometry.resetPosition(new Pose2d(RobotMap.startingPoseX, RobotMap.startingPoseY, 
+        new Rotation2d()), navX.getHeading());
+    driveSubsystem.zeroDriveEncoders(); 
   }
 
   public void updateOdometer() {
     Rotation2d gyroAngle = navX.getHeading();
+
     double leftDistanceMeters = convertEncoderTicsToMeters(driveSubsystem.getLeftEncoder());
     double rightDistanceMeters = convertEncoderTicsToMeters(driveSubsystem.getRightEncoder());
-    Robot.smartDashboardSubsystem.updateMeterPrint(leftDistanceMeters, rightDistanceMeters
-    );
+    Robot.smartDashboardSubsystem.updateMeterPrint(leftDistanceMeters, rightDistanceMeters);
+
     odometry.update(gyroAngle, leftDistanceMeters, rightDistanceMeters);
   }
 
