@@ -18,6 +18,7 @@ import frc.robot.commands.*;
  * the robot.
  */
 public class OI {
+  // TODO: This class needs SERIOUS cleanup ASAP
  
   public static int driveStickPort = 0;
   public static int copilotPort = 2;
@@ -51,9 +52,11 @@ public class OI {
   Button LoaderDownButton = new JoystickButton(turnStick, 4);
   Button ShooterTiltSetpointButton = new JoystickButton(turnStick, 5);
   Button ShooterTiltZeroButton = new JoystickButton(turnStick, 6);
-  Button AutoSlalomButton = new JoystickButton(turnStick, 9);
-  Button AutoTest1Button = new JoystickButton(turnStick, 11);
-  Button AutoTest2Button = new JoystickButton(turnStick, 12);
+  Button BouncePathTrajectoryButton = new JoystickButton(turnStick, 8);
+  Button SlalomTrajectoryButton = new JoystickButton(turnStick, 9);
+  Button BarrelRacingTrajectoryButton = new JoystickButton(turnStick, 10);
+  Button TenForwardTrajectoryButton = new JoystickButton(turnStick, 11);
+  Button CircleOfLifeTrajectoryButton = new JoystickButton(turnStick, 12);
  // Button ZeroFangsButton = new JoystickButton(turnStick, 7);
  
 
@@ -94,13 +97,15 @@ public class OI {
      ShooterTiltSetpointButton.whileHeld(new ShooterTiltGoToSetpointCommand());
      ShooterTiltZeroButton.whileHeld(new ShooterTiltGoToZeroCommand());
      //runTrajectory.whenPressed(new AutonomousTrajectoryRioCommand("TestTrajectory"));
-     AutoSlalomButton.whenPressed(new AutoSlalomPathCommandGroup());
-     AutoTest1Button.whenPressed(new DriveTurnCommand(-45));
-     AutoTest2Button.whenPressed(new DriveTurnCommand(45));
+     
      ZeroYawButton.whenPressed( new NavXZeroYawCommand());
 
      //Left Joystick
-
+     BouncePathTrajectoryButton.whenPressed(new AutonomousTrajectoryRioCommand("BouncePath.wpilib"));
+     SlalomTrajectoryButton.whenPressed(new AutonomousTrajectorySlalomRioCommand());
+     BarrelRacingTrajectoryButton.whenPressed(new AutonomousTrajectoryRioCommand("BarrelRacing.wpilib"));
+     TenForwardTrajectoryButton.whenPressed(new AutonomousTrajectoryRioCommand("10ftForward.wpilib"));
+     CircleOfLifeTrajectoryButton.whenPressed(new AutonomousTrajectoryRioCommand("CircleOfLife.wpilib"));
 
 
     //Button Board

@@ -120,8 +120,14 @@ public class Robot extends TimedRobot {
     
 
     oi = new OI();
+    sendableCommandChooser.addOption("Bounce Path",  new AutonomousTrajectoryRioCommand("BouncePath.wpilib"));
+    sendableCommandChooser.addOption("Slalom",  new AutonomousTrajectorySlalomRioCommand());
+    sendableCommandChooser.addOption("Barrel Racing",  new AutonomousTrajectoryRioCommand("BarrelRacing.wpilib"));
+    sendableCommandChooser.addOption("10ft Forward", new AutonomousTrajectoryRioCommand("10ftForward.wpilib"));
+    sendableCommandChooser.addOption("Circle of Life",  new AutonomousTrajectoryRioCommand("CircleOfLife.wpilib"));
+
     sendableCommandChooser.addOption("OffOrigin",  new AutonomousTrajectoryRioCommand("OffOrigin.wpilib"));
-    sendableCommandChooser.setDefaultOption("TestPath1s", new AutonomousTrajectoryRioCommand("TestPath1.wpilib"));
+    sendableCommandChooser.setDefaultOption("TestPath1", new AutonomousTrajectoryRioCommand("TestPath1.wpilib"));
   }       
 
   /**
