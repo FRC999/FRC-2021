@@ -30,11 +30,12 @@ public class DriveSubsystemFalconBot extends DriveSubsystemBase {
     drive = new DifferentialDrive(frontLeftDriveTalonFX, frontRightDriveTalonFX);
 
     encoderUnitsPerShaftRotation = 2048;
-    encoderUnitsPerRobotRotation = 80700;// thats the SUM of the two (this is just a rough guess
+    encoderUnitsPerRobotRotation = 66500;// thats the SUM of the two (this is just a rough guess
     distanceBetweenWheels = 20;
     wheelDiameter = 6;
     robotLength = 35;
     robotWidth = 23;
+    gearboxReduction = 11.25; // enter 1 if there is no reduction
 
     // I am pretty sure that the configuration tool doesn't want the gains modified --JW
     talonPidP_Value0 = 0.141;// * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
@@ -50,13 +51,13 @@ public class DriveSubsystemFalconBot extends DriveSubsystemBase {
     talonPidSmoothing = 3;
   
     //Gains for MotionMagic
-    MMtalonPidP_Value0 = 0.2 ;//* RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
+    MMtalonPidP_Value0 = 0.75 ;//* RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
     MMtalonPidI_Value0 = 0.005 ;//* RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
-    MMtalonPidD_Value0 = 0.1;
-    MMtalonPidF_Value0 = 2.8;
+    MMtalonPidD_Value0 = 0.01;
+    MMtalonPidF_Value0 = 2;
     
-    MMtalonPidCruiseVelocity = 2250*2;
-    MMtalonPidAcceleration = 2250 *2;
+    MMtalonPidCruiseVelocity = 2250*3;
+    MMtalonPidAcceleration = 2250 *3;
     MMtalonPidSmoothing = 3;
   
   }

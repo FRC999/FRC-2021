@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -53,7 +55,6 @@ public class Robot extends TimedRobot {
   public static ShuffleboardSubsystem shuffleBoardSubsystem = new ShuffleboardSubsystem();
   // public static Command visionCommand = new ShooterVisionCommand();
 
-
   public boolean TestBool = false;
   public static OI oi;
   Command autonomousCommand;
@@ -63,6 +64,8 @@ public class Robot extends TimedRobot {
   SendableChooser<String> sendableStringChooser = new SendableChooser<String>();
   SendableChooser<Integer> sendableIntegerChooser = new SendableChooser<Integer>();
   SendableChooser<Double> sendableDoubleChooser = new SendableChooser<Double>();
+
+  UsbCamera cam;
   // End sendable choosers
 
   /**
@@ -81,6 +84,8 @@ public class Robot extends TimedRobot {
     NetworkTableEntry testEntry = table.getEntry("test");
     testEntry.setDouble(10.5);
     System.out.println("Hit robotInit");
+
+    //cam = CameraServer.getInstance().startAutomaticCapture(1);
 
     /**
      * Zero Z axis; used in DriveSubsystembase to determine initial heading in

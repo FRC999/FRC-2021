@@ -9,33 +9,35 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
-public class ShooterRunWheelCommand extends Command {
-  private double speed;
+public class ShooterLockTurretToHeadingCommand extends Command {
+  private double heading;
 
-  public ShooterRunWheelCommand(double speed) {
+  public ShooterLockTurretToHeadingCommand(double heading) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.navXSubsystem);
     requires(Robot.shooterSubsystem);
+
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.shooterSubsystem.shoot(speed);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //Robot.shooterSubsystem.shoot(1);
-   Robot.shooterSubsystem.shoot(speed);
+    Robot.shooterSubsystem.panToSetpoint(RobotMap.shooterPanMotorEncoderFrontVal+Math.round((heading-Robot.navXSubsystem.getYaw())* RobotMap.shooterPanMotorEncoderTicksPerDegree)); 
+      
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true
@@ -47,6 +49,5 @@ public class ShooterRunWheelCommand extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }
