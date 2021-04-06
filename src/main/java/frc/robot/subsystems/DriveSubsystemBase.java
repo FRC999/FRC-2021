@@ -37,14 +37,22 @@ public abstract class DriveSubsystemBase extends Subsystem {
   protected int talonPidAcceleration, talonPidCruiseVelocity, talonPidSmoothing;
   protected int MMtalonPidAcceleration, MMtalonPidCruiseVelocity, MMtalonPidSmoothing;
   /**
-   * Number of encoder units required to rotate wheels once
+   * Number of encoder units required to rotate encoder shafts once
+   * WHEELS MAY HAVE A DIFFERENT NUMBER
    */
   public int encoderUnitsPerShaftRotation;
 
+    /**
+   * Ratio between encoder input and shaft input (eg, encoder/shaft)
+   * 
+   * (Note that there might be a different ratio for MOTOR output vs shaft output:
+   * this is purely for calculating encoder tics)
+   */
+  protected double encoderGearReduction = 1;
+
   /**
-   * Average between left and right encoders 
-   * following a 360 degree rotation
-   * manually adjusted for drivetrain backlash
+   * Average between left and right encoders following a 360 degree rotation.
+   * Empherically measured and manually adjusted for drivetrain backlash
    */
   public int encoderUnitsPerRobotRotation;
 
@@ -316,8 +324,8 @@ public abstract class DriveSubsystemBase extends Subsystem {
    * @return encoder tics in double form, for precision(tm)
    */
   public double getEncoderTicksPerInch(){
-    // tics per rotation / number of inches per rotation
-    return encoderUnitsPerShaftRotation / (wheelDiameter*Math.PI);
+    // tics per rotation / number of inches per rotation * gearReduction
+    return encoderUnitsPerShaftRotation / (wheelDiameter*Math.PI) * encoderGearReduction;
   }
 
   /**  
