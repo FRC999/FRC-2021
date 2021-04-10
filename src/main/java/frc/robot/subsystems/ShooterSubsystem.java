@@ -163,8 +163,8 @@ public class ShooterSubsystem extends Subsystem {
     panMotorController.set(ControlMode.PercentOutput, 0);
   }
 
-  public void panToSetpoint(int setpoint){
-    panMotorController.set(ControlMode.Position, setpoint);
+  public void panToSetpoint(long panSetpoint){
+    panMotorController.set(ControlMode.Position, panSetpoint);
   }
 
   /**
@@ -382,9 +382,17 @@ public void zeroTiltPot() {
     tiltMotorController.set(ControlMode.PercentOutput, output);
   }
 
+  public void testWheelSpeed(){
+    //System.out.println("Testing TILT");
+    double maxSpeed = 1;
+    double output = (Robot.oi.turnStick.getThrottle()*1) * maxSpeed;
+    Robot.smartDashboardSubsystem.updateShooterValues();
+    shooterMotorController.set(ControlMode.PercentOutput, output);  
+  }
+
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new ShooterStandbyCommand());
+    //setDefaultCommand(new ShooterStandbyCommand());
     //setDefaultCommand(new ShooterVisionCommand());
   }
 

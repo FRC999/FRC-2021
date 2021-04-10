@@ -12,10 +12,13 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 public class ShooterTiltGoToSetpointCommand extends Command {
-  public ShooterTiltGoToSetpointCommand() {
+  private int encoderSetpoint;
+
+  public ShooterTiltGoToSetpointCommand(int elevation) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.shooterSubsystem);
+    encoderSetpoint = elevation;
   }
 
   // Called just before this Command runs the first time
@@ -27,7 +30,7 @@ public class ShooterTiltGoToSetpointCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.shooterSubsystem.tiltGoToSetpoint(RobotMap.tiltFangs10Feet);
+    Robot.shooterSubsystem.tiltGoToSetpoint(encoderSetpoint);
   }
 
   // Make this return true when this Command no longer needs to run execute()

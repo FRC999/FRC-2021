@@ -9,33 +9,33 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.DriveSubsystemBase;
 
-public class ShooterRunWheelCommand extends Command {
-  private double speed;
+public class DriveToSetpointCommand extends Command {
+  private int encoderSetpoint;
 
-  public ShooterRunWheelCommand(double speed) {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.shooterSubsystem);
+  public DriveToSetpointCommand(int setpoint) {
+    requires(Robot.driveSubsystem);
+    encoderSetpoint =  (int) (setpoint * Robot.driveSubsystem.getEncoderTicksPerInch());
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.shooterSubsystem.shoot(speed);
+    DriveSubsystemBase.drive.setSafetyEnabled(false);
+    Robot.driveSubsystem.simpleMotionMagic(encoderSetpoint, encoderSetpoint);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //Robot.shooterSubsystem.shoot(1);
-   Robot.shooterSubsystem.shoot(speed);
+    Robot.smartDashboardSubsystem.updateEncoderValue();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return Robot.driveSubsystem.isOnTarget(encoderSetpoint,encoderSetpoint,50);
   }
 
   // Called once after isFinished returns true
@@ -47,6 +47,5 @@ public class ShooterRunWheelCommand extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }
