@@ -38,14 +38,13 @@ public class DriveSubsystemFrankenbot extends DriveSubsystemBase {
     robotWidth = 33;
     wheelDiameter = 4;
 
-    talonPidP_Value0 = 0.75 * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
-    talonPidI_Value0 = 0.005 * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
-    talonPidD_Value0 = .1;
-    talonPidF_Value0 = 0.227; 
+    trajectoryRioPidP_Value = 0.75 * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
+    trajectoryRioPidI_Value0 = 0.005 * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
+    trajectoryRioPidD_Value0 = .1;
 
-    talonPidCruiseVelocity = 2250;
-    talonPidAcceleration = 2250;
-    talonPidSmoothing = 3;
+    motionMagicCruiseVelocity = 2250;
+    motionMagicAcceleration = 2250;
+    motionMagicSmoothing = 3;
 
     feedForwardStatic = 0.834;
     feedForwardVelocity = 0.816;
