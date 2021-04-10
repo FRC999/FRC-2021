@@ -38,13 +38,13 @@ public class DriveSubsystemFalconBot extends DriveSubsystemBase {
     robotWidth = 23;
 
     // I am pretty sure that the configuration tool doesn't want the gains modified --JW
-    talonPidP_Value0 = 0.141;// * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
+    talonPidP_Value0 = 1.43;// * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
     talonPidI_Value0 = 0.00;// * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
     talonPidD_Value0 = 0;
     
-    feedForwardStatic = 0.566;
-    feedForwardVelocity = 0.0272;
-    feedForwardAcceleration = 0.00308;
+    feedForwardStatic = 0.541;
+    feedForwardVelocity = 0.305;
+    feedForwardAcceleration = 0.0362;
 
     talonPidCruiseVelocity = 2250*5;
     talonPidAcceleration = 2250 *2;
