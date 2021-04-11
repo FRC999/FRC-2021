@@ -30,35 +30,36 @@ public class DriveSubsystemFalconBot extends DriveSubsystemBase {
     drive = new DifferentialDrive(frontLeftDriveTalonFX, frontRightDriveTalonFX);
 
     encoderUnitsPerShaftRotation = 2048;
-    encoderUnitsPerRobotRotation = 80700;// thats the SUM of the two (this is just a rough guess
     encoderGearReduction = 11.25;
+    encoderUnitsPerRobotRotation = 66500;// thats the SUM of the two (this is just a rough guess
     distanceBetweenWheels = 20;
     wheelDiameter = 6;
     robotLength = 35;
     robotWidth = 23;
+    gearboxReduction = 11.25; // enter 1 if there is no reduction
 
     // I am pretty sure that the configuration tool doesn't want the gains modified --JW
-    talonPidP_Value0 = 0.141;// * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
-    talonPidI_Value0 = 0.00;// * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
-    talonPidD_Value0 = 0;
+    trajectoryRioPidP_Value = 1.43;// * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
+    trajectoryRioPidI_Value0 = 0.00;// * RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
+    trajectoryRioPidD_Value0 = 0;
     
-    feedForwardStatic = 0.566;
-    feedForwardVelocity = 0.0272;
-    feedForwardAcceleration = 0.00308;
+    feedForwardStatic = 0.541;
+    feedForwardVelocity = 0.305;
+    feedForwardAcceleration = 0.0362;
 
-    talonPidCruiseVelocity = 2250*5;
-    talonPidAcceleration = 2250 *2;
-    talonPidSmoothing = 3;
+    motionMagicCruiseVelocity = 2250*5;
+    motionMagicAcceleration = 2250 *2;
+    motionMagicSmoothing = 3;
   
     //Gains for MotionMagic
-    MMtalonPidP_Value0 = 0.2 ;//* RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
-    MMtalonPidI_Value0 = 0.005 ;//* RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
-    MMtalonPidD_Value0 = 0.1;
-    MMtalonPidF_Value0 = 2.8;
+    motionMagicPidP_Value = 0.75 ;//* RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
+    motionMagicPidI_Value = 0.005 ;//* RobotMap.fullMotorOutput / encoderUnitsPerShaftRotation;
+    motionMagicPidD_Value = 0.01;
+    motionMagicPidF_Value = 2;
     
-    MMtalonPidCruiseVelocity = 2250*2;
-    MMtalonPidAcceleration = 2250 *2;
-    MMtalonPidSmoothing = 3;
+    motionMagicCruiseVelocity = 2250*3;
+    motionMagicAcceleration = 2250 *3;
+    motionMagicSmoothing = 3;
   
   }
 

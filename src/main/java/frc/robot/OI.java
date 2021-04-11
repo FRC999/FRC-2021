@@ -40,8 +40,8 @@ public class OI {
   //int turret = new turnStick.getPov();
   Button ZeroFangsButton = new JoystickButton(driveStick, 8); 
   Button ShooterStayOnButton = new JoystickButton(driveStick, 10); 
-  Button DriveForwardButton = new JoystickButton(driveStick, 11); 
-  Button DriveBackwardButton = new JoystickButton(driveStick, 12); 
+  //Button DriveForwardButton = new JoystickButton(driveStick, 11); 
+ // Button DriveBackwardButton = new JoystickButton(driveStick, 12); 
   //Button StatusReport = new JoystickButton(driveStick,11);
   
 
@@ -58,16 +58,22 @@ public class OI {
   Button TenForwardTrajectoryButton = new JoystickButton(turnStick, 11);
   Button CircleOfLifeTrajectoryButton = new JoystickButton(turnStick, 12);
  // Button ZeroFangsButton = new JoystickButton(turnStick, 7);
+  Button ShooterWheelManual = new JoystickButton(turnStick, 7);
+  Button ShooterNavLockButton = new JoystickButton(turnStick, 8);
+  Button AutoTest1Button = new JoystickButton(turnStick, 9);
+  //Button AutoTest2Button = new JoystickButton(turnStick, 12);
+  Button ZeroYawButton = new JoystickButton(turnStick, 10);
  
 
   //Button Board
 // *** Temporary reasign buttons for testing
-//  Button IntakeInButton = new JoystickButton(buttonBox, 1);
- // Button IntakeOutButton = new JoystickButton(buttonBox, 2);
-  //Button IntakeStandbyButton = new JoystickButton(buttonBox, 3);
-//  Button IntakeUpButton = new JoystickButton(buttonBox, 4);
-//  Button IntakeDownButton = new JoystickButton(buttonBox, 5);
-  Button ZeroYawButton = new JoystickButton(turnStick, 10);
+  Button GotoGreenZoneButton = new JoystickButton(buttonBox, 1);
+  Button ShootingFromGreenZoneButton = new JoystickButton(buttonBox, 2);
+  Button GotoYellowZoneButton = new JoystickButton(buttonBox, 4);
+  Button GotoBlueZoneButton = new JoystickButton(buttonBox, 7);
+  Button GotoRedZoneButton = new JoystickButton(buttonBox, 10);
+  Button GotoEndZoneButton = new JoystickButton(buttonBox, 12);
+ // Button ZeroYawButton = new JoystickButton(turnStick, 10);
  // Button LoaderUpButton = new JoystickButton(buttonBox, 7);
  // Button LoaderDownButton = new JoystickButton(buttonBox, 8);
   //Button LoaderStandbyButton = new JoystickButton(buttonBox, 9);
@@ -94,12 +100,22 @@ public class OI {
      //runIntake.whileHeld(new IntakeInCommand());
      //runIntake.whenReleased(new IntakeUpCommand());
      //intakeEject.whileHeld(new IntakeEject());
-     ShooterTiltSetpointButton.whileHeld(new ShooterTiltGoToSetpointCommand());
+     ShooterTiltSetpointButton.whileHeld(new ShooterTiltGoToSetpointCommand(706));
      ShooterTiltZeroButton.whileHeld(new ShooterTiltGoToZeroCommand());
      //runTrajectory.whenPressed(new AutonomousTrajectoryRioCommand("TestTrajectory"));
      
      ZeroYawButton.whenPressed( new NavXZeroYawCommand());
 
+     AutoTest1Button.whenPressed(new DriveZeroEncodersCommand());
+     //AutoTest2Button.whenPressed(new DriveForwardCommand(-60));
+     ZeroYawButton.whenPressed( new NavXZeroYawCommand());
+     GotoGreenZoneButton.whenPressed( new GoToShootingPositionCommand(-54,706));
+     GotoYellowZoneButton.whenPressed( new GoToShootingPositionCommand(-110,706));
+     GotoBlueZoneButton.whenPressed( new GoToShootingPositionCommand(-155,710));
+     GotoRedZoneButton.whenPressed( new GoToShootingPositionCommand(-215,690));
+     GotoEndZoneButton.whenPressed( new GoToShootingPositionCommand(-215,706));
+     ShootingFromGreenZoneButton.whenPressed( new ShooterRunWheelCommand(0.5));
+     ShooterNavLockButton.whenPressed(new ShooterLockTurretToHeadingCommand(0));
      //Left Joystick
      BouncePathTrajectoryButton.whenPressed(new AutonomousTrajectoryRioCommand("BouncePath.wpilib"));
      SlalomTrajectoryButton.whenPressed(new AutonomousTrajectorySlalomRioCommand());
@@ -122,9 +138,9 @@ public class OI {
     LoaderUpButton.whileHeld(new IntakeLoaderUpCommand());
     LoaderDownButton.whileHeld(new IntakeLoaderDownCommand());
     //LoaderStandbyButton.whileHeld(new IntakeStandbyCommand());
-    ShooterWheelOnButton.whileHeld(new ShooterRunWheelCommand());
-    ShooterWheelOnButton.whenReleased(new ShooterStandbyCommand());
-    ShooterStayOnButton.whenPressed(new ShooterRunWheelCommand());
+    ShooterWheelOnButton.whileHeld(new ShooterRunWheelCommand(1));
+    //ShooterWheelOnButton.whenReleased(new ShooterStandbyCommand());
+    ShooterStayOnButton.whenPressed(new ShooterRunWheelCommand(1));
     IntakeDownButton.whileHeld(new IntakeDownCommand());
     IntakeUpButton.whileHeld(new IntakeUpCommand());
     IntakeInButton.whileHeld(new IntakeInCommand());
@@ -138,13 +154,15 @@ public class OI {
 
     //fangsFullyBack.whenPressed(new ShooterTiltGoToSetpointCommand());
     visionTracking.whenPressed(new ShooterVisionCommand());
-    DriveForwardButton.whenPressed(new DriveForwardCommand(100800));
-    DriveBackwardButton.whenPressed(new DriveForwardCommand(-100800));
+    //DriveForwardButton.whenPressed(new DriveForwardCommand(24));
+    //[DriveBackwardButton.whenPressed(new DriveForwardCommand(-24));
     //visionTilt.whileHeld(new ShooterVisionTiltCommand());
     //fullShooter.whileHeld(new ShooterFullCommand());
     turretButton.whileHeld(new ShooterPanManuallyCommand());
     zeroTurret.whileHeld(new ShooterTurretCenterCommand());
     TiltManual.whileHeld(new ShooterTiltManuallyCommand());
+    ShooterWheelManual.whileHeld(new ShooterWheelSpeedManualCommand());
     //StatusReport.whileHeld(new StatusReport());
+
   }
 }

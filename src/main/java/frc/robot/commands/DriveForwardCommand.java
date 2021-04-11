@@ -18,11 +18,8 @@ public class DriveForwardCommand extends Command {
   int leftTarget;
 
   public DriveForwardCommand(int distance) {
-    requires(Robot.driveSubsystem);
-    driveDistance =  (int) (distance * Robot.driveSubsystem.getEncoderTicksPerInch());
-    //System.out.println("Distance: " + distance);
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(Robot.driveSubsystem);  
+    driveDistance =  (int) (distance * 1222);
   }
 
   // Called just before this Command runs the first time
@@ -35,9 +32,9 @@ public class DriveForwardCommand extends Command {
     rightTarget = driveDistance + rEncoder;
     Robot.driveSubsystem.simpleMotionMagic(leftTarget, rightTarget);
     
-    SmartDashboard.putNumber("Drive Distance", driveDistance);
-    SmartDashboard.putNumber("leftTarget",leftTarget);
-    SmartDashboard.putNumber("RightTarget", rightTarget);
+    //SmartDashboard.putNumber("Drive Distance", driveDistance);
+    //SmartDashboard.putNumber("leftTarget",leftTarget);
+    //SmartDashboard.putNumber("RightTarget", rightTarget);
   }
 
   // Called repeatedly when this Command is scheduled to run

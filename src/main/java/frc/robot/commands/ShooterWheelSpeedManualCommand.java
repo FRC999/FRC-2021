@@ -10,32 +10,28 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ShooterRunWheelCommand extends Command {
-  private double speed;
-
-  public ShooterRunWheelCommand(double speed) {
+public class ShooterWheelSpeedManualCommand extends Command {
+  public ShooterWheelSpeedManualCommand() {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.shooterSubsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.shooterSubsystem.shoot(speed);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //Robot.shooterSubsystem.shoot(1);
-   Robot.shooterSubsystem.shoot(speed);
+    Robot.shooterSubsystem.testWheelSpeed();
+ 
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true
@@ -47,6 +43,5 @@ public class ShooterRunWheelCommand extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }
