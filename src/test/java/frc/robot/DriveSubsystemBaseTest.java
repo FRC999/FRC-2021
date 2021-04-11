@@ -17,7 +17,7 @@ public abstract class DriveSubsystemBaseTest {
     public void testEncodersCalculation(){
         System.out.println(driveMeBase.getEncoderTicksPerInch());
         assertNotNull(driveMeBase.getEncoderTicksPerInch());
-        assertTrue("Ticks/inch is way too small",driveMeBase.getEncoderTicksPerInch()> 1000);
-        assertTrue("Ticks/inch is way too big", driveMeBase.getEncoderTicksPerInch() < 30000);
+        assertTrue("Ticks/inch is way too small",driveMeBase.getEncoderTicksPerInch()> 200);
+        assertTrue("Ticks/inch is way too big", driveMeBase.getEncoderTicksPerInch() < 3000);
     }
 }

@@ -1,6 +1,8 @@
 package frc.robot;
 
-import org.junit.Before;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.*;
 
 import frc.robot.subsystems.DriveSubsystemFrankenbot;
 
@@ -11,5 +13,10 @@ public class DriveSubsystemFrankenBotTest extends DriveSubsystemBaseTest{
     public void setupDriveSubsystem(){
         driveMeFrank = new DriveSubsystemFrankenbot();
         driveMeBase = driveMeFrank;
+    }
+
+    @Test
+    public void testEncodersCorrect(){
+        assertEquals(driveMeFrank.getEncoderTicksPerInch(),326,10);
     }
 }
