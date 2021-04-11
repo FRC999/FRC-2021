@@ -37,10 +37,9 @@ public class NavigationTrajectoriesAreValid {
     public void checkThatZeroIsStart() throws IOException{
         String trajectoryName = trajectoryFile.getName();
         assumeFalse(trajectoryName.contains("Slalom")); // Not fixable by field design
-        assumeFalse(trajectoryName.contains("TestTrajectory"));//TODO: remove test trajectory
         assumeFalse(trajectoryName.contains("Down")); //TODO: Fix Down trajectory to start facing forward
-        assumeFalse(trajectoryName.contains("BarrelRacing"));
         assumeFalse(trajectoryName.contains("CircleOfLife"));
+        assumeFalse(trajectoryName.contains("OffOrigin"));
         Trajectory t = TrajectoryUtil.fromPathweaverJson(trajectoryFile.toPath());
         Pose2d tstate = t.sample(0).poseMeters;
         Pose2d baseState = new Pose2d(RobotMap.startingPoseX, RobotMap.startingPoseY, new Rotation2d());
