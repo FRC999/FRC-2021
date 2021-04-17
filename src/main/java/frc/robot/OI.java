@@ -58,11 +58,12 @@ public class OI {
   Button TenForwardTrajectoryButton = new JoystickButton(turnStick, 11);
   Button CircleOfLifeTrajectoryButton = new JoystickButton(turnStick, 12);
  // Button ZeroFangsButton = new JoystickButton(turnStick, 7);
+  /*
   Button ShooterWheelManual = new JoystickButton(turnStick, 7);
   Button ShooterNavLockButton = new JoystickButton(turnStick, 8);
-  Button AutoTest1Button = new JoystickButton(turnStick, 9);
+  Button AutoTest1Button = new JoystickButton(turnStick, 9);*/
   //Button AutoTest2Button = new JoystickButton(turnStick, 12);
-  Button ZeroYawButton = new JoystickButton(turnStick, 10);
+  //Button ZeroYawButton = new JoystickButton(turnStick, 10);
  
 
   //Button Board
@@ -104,18 +105,18 @@ public class OI {
      ShooterTiltZeroButton.whileHeld(new ShooterTiltGoToZeroCommand());
      //runTrajectory.whenPressed(new AutonomousTrajectoryRioCommand("TestTrajectory"));
      
-     ZeroYawButton.whenPressed( new NavXZeroYawCommand());
+     //ZeroYawButton.whenPressed( new NavXZeroYawCommand());
 
-     AutoTest1Button.whenPressed(new DriveZeroEncodersCommand());
+     //AutoTest1Button.whenPressed(new DriveZeroEncodersCommand());
      //AutoTest2Button.whenPressed(new DriveForwardCommand(-60));
-     ZeroYawButton.whenPressed( new NavXZeroYawCommand());
+     //ZeroYawButton.whenPressed( new NavXZeroYawCommand());
      GotoGreenZoneButton.whenPressed( new GoToShootingPositionCommand(-54,706));
      GotoYellowZoneButton.whenPressed( new GoToShootingPositionCommand(-110,706));
      GotoBlueZoneButton.whenPressed( new GoToShootingPositionCommand(-155,710));
      GotoRedZoneButton.whenPressed( new GoToShootingPositionCommand(-215,690));
      GotoEndZoneButton.whenPressed( new GoToShootingPositionCommand(-215,706));
      ShootingFromGreenZoneButton.whenPressed( new ShooterRunWheelCommand(0.5));
-     ShooterNavLockButton.whenPressed(new ShooterLockTurretToHeadingCommand(0));
+     //ShooterNavLockButton.whenPressed(new ShooterLockTurretToHeadingCommand(0));
      //Left Joystick
      BouncePathTrajectoryButton.whenPressed(new AutonomousTrajectoryRioCommand("BouncePath.wpilib"));
      SlalomTrajectoryButton.whenPressed(new AutonomousTrajectorySlalomRioCommand());
@@ -161,7 +162,7 @@ public class OI {
     turretButton.whileHeld(new ShooterPanManuallyCommand());
     zeroTurret.whileHeld(new ShooterTurretCenterCommand());
     TiltManual.whileHeld(new ShooterTiltManuallyCommand());
-    ShooterWheelManual.whileHeld(new ShooterWheelSpeedManualCommand());
+    //ShooterWheelManual.whileHeld(new ShooterWheelSpeedManualCommand());
     //StatusReport.whileHeld(new StatusReport());
 
   }
