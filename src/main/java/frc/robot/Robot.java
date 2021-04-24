@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.AutonomousTrajectoryRioCommand;
-import frc.robot.commands.AutonomousTrajectorySlalomRioCommand;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.MoveOffLineAuto;
 import frc.robot.commands.RealSmartAutoCommand;
@@ -127,7 +126,6 @@ public class Robot extends TimedRobot {
 
     oi = new OI();
     sendableCommandChooser.addOption("Bounce Path",  new AutonomousTrajectoryRioCommand("BouncePath.wpilib"));
-    sendableCommandChooser.addOption("Slalom",  new AutonomousTrajectorySlalomRioCommand());
     sendableCommandChooser.addOption("Barrel Racing",  new AutonomousTrajectoryRioCommand("BarrelRacing.wpilib"));
     sendableCommandChooser.addOption("10ft Forward", new AutonomousTrajectoryRioCommand("10ftForward.wpilib"));
     sendableCommandChooser.addOption("Circle of Life",  new AutonomousTrajectoryRioCommand("CircleOfLife.wpilib"));

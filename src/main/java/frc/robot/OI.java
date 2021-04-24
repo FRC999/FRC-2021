@@ -84,7 +84,7 @@ public class OI {
     //DriveStickButton9.whenPressed(new Command());
     DriveStickButton10.whenPressed(new ShooterRunWheelCommand(1));
     //DriveStickButton11.whenPressed(new Command());
-    DriveStickButton12.whenPressed(new AutonomousTrajectorySlalomRioCommand());
+    DriveStickButton12.whenPressed(new AutonomousTrajectoryRioCommand("Slalom.wpilib"));
     DriveStickButton12.whenReleased(new DriveStopCommand());
 
     // *** TurnStick Commands Here
