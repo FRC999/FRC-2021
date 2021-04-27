@@ -10,10 +10,10 @@ public class AutonomousTrajectoryBarrelRun extends CommandGroup {
   /** Add your docs here. */
   public AutonomousTrajectoryBarrelRun() {
     // Add Commands here:
-    addSequential(new AutonomousTrajectoryRioCommand("BarrelRunPart1.wpilib"));
-    addSequential(new AutonomousTrajectoryRioCommand("BarrelRunPart2.wpilib"));
-    addSequential(new AutonomousTrajectoryRioCommand("BarrelRunPart3.wpilib"));
-    addSequential(new AutonomousTrajectoryRioCommand("BarrelRunPart4.wpilib"));
+    addSequential(new AutonomousTrajectoryRioCommand("BounchPathPart1.wpilib"));
+    addSequential(new AutonomousTrajectoryRioCommand("BounchPathPart2.wpilib"));
+    addSequential(new AutonomousTrajectoryRioCommand("BounchPathPart3.wpilib"));
+    addSequential(new AutonomousTrajectoryRioCommand("BounchPathPart4.wpilib"));
 
 
     // these will run in order.
