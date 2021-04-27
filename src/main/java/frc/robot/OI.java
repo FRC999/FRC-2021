@@ -84,7 +84,8 @@ public class OI {
     DriveStickButton9.whenPressed(new AutonomousTrajectoryBarrelRun());
     DriveStickButton9.whenReleased(new DriveStopCommand());
     DriveStickButton10.whenPressed(new ShooterRunWheelCommand(1));
-    //DriveStickButton11.whenPressed(new Command());
+    DriveStickButton11.whenPressed(new AutonomousTrajectoryBarrelRun());
+    DriveStickButton11.whenReleased(new DriveStopCommand());
     DriveStickButton12.whenPressed(new AutonomousTrajectoryRioCommand("Slalom.wpilib"));
     DriveStickButton12.whenReleased(new DriveStopCommand());
 
