@@ -15,7 +15,7 @@ import frc.robot.commands.ShooterVisionCommand;
 
 public class ShooterSubsystem extends Subsystem {
 
-  public static WPI_VictorSPX shooterMotorController = new WPI_VictorSPX(RobotMap.shooterWheelMotorControllerID);
+  public static WPI_TalonFX shooterMotorController = new WPI_TalonFX(RobotMap.shooterWheelMotorControllerID);
   public static WPI_TalonSRX panMotorController = new WPI_TalonSRX(RobotMap.shooterPanMotorControllerID);
   public WPI_TalonSRX tiltMotorController = new WPI_TalonSRX(RobotMap.ShooterTiltMotorControllerID);
   public Boolean fangsActivated = false;
