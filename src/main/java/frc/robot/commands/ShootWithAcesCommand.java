@@ -7,7 +7,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
@@ -26,9 +25,9 @@ public class ShootWithAcesCommand extends CommandGroup {
     // e.g. addParallel(new Command1());
     // addSequential(new Command2());
     // Command1 and Command2 will run in parallel.
-    addSequential(new ShooterRunWheelCommand());
+    addSequential(new ShooterRunWheelCommand(1));
     addSequential(new WaitCommand(6));
-    addSequential(new IntakeMagazineInCommand());
+    //addSequential(new IntakeMagazineInCommand());
     addSequential(new IntakeLoaderUpCommand());
     addSequential(new WaitCommand(3));
     addSequential(new DriveSequentialForwardCommand(50));

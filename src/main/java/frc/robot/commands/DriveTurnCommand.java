@@ -10,8 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
-import frc.robot.subsystems.TalonDriveSubsystem;
+import frc.robot.subsystems.DriveSubsystemFrankenbot;
 
 public class DriveTurnCommand extends Command {
   private int leftTarget;
@@ -32,14 +31,14 @@ public class DriveTurnCommand extends Command {
     requires(Robot.driveSubsystem);
     requires(Robot.navXSubsystem);
     turnDegrees = degrees;
-    leftAddEncoder = (int) Math.round(RobotMap.encoderUnitsPerRobotRotation * turnDegrees / 360);
-    rightAddEncoder = (int) Math.round(RobotMap.encoderUnitsPerRobotRotation * turnDegrees / 360);
+    leftAddEncoder = (int) Math.round(Robot.driveSubsystem.encoderUnitsPerRobotRotation * turnDegrees / 360);
+    rightAddEncoder = (int) Math.round(Robot.driveSubsystem.encoderUnitsPerRobotRotation * turnDegrees / 360);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    TalonDriveSubsystem.drive.setSafetyEnabled(false);
+    DriveSubsystemFrankenbot.drive.setSafetyEnabled(false);
     //NOTE: This is *not* configured to work with the NavX anymore: it is purely based on encoder tics
     //We could (and maybe should) rewrite it to use the NavX as an auxiliary input for more accuracy.
 
@@ -63,14 +62,14 @@ public class DriveTurnCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.driveSubsystem.isOnTarget(leftTarget,rightTarget,100, targetHeading);
+    return Robot.driveSubsystem.isOnTarget(leftTarget,rightTarget,30, targetHeading);
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
     System.out.println("Done turning.");
-    TalonDriveSubsystem.drive.setSafetyEnabled(true);
+    DriveSubsystemFrankenbot.drive.setSafetyEnabled(true);
   }
 
   // Called when another command which requires one or more of the same

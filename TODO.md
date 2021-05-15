@@ -26,3 +26,9 @@
 * DOCUMENT THE CODE MORE, FOR THE LOVE OF GOD!
 * Look at shrinking classes to be a more reasonable size
 * Organize RobotMap: perhaps have encapsulated classes that arrange constants by type
+
+
+TODO 2.0: ELECTRIC BOGALOO
+- Shrink RobotMap
+- Define "util" class for conversions of encoder tics
+- Use a testing framework, for gods sake!

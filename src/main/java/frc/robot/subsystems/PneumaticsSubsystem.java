@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 //import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Compressor;
 
@@ -17,18 +18,24 @@ import edu.wpi.first.wpilibj.Compressor;
 public class PneumaticsSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  Compressor compressor = new Compressor();
+  Compressor compressor;
 
   public PneumaticsSubsystem() {
-
+    if(RobotMap.enablePneumatics){
+      compressor = new Compressor();  
+    }
   }
 
   public void activateCompressor() {
-    compressor.setClosedLoopControl(true);
+    if(RobotMap.enablePneumatics){
+      compressor.setClosedLoopControl(true);
+    }
   }
 
   public void deactivateCompressor() {
-    compressor.setClosedLoopControl(false);
+    if(RobotMap.enablePneumatics){
+      compressor.setClosedLoopControl(false);
+    }
   }
 
   @Override

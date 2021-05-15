@@ -44,7 +44,7 @@ public class ShooterCenterOnVisionCrybabyCommand extends Command {
       case "Left" : {
         pos = ShooterSubsystem.panMotorController.getSelectedSensorPosition()+3;
         ShooterSubsystem.panMotorController.set(ControlMode.Position, pos);
-        //System.out.println("TARGET LEFT OF CENTER");
+        System.out.println("TARGET LEFT OF CENTER");
         loc = "Left";
         locExact = Robot.shooterSubsystem.getX();
         counter = 0;
@@ -52,7 +52,7 @@ public class ShooterCenterOnVisionCrybabyCommand extends Command {
       break;
       case "Center" : {
         ShooterSubsystem.panMotorController.set(0);
-      //  System.out.println("TARGET IN CENTER");
+        System.out.println("TARGET IN CENTER");
         loc = "Center";
         locExact = Robot.shooterSubsystem.getX();
         counter+=1;
@@ -61,7 +61,7 @@ public class ShooterCenterOnVisionCrybabyCommand extends Command {
       case "Right" : {
         pos = ShooterSubsystem.panMotorController.getSelectedSensorPosition()-3;
         ShooterSubsystem.panMotorController.set(ControlMode.Position, pos);
-      //  System.out.println("TARGET RIGHT OF CENTER");
+        System.out.println("TARGET RIGHT OF CENTER");
         loc = "Right";
         locExact = Robot.shooterSubsystem.getX();
         counter = 0;
@@ -69,7 +69,7 @@ public class ShooterCenterOnVisionCrybabyCommand extends Command {
       break;
       case "Out Of Bounds" : {
         ShooterSubsystem.panMotorController.set(0);
-      //  System.out.println("TARGET OUT OF BOUNDS");
+        System.out.println("TARGET OUT OF BOUNDS");
         loc = "Out Of Bounds";
         locExact = Robot.shooterSubsystem.getX();
         counter = 0;
@@ -102,6 +102,7 @@ public class ShooterCenterOnVisionCrybabyCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    ShooterSubsystem.panMotorController.set(0);
   }
 
   // Called when another command which requires one or more of the same

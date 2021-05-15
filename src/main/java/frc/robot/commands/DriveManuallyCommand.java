@@ -12,6 +12,7 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 public class DriveManuallyCommand extends Command {
+   static double turnAdjust = 0.6;
 
   public DriveManuallyCommand() {
     // Use requires() here to declare subsystem dependencies
@@ -30,16 +31,16 @@ public class DriveManuallyCommand extends Command {
   @Override
   protected void execute() {
     // Read joystick values
-    double move = (Robot.oi.leftJoystick.getY() * -1); // inverts sign for Y axis
+    double move = (Robot.oi.driveStick.getY() * -1); // inverts sign for Y axis
     double turn = 0;
-    //if (RobotMap.isSplitStick) {
-      turn = Robot.oi.rightJoystick.getX();
-   // }
-  // else{
-  //   turn = Robot.oi.leftJoystick.getX();
-  //  }
-    //double turn = Robot.oi.leftJoystick.getX();
-    Robot.driveSubsystem.manualDrive(move, turn);
+    if (RobotMap.isSplitStick) {
+      turn = Robot.oi.turnStick.getX();
+    }
+    else{
+      turn = Robot.oi.driveStick.getX();
+     }
+    //double turn = Robot.oi.driveStick.getX();
+    Robot.driveSubsystem.manualDrive(move, turn * turnAdjust);
     Robot.smartDashboardSubsystem.updateEncoderValue();
   }
 

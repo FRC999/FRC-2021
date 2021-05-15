@@ -1,25 +1,25 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.StatusFrame;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.Robot;
-import frc.robot.commands.ShootManuallyCommand;
 import frc.robot.commands.ShooterStandbyCommand;
+import frc.robot.commands.ShooterVisionCommand;
 
 public class ShooterSubsystem extends Subsystem {
 
-  public static WPI_TalonSRX shooterMotorController = new WPI_TalonSRX(RobotMap.shooterWheelMotorControllerID);
+  public static WPI_TalonFX shooterMotorController = new WPI_TalonFX(RobotMap.shooterWheelMotorControllerID);
   public static WPI_TalonSRX panMotorController = new WPI_TalonSRX(RobotMap.shooterPanMotorControllerID);
-  public static WPI_TalonSRX tiltMotorController = new WPI_TalonSRX(RobotMap.ShooterTiltMotorControllerID);
-
+  public WPI_TalonSRX tiltMotorController = new WPI_TalonSRX(RobotMap.ShooterTiltMotorControllerID);
+  public Boolean fangsActivated = false;
   // double shooterSpeed = 0.5;
 
   NetworkTableInstance networkTableInstance = NetworkTableInstance.getDefault();
@@ -28,13 +28,9 @@ public class ShooterSubsystem extends Subsystem {
     shooterMotorController.configFactoryDefault();
     panMotorController.configFactoryDefault();
 
-    if (RobotMap.isFalconBot) {
-      panMotorController.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
-      panMotorController.configFeedbackNotContinuous(true, RobotMap.configureTimeoutMs);
-    } else {
-      panMotorController.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-      panMotorController.setSelectedSensorPosition(0);
-    }
+    panMotorController.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
+    panMotorController.configFeedbackNotContinuous(true, RobotMap.configureTimeoutMs);
+    
 
     tiltMotorController.configFactoryDefault();
     tiltMotorController.configSelectedFeedbackSensor(FeedbackDevice.Analog);
@@ -48,15 +44,10 @@ public class ShooterSubsystem extends Subsystem {
      */
 
   }
-
-  public void configurePanMotorControllerForMagic() {
+  public void configurePanMotorControllerForPosition() {
     // Configure the encoders for PID control
     panMotorController.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition, RobotMap.PID_PAN,
         RobotMap.configureTimeoutMs);
-
-    /* Set status frame periods to ensure we don't have stale data */
-    panMotorController.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, RobotMap.configureTimeoutMs);
-    panMotorController.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 20, RobotMap.configureTimeoutMs);
 
     /* Configure motor neutral deadband */
     panMotorController.configNeutralDeadband(RobotMap.NeutralDeadband, RobotMap.configureTimeoutMs);
@@ -65,40 +56,73 @@ public class ShooterSubsystem extends Subsystem {
      * Max out the peak output (for all modes). However you can limit the output of
      * a given PID object with configClosedLoopPeakOutput().
      */
-    panMotorController.configPeakOutputForward(+1.0, RobotMap.configureTimeoutMs);
-    panMotorController.configPeakOutputReverse(-1.0, RobotMap.configureTimeoutMs);
+    panMotorController.configPeakOutputForward(+1, RobotMap.configureTimeoutMs);
+    panMotorController.configPeakOutputReverse(-1, RobotMap.configureTimeoutMs);
     panMotorController.configNominalOutputForward(0, RobotMap.configureTimeoutMs);
     panMotorController.configNominalOutputReverse(0, RobotMap.configureTimeoutMs);
 
-    /* FPID Gains for each side of drivetrain */
+    /* FPID Gains for pan motor */
 
     panMotorController.config_kP(RobotMap.SLOT_0, RobotMap.P_PAN, RobotMap.configureTimeoutMs);
     panMotorController.config_kI(RobotMap.SLOT_0, RobotMap.I_PAN, RobotMap.configureTimeoutMs);
     panMotorController.config_kD(RobotMap.SLOT_0, RobotMap.D_PAN, RobotMap.configureTimeoutMs);
     panMotorController.config_kF(RobotMap.SLOT_0, RobotMap.F_PAN, RobotMap.configureTimeoutMs);
-    panMotorController.config_IntegralZone(RobotMap.SLOT_0, RobotMap.Izone_PAN, RobotMap.configureTimeoutMs);
     panMotorController.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0, RobotMap.configureTimeoutMs);
-    panMotorController.configAllowableClosedloopError(RobotMap.SLOT_0, 0, RobotMap.configureTimeoutMs);
+    panMotorController.configAllowableClosedloopError(RobotMap.SLOT_0, RobotMap.panDefaultAcceptableError, RobotMap.configureTimeoutMs);
 
+    panMotorController.configMotionAcceleration(RobotMap.panAcceleration, RobotMap.configureTimeoutMs);
+    panMotorController.configMotionCruiseVelocity(RobotMap.panCruiseVelocity, RobotMap.configureTimeoutMs);
+    panMotorController.configMotionSCurveStrength(RobotMap.panSmoothing);
     /**
      * 1ms per loop. PID loop can be slowed down if need be. For example, - if
      * sensor updates are too slow - sensor deltas are very small per update, so
      * derivative error never gets large enough to be useful. - sensor movement is
      * very slow causing the derivative error to be near zero.
      */
-    panMotorController.configClosedLoopPeriod(0, RobotMap.closedLoopPeriodMs, RobotMap.configureTimeoutMs);
+    panMotorController.configClosedLoopPeriod(1, RobotMap.closedLoopPeriodMs, RobotMap.configureTimeoutMs);
 
-    /* Motion Magic Configurations */
+  } // End configurePanMotorControllerForPosition
+
+  public void configureTiltMotorControllerForPosition() {
+
+    tiltMotorController.setSensorPhase(true);
+    tiltMotorController.setInverted(true);
+      // Configure the encoders for PID control
+    tiltMotorController.configSelectedFeedbackSensor(FeedbackDevice.Analog, RobotMap.PID_TILT,	RobotMap.configureTimeoutMs);
+
+    /* Configure motor neutral deadband */
+    tiltMotorController.configNeutralDeadband(RobotMap.NeutralDeadband, RobotMap.configureTimeoutMs);
+
     /**
-     * Need to replace numbers with real measured values for acceleration and cruise
-     * vel.
-     */
+    * Max out the peak output (for all modes).  
+    * However you can limit the output of a given PID object with configClosedLoopPeakOutput().
+    */
+    tiltMotorController.configPeakOutputForward(+0.5, RobotMap.configureTimeoutMs);
+    tiltMotorController.configPeakOutputReverse(-0.5, RobotMap.configureTimeoutMs);
+    tiltMotorController.configNominalOutputForward(0, RobotMap.configureTimeoutMs);
+    tiltMotorController.configNominalOutputReverse(0, RobotMap.configureTimeoutMs);
 
-    panMotorController.configMotionAcceleration(RobotMap.panAcceleration, RobotMap.configureTimeoutMs);
-    panMotorController.configMotionCruiseVelocity(RobotMap.panCruiseVelocity, RobotMap.configureTimeoutMs);
-    panMotorController.configMotionSCurveStrength(RobotMap.smoothing);
+    /* FPID Gains for each side of drivetrain */
+    tiltMotorController.config_kP(RobotMap.SLOT_0, RobotMap.P_TILT, RobotMap.configureTimeoutMs);
+    tiltMotorController.config_kI(RobotMap.SLOT_0, RobotMap.I_TILT, RobotMap.configureTimeoutMs);
+    tiltMotorController.config_kD(RobotMap.SLOT_0, RobotMap.D_TILT, RobotMap.configureTimeoutMs);
+    tiltMotorController.config_kF(RobotMap.SLOT_0, RobotMap.F_TILT, RobotMap.configureTimeoutMs);
+    tiltMotorController.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0, RobotMap.configureTimeoutMs);
+    tiltMotorController.configAllowableClosedloopError(RobotMap.SLOT_0, RobotMap.tiltDefaultAcceptableError, RobotMap.configureTimeoutMs);
 
-  } // End configureDriveTrainControllersForSimpleMagic
+    tiltMotorController.configMotionAcceleration(RobotMap.tiltAcceleration, RobotMap.configureTimeoutMs);
+    tiltMotorController.configMotionCruiseVelocity(RobotMap.tiltCruiseVelocity, RobotMap.configureTimeoutMs);
+    tiltMotorController.configMotionSCurveStrength(RobotMap.tiltSmoothing);
+
+    /**
+    * 1ms per loop.  PID loop can be slowed down if need be.
+    * For example,
+    * - if sensor updates are too slow
+    * - sensor deltas are very small per update, so derivative error never gets large enough to be useful.
+    * - sensor movement is very slow causing the derivative error to be near zero.
+    */
+    tiltMotorController.configClosedLoopPeriod(0, RobotMap.closedLoopPeriodMs, RobotMap.configureTimeoutMs);
+  } // End configureTiltMotorControllerForPosition
 
   public int getPanEncoder() {
     return panMotorController.getSelectedSensorPosition();
@@ -113,11 +137,8 @@ public class ShooterSubsystem extends Subsystem {
     shooterMotorController.set(ControlMode.PercentOutput, 0);
   }
 
-  
-
   public void shoot(double shooterSpeed) {
-    shooterMotorController.set(ControlMode.PercentOutput, -shooterSpeed);
-  
+    shooterMotorController.set(ControlMode.PercentOutput, -shooterSpeed);  
   }
 
   public  double deadbandPan(double pan) {
@@ -135,18 +156,16 @@ public class ShooterSubsystem extends Subsystem {
     return pan;
   }
 
-
   public void pan(double pan) {
     panMotorController.set(ControlMode.PercentOutput, deadbandPan(pan));
   }
 
-  /** do not use in a context in which it would be outside the encoder values 1178-. Boolean indicates whether it is. */
-  public void panToRobotFront()
-  { /*boolean retVal =false;
-    if ((getPanEncoder() <RobotMap.shooterEstimatedPos90PanEncoderVal) && ( getPanEncoder() >RobotMap.shooterEstimatedNeg90PanEncoderVal) )
-    { */panMotorController.set(ControlMode.MotionMagic, RobotMap.shooterPanMotorEncoderFrontVal);
-   /* retVal = true;}
-    return retVal;*/
+  public void panStandby() {
+    panMotorController.set(ControlMode.PercentOutput, 0);
+  }
+
+  public void panToSetpoint(long panSetpoint){
+    panMotorController.set(ControlMode.Position, panSetpoint);
   }
 
   /**
@@ -154,7 +173,7 @@ public class ShooterSubsystem extends Subsystem {
    * the maximum; if it returns 1000, the pi is not posting to networktables.
    */
   public double getX() {
-    return networkTableInstance.getTable("TestTable/PI").getEntry("X").getDouble(1000);// 640 is the maximum;
+    return networkTableInstance.getTable("TestTable/PI").getEntry("CenterXCoord").getDouble(1000);// 640 is the maximum;
   }
 
   /**
@@ -162,7 +181,7 @@ public class ShooterSubsystem extends Subsystem {
    * the maximum; if it returns 1000, the pi is not posting to networktables.
    */
   public double getY() {
-    return networkTableInstance.getTable("TestTable/PI").getEntry("Y").getDouble(1000);// 480 is the maximum;
+    return networkTableInstance.getTable("TestTable/PI").getEntry("CenterYCoord").getDouble(1000);// 480 is the maximum;
   }
 
   /**
@@ -180,6 +199,10 @@ public class ShooterSubsystem extends Subsystem {
   public double differenceFromMiddleY() {
     return (getY() - (RobotMap.shooterYResolution / 2));
   }
+  public double getPanError() {
+    return panMotorController.getClosedLoopError();// Returns the PID error for Pan motion control;
+  }
+
 
   public String whichSide() {
     String state = "";
@@ -208,111 +231,113 @@ public class ShooterSubsystem extends Subsystem {
         state = "Center";
       }
     }
+    else state = "Park";
     return state; 
    }
 
-   public void centerShooterVertically() {
+   public void centerShooterTilt() {
+     if (getY() < 1000) {
+       tiltMotorController.set(ControlMode.Position, Math.round(729 - getY()));  
+      }
+    } 
+
+  /*
+  public void centerShooterTilt() {
     switch (whichVerticalSide()) {
       case "Below": {
-        tiltMotorController.set(ControlMode.MotionMagic, Math.round(
+        tiltMotorController.set(ControlMode.Position, Math.round(
             getTiltPot() + (differenceFromMiddleY() / RobotMap.pixelsPerDegreeY * RobotMap.potentiometerTicksPerDegreeY)));
       }
         break;
 
       case "Center": {
-        tiltMotorController.set(ControlMode.PercentOutput, 0);
+        tiltStandby();
+        //tiltMotorController.set(ControlMode.PercentOutput, 0);
       }
         break;
 
-      case "Right": {
-        panMotorController.set(ControlMode.MotionMagic, Math.round(
+      case "Above": {
+        tiltMotorController.set(ControlMode.Position, Math.round(
             getTiltPot() - (differenceFromMiddleY() / RobotMap.pixelsPerDegreeY * RobotMap.potentiometerTicksPerDegreeY)));
       }
         break;
 
+        case "Park": {
+          tiltMotorController.set(ControlMode.Position, 200);
+        }
+          break;
+  
       default: {
-        tiltMotorController.set(ControlMode.PercentOutput, 0);
+        tiltStandby();
+        //tiltMotorController.set(ControlMode.PercentOutput, 0);
       }
     }
   }
+*/
 
-  public void centerShooter() {
+  public void centerShooterPan() {
     switch (whichSide()) {
       case "Left": {
-        panMotorController.set(ControlMode.MotionMagic, Math.round(
+
+        panMotorController.set(ControlMode.Position, Math.round(
             getPanEncoder() - (differenceFromMiddleX() / RobotMap.pixelsPerDegreeX * RobotMap.encoderTicksPerDegreeX)));
       }
         break;
 
       case "Center": {
-        panMotorController.set(ControlMode.PercentOutput, 0);
+        panStandby();
+        //panMotorController.set(ControlMode.PercentOutput, 0);
       }
         break;
 
       case "Right": {
-        panMotorController.set(ControlMode.MotionMagic, Math.round(
+        panMotorController.set(ControlMode.Position, Math.round(
             getPanEncoder() + (differenceFromMiddleX() / RobotMap.pixelsPerDegreeX * RobotMap.encoderTicksPerDegreeX)));
       }
         break;
 
       default: {
-        panMotorController.set(ControlMode.PercentOutput, 0);
+        panStandby();
+        //panMotorController.set(ControlMode.PercentOutput, 0);
+      }
+    }
+  }
+  public void centerShooterPan(String side, double lastError) {
+    if (Math.abs(lastError) < Math.abs(getPanError())+1) {
+      panMotorController.set(ControlMode.Position, lastError, DemandType.Neutral, 0);
+    }
+    switch (side) {
+      case "Left": {
+        panMotorController.set(ControlMode.Position, Math.round(
+            getPanEncoder() - (differenceFromMiddleX() / RobotMap.pixelsPerDegreeX * RobotMap.encoderTicksPerDegreeX)));
+      }
+        break;
+
+      case "Center": {
+        panStandby();
+        //panMotorController.set(ControlMode.PercentOutput, 0);
+      }
+        break;
+
+      case "Right": {
+        panMotorController.set(ControlMode.Position, Math.round(
+            getPanEncoder() + (differenceFromMiddleX() / RobotMap.pixelsPerDegreeX * RobotMap.encoderTicksPerDegreeX)));
+      }
+        break;
+
+      default: {
+        panStandby();
+        //panMotorController.set(ControlMode.PercentOutput, 0);
       }
     }
   }
 
 //Start of work on the FANGS
-  Boolean fangsActivated = false;
 
-public void configureTiltMotorControllerForMagic(){
+public void zeroTiltPot() {
+  tiltMotorController.setSelectedSensorPosition(0);
+}
 
-  // Configure the encoders for PID control
-  tiltMotorController.configSelectedFeedbackSensor(FeedbackDevice.Analog, RobotMap.PID_TILT,	RobotMap.configureTimeoutMs);
-
-  /* Set status frame periods to ensure we don't have stale data */
-  tiltMotorController.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, RobotMap.configureTimeoutMs);
-  tiltMotorController.setStatusFramePeriod(StatusFrame.Status_10_Targets, 20, RobotMap.configureTimeoutMs);
-
-  /* Configure motor neutral deadband */
-  tiltMotorController.configNeutralDeadband(RobotMap.NeutralDeadband, RobotMap.configureTimeoutMs);
-
-  /**
-  * Max out the peak output (for all modes).  
-  * However you can limit the output of a given PID object with configClosedLoopPeakOutput().
-  */
-  tiltMotorController.configPeakOutputForward(+1.0, RobotMap.configureTimeoutMs);
-  tiltMotorController.configPeakOutputReverse(-1.0, RobotMap.configureTimeoutMs);
-  tiltMotorController.configNominalOutputForward(0, RobotMap.configureTimeoutMs);
-  tiltMotorController.configNominalOutputReverse(0, RobotMap.configureTimeoutMs);
-
-  /* FPID Gains for each side of drivetrain */
-
-  tiltMotorController.config_kP(RobotMap.SLOT_0, RobotMap.P_TILT, RobotMap.configureTimeoutMs);
-  tiltMotorController.config_kI(RobotMap.SLOT_0, RobotMap.I_TILT, RobotMap.configureTimeoutMs);
-  tiltMotorController.config_kD(RobotMap.SLOT_0, RobotMap.D_TILT, RobotMap.configureTimeoutMs);
-  tiltMotorController.config_kF(RobotMap.SLOT_0, RobotMap.F_TILT, RobotMap.configureTimeoutMs);
-  tiltMotorController.config_IntegralZone(RobotMap.SLOT_0, RobotMap.Izone_TILT, RobotMap.configureTimeoutMs);
-  tiltMotorController.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0, RobotMap.configureTimeoutMs);
-  tiltMotorController.configAllowableClosedloopError(RobotMap.SLOT_0, 0, RobotMap.configureTimeoutMs);
-
-  /**
-  * 1ms per loop.  PID loop can be slowed down if need be.
-  * For example,
-  * - if sensor updates are too slow
-  * - sensor deltas are very small per update, so derivative error never gets large enough to be useful.
-  * - sensor movement is very slow causing the derivative error to be near zero.
-  */
-  tiltMotorController.configClosedLoopPeriod(0, RobotMap.closedLoopPeriodMs, RobotMap.configureTimeoutMs);
-
-  /* Motion Magic Configurations */
-  /**Need to replace numbers with real measured values for acceleration and cruise vel. */
-
-  tiltMotorController.configMotionAcceleration(RobotMap.tiltAcceleration, RobotMap.configureTimeoutMs);
-  tiltMotorController.configMotionCruiseVelocity(RobotMap.tiltCruiseVelocity, RobotMap.configureTimeoutMs);
-  tiltMotorController.configMotionSCurveStrength(RobotMap.smoothing);
-
-  } 
-  
   public int getTiltPot() {
     return tiltMotorController.getSelectedSensorPosition();
     //1024 units per rotation
@@ -322,53 +347,54 @@ public void configureTiltMotorControllerForMagic(){
     tiltMotorController.set(ControlMode.PercentOutput, 0);
   }
 
-  public void tiltGoToSetpoint() {
-    configureTiltMotorControllerForMagic();
-    tiltMotorController.set(ControlMode.MotionMagic, 500);
-
+  public void tiltGoToSetpoint(int setpoint) {
+    tiltMotorController.set(ControlMode.Position, setpoint);
   }
-
 
   public void tiltFangDeployToggle(){
     if (fangsActivated==false)
     {
-    tiltMotorController.set(ControlMode.MotionMagic, RobotMap.tiltFangsUpperLimit);
+    tiltMotorController.set(ControlMode.Position, RobotMap.tiltFangsUpperLimit);
     fangsActivated = true;
     }
 
     else if (fangsActivated==true)
     {
-      tiltMotorController.set(ControlMode.MotionMagic, RobotMap.tiltFangsLowerLimit);
+      tiltMotorController.set(ControlMode.Position, RobotMap.tiltFangsLowerLimit);
       fangsActivated = false;
     }
   } 
 
-  public void manualAimTiltFangs(){
-    double tiltValue = ((Robot.oi.leftJoystick.getThrottle()*-1) + 1) / 2;
-    double output = tiltValue*RobotMap.shooterTiltMotorTicksPerRotation;
-
-    if (fangsActivated==true)
-    {
-    tiltMotorController.set(ControlMode.MotionMagic, output);
-    }
-    //Use a constant for the activated position of the encoders and then add to it.  
+  public void testPanTurret(){
+    //System.out.println("Testing PAN");
+    double maxSpeed = 0.25; 
+    double output = (Robot.oi.turnStick.getZ()*1) * maxSpeed;
+    panMotorController.set(ControlMode.PercentOutput, output);
   }
 
   public void testTiltFangs(){
-    //System.out.println("Testing");
+    //System.out.println("Testing TILT");
     double maxSpeed = 0; //sets motorspeed to 0 if tilt is against stops
-    if (getTiltPot() >= RobotMap.tiltFangsLowerLimit &&  getTiltPot() <= RobotMap.tiltFangsUpperLimit) {
+    //if (getTiltPot() >= RobotMap.tiltFangsLowerLimit &&  getTiltPot() <= RobotMap.tiltFangsUpperLimit) {
       maxSpeed = 0.25;
-    }
-    double output = (Robot.oi.leftJoystick.getThrottle()*-1) * maxSpeed;
+    //}
+    double output = (Robot.oi.driveStick.getThrottle()*-1) * maxSpeed;
     Robot.smartDashboardSubsystem.updateShooterValues();
-   // System.out.println(output);
     tiltMotorController.set(ControlMode.PercentOutput, output);
+  }
+
+  public void testWheelSpeed(){
+    //System.out.println("Testing TILT");
+    double maxSpeed = 1;
+    double output = (Robot.oi.turnStick.getThrottle()*1) * maxSpeed;
+    Robot.smartDashboardSubsystem.updateShooterValues();
+    shooterMotorController.set(ControlMode.PercentOutput, output);  
   }
 
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new ShooterStandbyCommand());
+    //setDefaultCommand(new ShooterStandbyCommand());
+    //setDefaultCommand(new ShooterVisionCommand());
   }
 
 }

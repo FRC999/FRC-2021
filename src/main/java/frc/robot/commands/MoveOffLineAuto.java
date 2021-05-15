@@ -8,7 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.RobotMap;
+import frc.robot.Robot;
 
 public class MoveOffLineAuto extends CommandGroup {
   /**
@@ -21,7 +21,7 @@ public class MoveOffLineAuto extends CommandGroup {
     // these will run in order.
 
     addSequential(new DriveSequentialZeroEncodersCommand());
-    addSequential(new DriveSequentialForwardCommand(RobotMap.robotLength + 3));
+    addSequential(new DriveSequentialForwardCommand(Robot.driveSubsystem.robotLength + 3));
 
     // To run multiple commands at the same time,
     // use addParallel()

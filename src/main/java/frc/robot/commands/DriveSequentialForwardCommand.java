@@ -9,7 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
-import frc.robot.RobotMap;
+import frc.robot.Robot;
 
 public class DriveSequentialForwardCommand extends CommandGroup {
   /**
@@ -21,7 +21,8 @@ public class DriveSequentialForwardCommand extends CommandGroup {
     // addSequential(new Command2());
     // these will run in order.
     addSequential(new WaitCommand(.1));
-    addSequential(new DriveForwardCommand((int) inches * RobotMap.encoderTicksPerInch));
+    addSequential(new DriveForwardCommand((int) (inches * Robot.driveSubsystem.getEncoderTicksPerInch())));
+    addSequential(new DriveTurnCommand(45));
     addSequential(new DriveStopCommand());
     // To run multiple commands at the same time,
     // use addParallel()
@@ -38,7 +39,7 @@ public class DriveSequentialForwardCommand extends CommandGroup {
 
   public DriveSequentialForwardCommand(double start, double end){
     addSequential(new WaitCommand(.1));
-    addSequential(new DriveForwardCommand((int) Math.round(Math.abs(end - start) * RobotMap.encoderTicksPerInch)));
+    addSequential(new DriveForwardCommand((int) Math.round(Math.abs(end - start) * Robot.driveSubsystem.getEncoderTicksPerInch())));
     addSequential(new DriveStopCommand());
   }
 }

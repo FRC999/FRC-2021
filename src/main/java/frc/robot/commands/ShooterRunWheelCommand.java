@@ -11,21 +11,26 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class ShooterRunWheelCommand extends Command {
-  public ShooterRunWheelCommand() {
+  private double speed;
+
+  public ShooterRunWheelCommand(double speed) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.shooterSubsystem);
+    this.speed=speed;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.shooterSubsystem.shoot(1);
+    Robot.shooterSubsystem.shoot(speed);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    //Robot.shooterSubsystem.shoot(1);
+   Robot.shooterSubsystem.shoot(speed);
   }
 
   // Make this return true when this Command no longer needs to run execute()

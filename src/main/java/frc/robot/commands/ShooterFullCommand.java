@@ -20,9 +20,9 @@ public class ShooterFullCommand extends CommandGroup {
     // addSequential(new Command2());
     // these will run in order.
 
-    addSequential(new ShooterRunWheelCommand());
+    addSequential(new ShooterRunWheelCommand(1));
     addSequential(new WaitCommand(3));
-    addSequential(new IntakeMagazineInCommand());
+    //addSequential(new IntakeMagazineInCommand());
     addSequential(new IntakeLoaderUpCommand());
 
     

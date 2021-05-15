@@ -25,10 +25,43 @@ import frc.robot.commands.DriveManuallyCommand;
 public abstract class DriveSubsystemBase extends Subsystem {
   // Put methods for controlling this subsystem here. Call these from Commands.
 
-  //For isOnTarget
+  // For isOnTarget
   boolean wasOnTarget = false;
   int withinAcceptableErrorLoops = 0;
 
+  protected double trajectoryRioPidP_Value, trajectoryRioPidI_Value0, trajectoryRioPidD_Value0;
+  protected double motionMagicPidP_Value, motionMagicPidI_Value, motionMagicPidD_Value, motionMagicPidF_Value;
+
+  protected double feedForwardStatic, feedForwardVelocity, feedForwardAcceleration;
+
+  protected int motionMagicAcceleration, motionMagicCruiseVelocity, motionMagicSmoothing;
+  /**
+   * Number of encoder units required to rotate encoder shafts once
+   * WHEELS MAY HAVE A DIFFERENT NUMBER
+   */
+  public int encoderUnitsPerShaftRotation;
+
+    /**
+   * Ratio between encoder input and shaft input (eg, encoder/shaft)
+   * 
+   * (Note that there might be a different ratio for MOTOR output vs shaft output:
+   * this is purely for calculating encoder tics)
+   */
+  protected double encoderGearReduction = 1;
+
+  /**
+   * Average between left and right encoders following a 360 degree rotation.
+   * Empherically measured and manually adjusted for drivetrain backlash
+   */
+  public int encoderUnitsPerRobotRotation;
+
+  /** 
+   *  These factors DO differ between robots
+   * Values are in inches. TODO: Consider metric
+   */
+  public double distanceBetweenWheels, wheelDiameter, robotLength, robotWidth, gearboxReduction;
+
+  // Front controllers are masters
   static BaseTalon frontLeftDriveMotorController;
   static BaseTalon backLeftDriveMotorController;
   static BaseTalon frontRightDriveMotorController;
@@ -36,73 +69,64 @@ public abstract class DriveSubsystemBase extends Subsystem {
 
   public static DifferentialDrive drive;
 
-  DriveSubsystemBase(){
-	  super();
+  DriveSubsystemBase() {
     System.out.println("Made a DriveSubsystem");
   }
 
-  public  double deadbandMove(double move) {
-    if (Math.abs(move) >= RobotMap.deadbandY){
+  public double deadbandMove(double move) {
+    if (Math.abs(move) >= RobotMap.deadbandY) {
       if (move > 0) {
-        move = (move - RobotMap.deadbandY) /(1-RobotMap.deadbandY); 
+        move = (move - RobotMap.deadbandY) / (1 - RobotMap.deadbandY);
+      } else {
+        move = (move + RobotMap.deadbandY) / (1 - RobotMap.deadbandY);
       }
-      else{
-        move = (move + RobotMap.deadbandY) /(1-RobotMap.deadbandY);  
-      }
-    }
-    else {
+    } else {
       move = 0;
-    } 
+    }
     return move;
   }
-  
-public  double deadbandTurn(double turn) {
-  if (Math.abs(turn) >= RobotMap.deadbandX){
-    if (turn > 0) {
-      turn = (turn - RobotMap.deadbandX) /(1-RobotMap.deadbandX); 
+
+  public double deadbandTurn(double turn) {
+    if (Math.abs(turn) >= RobotMap.deadbandX) {
+      if (turn > 0) {
+        turn = (turn - RobotMap.deadbandX) / (1 - RobotMap.deadbandX);
+      } else {
+        turn = (turn + RobotMap.deadbandX) / (1 - RobotMap.deadbandX);
+      }
+    } else {
+      turn = 0;
     }
-    else{
-      turn = (turn + RobotMap.deadbandX) /(1-RobotMap.deadbandX);  
-    }
+    return turn;
   }
-  else {
-    turn = 0;
-  } 
-  return turn;
-}
 
   public void manualDrive(double move, double turn) {
-	  drive.arcadeDrive(deadbandMove(move), deadbandTurn(turn));
+    drive.arcadeDrive(deadbandMove(move), deadbandTurn(turn));
   }
-
-
-
 
   public void zeroDriveEncoders() {
     frontLeftDriveMotorController.setSelectedSensorPosition(0);
     frontRightDriveMotorController.setSelectedSensorPosition(0);
-    frontLeftDriveMotorController.setNeutralMode(NeutralMode.Coast);
-    backLeftDriveMotorController.setNeutralMode(NeutralMode.Coast);
-    frontRightDriveMotorController.setNeutralMode(NeutralMode.Coast);
-    backRightDriveMotorController.setNeutralMode(NeutralMode.Coast);  
+    driveTrainCoastMode(); // TODO: figure out why this was introduced in 2020
   }
 
+  /** Get the number of tics moved by the left encoder */
   public int getLeftEncoder() {
     return frontLeftDriveMotorController.getSelectedSensorPosition();
   }
-
-  public int getLeftEncoderSpeed(){
-    return frontLeftDriveMotorController.getSelectedSensorVelocity();
-  }
-
-  public int getRightEncoderSpeed(){
-    return frontRightDriveMotorController.getSelectedSensorVelocity();
-  }
+  /** Get the number of tics moved by the left encoder */
   public int getRightEncoder() {
     return frontRightDriveMotorController.getSelectedSensorPosition();
   }
 
-  public void DriveTrainCoastMode() {
+  public int getLeftEncoderSpeed() {
+    return frontLeftDriveMotorController.getSelectedSensorVelocity();
+  }
+
+  public int getRightEncoderSpeed() {
+    return frontRightDriveMotorController.getSelectedSensorVelocity();
+  }
+
+  public void driveTrainCoastMode() {
     frontLeftDriveMotorController.setNeutralMode(NeutralMode.Coast);
     backLeftDriveMotorController.setNeutralMode(NeutralMode.Coast);
     frontRightDriveMotorController.setNeutralMode(NeutralMode.Coast);
@@ -110,25 +134,22 @@ public  double deadbandTurn(double turn) {
   }
 
   /**
-   * Sets the talons to our preferred defaults
-   * We are going away from controller-groups, and back to master-slave
-   * Call this in robot-init: it preforms basic setup for ArcadeDrive
+   * Sets the talons to our preferred defaults We are going away from
+   * controller-groups, and back to master-slave Call this in robot-init: it
+   * preforms basic setup for ArcadeDrive
    */
   public void resetDriveTrainControllers() {
     frontLeftDriveMotorController.configFactoryDefault();
     backLeftDriveMotorController.configFactoryDefault();
     frontRightDriveMotorController.configFactoryDefault();
     backRightDriveMotorController.configFactoryDefault();
-    
+
     configureEncoders();
 	
 	  //Set all drive motors to brake mode
-    frontLeftDriveMotorController.setNeutralMode(NeutralMode.Brake);
-    backLeftDriveMotorController.setNeutralMode(NeutralMode.Brake);
-    frontRightDriveMotorController.setNeutralMode(NeutralMode.Brake);
-    backRightDriveMotorController.setNeutralMode(NeutralMode.Brake);
+    driveTrainBrakeMode();
 
-  	// Set controllers to Percent output
+    // Set controllers to Percent output
     frontLeftDriveMotorController.set(ControlMode.PercentOutput, 0);
     frontRightDriveMotorController.set(ControlMode.PercentOutput, 0);
 
@@ -136,7 +157,8 @@ public  double deadbandTurn(double turn) {
     backLeftDriveMotorController.follow(frontLeftDriveMotorController);
     backRightDriveMotorController.follow(frontRightDriveMotorController);
 
-    // Set controller orientation so both sides show green LEDs when drivetrain is going forward  
+    // Set controller orientation so both sides show green LEDs when drivetrain is
+    // going forward
     frontLeftDriveMotorController.setInverted(false);
     frontRightDriveMotorController.setInverted(true);
     backLeftDriveMotorController.setInverted(InvertType.FollowMaster);
@@ -145,30 +167,38 @@ public  double deadbandTurn(double turn) {
     // Set encoder phase so values increase when controller LEDs are green
     frontLeftDriveMotorController.setSensorPhase(true);
     frontRightDriveMotorController.setSensorPhase(true);
-    // Prevent WPI drivetrain class from inverting input for right side motors because we already inverted them
+    // Prevent WPI drivetrain class from inverting input for right side motors
+    // because we already inverted them
     drive.setRightSideInverted(false);
   }
 
   /**
-   * This had to be factored out because the Falcon has a different sensor than
-   * is used by a TalonBot.
+   * This had to be factored out because the Falcon has a different sensor than is
+   * used by a TalonBot.
    */
   public abstract void configureEncoders();
 
+  /**
+   * TODO: Consider moving to the TalonConfig objects, to make this... less of a polymorphic mess
+   */
   public void configureDriveTrainControllersForSimpleMagic(){
     /* Set status frame periods to ensure we don't have stale data */
-    frontRightDriveMotorController.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, RobotMap.configureTimeoutMs);
-    frontRightDriveMotorController.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 20, RobotMap.configureTimeoutMs);
-    frontLeftDriveMotorController.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, RobotMap.configureTimeoutMs);
-    frontLeftDriveMotorController.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 20, RobotMap.configureTimeoutMs);
+    frontRightDriveMotorController.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20,
+        RobotMap.configureTimeoutMs);
+    frontRightDriveMotorController.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 20,
+        RobotMap.configureTimeoutMs);
+    frontLeftDriveMotorController.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20,
+        RobotMap.configureTimeoutMs);
+    frontLeftDriveMotorController.setStatusFramePeriod(StatusFrame.Status_10_MotionMagic, 20,
+        RobotMap.configureTimeoutMs);
 
     /* Configure motor neutral deadband */
     frontRightDriveMotorController.configNeutralDeadband(RobotMap.NeutralDeadband, RobotMap.configureTimeoutMs);
     frontLeftDriveMotorController.configNeutralDeadband(RobotMap.NeutralDeadband, RobotMap.configureTimeoutMs);
 
     /**
-     * Max out the peak output (for all modes).  
-     * However you can limit the output of a given PID object with configClosedLoopPeakOutput().
+     * Max out the peak output (for all modes). However you can limit the output of
+     * a given PID object with configClosedLoopPeakOutput().
      */
     frontLeftDriveMotorController.configPeakOutputForward(+1.0, RobotMap.configureTimeoutMs);
     frontLeftDriveMotorController.configPeakOutputReverse(-1.0, RobotMap.configureTimeoutMs);
@@ -181,102 +211,128 @@ public  double deadbandTurn(double turn) {
     frontRightDriveMotorController.configNominalOutputReverse(0, RobotMap.configureTimeoutMs);
 
     /* FPID Gains for each side of drivetrain */
-    frontLeftDriveMotorController.config_kP(RobotMap.SLOT_0, RobotMap.P_0, RobotMap.configureTimeoutMs);
-    frontLeftDriveMotorController.config_kI(RobotMap.SLOT_0, RobotMap.I_0, RobotMap.configureTimeoutMs);
-    frontLeftDriveMotorController.config_kD(RobotMap.SLOT_0, RobotMap.D_0, RobotMap.configureTimeoutMs);
-    frontLeftDriveMotorController.config_kF(RobotMap.SLOT_0, RobotMap.F_0, RobotMap.configureTimeoutMs);
+    frontLeftDriveMotorController.config_kP(RobotMap.SLOT_0, motionMagicPidP_Value, RobotMap.configureTimeoutMs);
+    frontLeftDriveMotorController.config_kI(RobotMap.SLOT_0, motionMagicPidI_Value, RobotMap.configureTimeoutMs);
+    frontLeftDriveMotorController.config_kD(RobotMap.SLOT_0, motionMagicPidD_Value, RobotMap.configureTimeoutMs);
+    frontLeftDriveMotorController.config_kF(RobotMap.SLOT_0, motionMagicPidF_Value, RobotMap.configureTimeoutMs);
     frontLeftDriveMotorController.config_IntegralZone(RobotMap.SLOT_0, RobotMap.Izone_0, RobotMap.configureTimeoutMs);
-    frontLeftDriveMotorController.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0, RobotMap.configureTimeoutMs);
-    frontLeftDriveMotorController.configAllowableClosedloopError(RobotMap.SLOT_0, 0, RobotMap.configureTimeoutMs);
+    frontLeftDriveMotorController.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0,
+        RobotMap.configureTimeoutMs);
+    frontLeftDriveMotorController.configAllowableClosedloopError(RobotMap.SLOT_0, 5, RobotMap.configureTimeoutMs);
 
-    frontRightDriveMotorController.config_kP(RobotMap.SLOT_0, RobotMap.P_0, RobotMap.configureTimeoutMs);
-    frontRightDriveMotorController.config_kI(RobotMap.SLOT_0, RobotMap.I_0, RobotMap.configureTimeoutMs);
-    frontRightDriveMotorController.config_kD(RobotMap.SLOT_0, RobotMap.D_0, RobotMap.configureTimeoutMs);
-    frontRightDriveMotorController.config_kF(RobotMap.SLOT_0, RobotMap.F_0, RobotMap.configureTimeoutMs);
+    frontRightDriveMotorController.config_kP(RobotMap.SLOT_0, motionMagicPidP_Value, RobotMap.configureTimeoutMs);
+    frontRightDriveMotorController.config_kI(RobotMap.SLOT_0, motionMagicPidI_Value, RobotMap.configureTimeoutMs);
+    frontRightDriveMotorController.config_kD(RobotMap.SLOT_0, motionMagicPidD_Value, RobotMap.configureTimeoutMs);
+    frontRightDriveMotorController.config_kF(RobotMap.SLOT_0, motionMagicPidF_Value, RobotMap.configureTimeoutMs);
     frontRightDriveMotorController.config_IntegralZone(RobotMap.SLOT_0, RobotMap.Izone_0, RobotMap.configureTimeoutMs);
-    frontRightDriveMotorController.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0, RobotMap.configureTimeoutMs);
-    frontRightDriveMotorController.configAllowableClosedloopError(RobotMap.SLOT_0, 0, RobotMap.configureTimeoutMs);
+    frontRightDriveMotorController.configClosedLoopPeakOutput(RobotMap.SLOT_0, RobotMap.PeakOutput_0,
+        RobotMap.configureTimeoutMs);
+    frontRightDriveMotorController.configAllowableClosedloopError(RobotMap.SLOT_0, 5, RobotMap.configureTimeoutMs);
 
     /**
-     * 1ms per loop.  PID loop can be slowed down if need be.
-     * For example,
-     * - if sensor updates are too slow
-     * - sensor deltas are very small per update, so derivative error never gets large enough to be useful.
-     * - sensor movement is very slow causing the derivative error to be near zero.
+     * 1ms per loop. PID loop can be slowed down if need be. For example, - if
+     * sensor updates are too slow - sensor deltas are very small per update, so
+     * derivative error never gets large enough to be useful. - sensor movement is
+     * very slow causing the derivative error to be near zero.
      */
     frontRightDriveMotorController.configClosedLoopPeriod(0, RobotMap.closedLoopPeriodMs, RobotMap.configureTimeoutMs);
     frontLeftDriveMotorController.configClosedLoopPeriod(0, RobotMap.closedLoopPeriodMs, RobotMap.configureTimeoutMs);
 
-      /* Motion Magic Configurations */
+    /* Motion Magic Configurations */
 
     /**Need to replace numbers with real measured values for acceleration and cruise vel. */
-    frontLeftDriveMotorController.configMotionAcceleration(RobotMap.acceleration, RobotMap.configureTimeoutMs);
-      frontLeftDriveMotorController.configMotionCruiseVelocity(RobotMap.cruiseVelocity, RobotMap.configureTimeoutMs);
-      frontLeftDriveMotorController.configMotionSCurveStrength(RobotMap.smoothing);
+    frontLeftDriveMotorController.configMotionAcceleration(motionMagicAcceleration, RobotMap.configureTimeoutMs);
+      frontLeftDriveMotorController.configMotionCruiseVelocity(motionMagicCruiseVelocity, RobotMap.configureTimeoutMs);
+      frontLeftDriveMotorController.configMotionSCurveStrength(motionMagicSmoothing);
 
-    frontRightDriveMotorController.configMotionAcceleration(RobotMap.acceleration, RobotMap.configureTimeoutMs);
-      frontRightDriveMotorController.configMotionCruiseVelocity(RobotMap.cruiseVelocity, RobotMap.configureTimeoutMs);
-      frontRightDriveMotorController.configMotionSCurveStrength(RobotMap.smoothing);
+    frontRightDriveMotorController.configMotionAcceleration(motionMagicAcceleration, RobotMap.configureTimeoutMs);
+      frontRightDriveMotorController.configMotionCruiseVelocity(motionMagicCruiseVelocity, RobotMap.configureTimeoutMs);
+      frontRightDriveMotorController.configMotionSCurveStrength(motionMagicSmoothing);
 
   } // End configureDriveTrainControllersForSimpleMagic
 
   public void simpleMotionMagic(int leftEncoderVal, int rightEncoderVal) {
-	// Test method that moves robot forward a given number of wheel rotations  
+    // Test method that moves robot forward a given number of wheel rotations
     frontLeftDriveMotorController.set(ControlMode.MotionMagic, leftEncoderVal);
-	  frontRightDriveMotorController.set(ControlMode.MotionMagic, rightEncoderVal);
+    frontRightDriveMotorController.set(ControlMode.MotionMagic, rightEncoderVal);
+  }
+  
+  /**
+   * This attempts to drive the wheels to reach the given velocities
+   * @param leftSpeedTics speed of left side in encoder tics per 100ms
+   * @param rightSpeedTics speed of right side in encoder tics per 100ms
+   */
+  public void velocityPid(double leftSpeedTics, double rightSpeedTics){
+    frontLeftDriveMotorController.set(ControlMode.Velocity, leftSpeedTics);
+    frontRightDriveMotorController.set(ControlMode.Velocity, rightSpeedTics);
   }
 
-  public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget){
-	  // stuff parameters and call again (-200 is an impossible heading)
+  public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget) {
+    // stuff parameters and call again (-200 is an impossible heading)
     return isOnTarget(leftEncoderTarget, rightEncoderTarget, RobotMap.defaultAcceptableError, -200);
   }
 
-  public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError){
+  public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError) {
     // stuff parameters and call again (-200 is an impossible heading)
     int leftError = Math.abs(leftEncoderTarget - getLeftEncoder());
-	  int rightError = Math.abs(rightEncoderTarget - getRightEncoder());
-	  SmartDashboard.putNumber("Error L", leftError);
-	  SmartDashboard.putNumber("Error R", rightError);
-    if(leftError <= acceptableError && rightError <= acceptableError){
-		  if(wasOnTarget){
+    int rightError = Math.abs(rightEncoderTarget - getRightEncoder());
+    SmartDashboard.putNumber("Error L", leftError);
+    SmartDashboard.putNumber("Error R", rightError);
+    if ((leftError <= acceptableError) && (rightError <= acceptableError)) {
+      if (wasOnTarget) {
         return true;
       }
-		  wasOnTarget = true;//Dont return true if we just 
-	  }
-	  else{
-		  wasOnTarget=false;
-	  }
+      wasOnTarget = true;// Dont return true if we just
+    } else {
+      wasOnTarget = false;
+    }
     return false;
   }
-  
-  public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError, double targetHeading){
+
+  public boolean isOnTarget(int leftEncoderTarget, int rightEncoderTarget, int acceptableError, double targetHeading) {
     return isOnTarget(leftEncoderTarget, rightEncoderTarget, acceptableError);
   }
-  
-  public boolean isOnTargetMagicMotion(int driveTarget, int acceptableError){
-	  int distanceError = driveTarget - frontRightDriveMotorController.getActiveTrajectoryPosition(0);
-	  if (distanceError < +acceptableError && distanceError > -acceptableError) {
+
+  public boolean isOnTargetMagicMotion(int driveTarget, int acceptableError) {
+    int distanceError = driveTarget - frontRightDriveMotorController.getActiveTrajectoryPosition(0);
+    if (distanceError < +acceptableError && distanceError > -acceptableError) {
       ++withinAcceptableErrorLoops;
     } else {
       withinAcceptableErrorLoops = 0;
     }
-    if (withinAcceptableErrorLoops > 10){
+    if (withinAcceptableErrorLoops > 10) {
       return true;
     } else {
       return false;
     }
   }
 
-  public void feed(){
+  public void feed() {
     drive.feed();
   }
 
   public void driveTrainBrakeMode() {
-	  frontLeftDriveMotorController.setNeutralMode(NeutralMode.Brake);
+    frontLeftDriveMotorController.setNeutralMode(NeutralMode.Brake);
     backLeftDriveMotorController.setNeutralMode(NeutralMode.Brake);
     frontRightDriveMotorController.setNeutralMode(NeutralMode.Brake);
     backRightDriveMotorController.setNeutralMode(NeutralMode.Brake);
   }
+
+  /**
+   * This gets the number of encoder tics in a given inch
+   * @return encoder tics in double form, for precision(tm)
+   */
+  public double getEncoderTicksPerInch(){
+    // tics per rotation / number of inches per rotation * gearReduction
+    return encoderUnitsPerShaftRotation / (wheelDiameter*Math.PI) * encoderGearReduction;
+  }
+
+  /**  
+   * setVoltage is a method of WPI speed controllers, not base talons
+   * While a generic set can work, it's a bit more effort
+   */
+  public abstract void setLeftVoltage(double voltage);
+  public abstract void setRightVoltage(double voltage);
 
   @Override
   public void initDefaultCommand() {

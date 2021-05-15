@@ -11,11 +11,12 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 
 /**
  * This is a class that manages a NavX. Copy-paste it, whatever The methods are
- * corrected to the robot orientation 
- * TODO: Have the methods return the correct axis for their name: ie, correct for NavX orientation
+ * corrected to the robot orientation TODO: Have the methods return the correct
+ * axis for their name: ie, correct for NavX orientation
  */
 public class NavXSubsystem extends Subsystem {
     AHRS NavX;
@@ -82,8 +83,17 @@ public class NavXSubsystem extends Subsystem {
         return temporaryDouble;
     }
 
-    public AHRS getNavX()
-    {
+    /**
+     * Provide heading in degrees with the angle increasing clockwise hence the
+     * negative value of getAngle
+     * 
+     * @return
+     */
+    public Rotation2d getHeading() {
+        return Rotation2d.fromDegrees(-NavX.getAngle());
+    }
+
+    public AHRS getNavX() {
         return NavX;
     }
 

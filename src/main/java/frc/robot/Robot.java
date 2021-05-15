@@ -7,31 +7,33 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.AutonomousTrajectoryRioCommand;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.MoveOffLineAuto;
 import frc.robot.commands.RealSmartAutoCommand;
-import frc.robot.commands.ShootAndRunAuto;
 import frc.robot.commands.ShootWithAcesCommand;
 import frc.robot.commands.ShooterVisionCommand;
-import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.NavigationControlSubsystem;
 import frc.robot.subsystems.ControlPanelSubsystem;
 import frc.robot.subsystems.DriveSubsystemBase;
-import frc.robot.subsystems.TalonDriveSubsystem;
-import frc.robot.subsystems.FalconDriveSubsystem;
+import frc.robot.subsystems.DriveSubsystemFrankenbot;
+import frc.robot.subsystems.DriveSubsystemFalconBot;
 import frc.robot.subsystems.NavXSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.ShuffleboardSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
-import frc.robot.subsystems.UltrasonicSensorSubsystem;
-import edu.wpi.first.networktables.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -43,17 +45,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
   NetworkTable table;
   public static DriveSubsystemBase driveSubsystem;
+  public static NavigationControlSubsystem navigationSubsystem;
   public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  public static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public static SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
   public static NavXSubsystem navXSubsystem = new NavXSubsystem();
-  public static UltrasonicSensorSubsystem ultrasonicSubsystem = new UltrasonicSensorSubsystem();
   public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  //public static ControlPanelSubsystem controlPanelSubsystem = new ControlPanelSubsystem();
+  // public static ControlPanelSubsystem controlPanelSubsystem = new
+  // ControlPanelSubsystem();
   public static ShuffleboardSubsystem shuffleBoardSubsystem = new ShuffleboardSubsystem();
- // public static Command visionCommand = new ShooterVisionCommand();
+  // public static Command visionCommand = new ShooterVisionCommand();
 
-  
   public boolean TestBool = false;
   public static OI oi;
   Command autonomousCommand;
@@ -63,6 +64,8 @@ public class Robot extends TimedRobot {
   SendableChooser<String> sendableStringChooser = new SendableChooser<String>();
   SendableChooser<Integer> sendableIntegerChooser = new SendableChooser<Integer>();
   SendableChooser<Double> sendableDoubleChooser = new SendableChooser<Double>();
+
+  UsbCamera cam;
   // End sendable choosers
 
   /**
@@ -71,11 +74,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    
-    //Set up shuffleboard
-    shuffleBoardSubsystem.setupShuffleboard();
-    
 
+    // Set up shuffleboard
+    shuffleBoardSubsystem.setupShuffleboard();
 
     NetworkTableInstance ntInst = NetworkTableInstance.getDefault();
     ntInst.startClientTeam(999);
@@ -84,26 +85,24 @@ public class Robot extends TimedRobot {
     testEntry.setDouble(10.5);
     System.out.println("Hit robotInit");
 
-    DigitalInput falconBotSwitch = new DigitalInput(RobotMap.falconBotSwitchPortNumber);
-    RobotMap.isFalconBot = true;// !falconBotSwitch.get();
-    System.out.println("falconBotSwitch = "+ RobotMap.isFalconBot);
-    if(RobotMap.isFalconBot){
-      driveSubsystem = new FalconDriveSubsystem();
-      RobotMap.isSplitStick = true;
-      // the IAmFalconBot method reset some RobotMap constants for the FalconBot chassis
-      // but the call to it was moved into the FalconDriveSubsystem constructor
-      System.out.println("We're a FALCON");
-    }
-    else{
-      driveSubsystem = new TalonDriveSubsystem();
-      System.out.println("We're a TALON");
-    }
+    //cam = CameraServer.getInstance().startAutomaticCapture(1);
+
+    /**
+     * Zero Z axis; used in DriveSubsystembase to determine initial heading in
+     * Kinematics driving so, do it before running the contructor for that class
+     */
+    Robot.navXSubsystem.zeroYaw();
+
+    // Change to reflect current robot
+    driveSubsystem = new DriveSubsystemFalconBot();
+    
+    System.out.println("Type of drive subsystem: " + driveSubsystem.getClass());
+    RobotMap.isSplitStick = true;
+    
     driveSubsystem.setDefaultCommand(new DriveManuallyCommand());
-    falconBotSwitch.close();
 
     sendableCommandChooser.addOption("Really Smart Auto", new RealSmartAutoCommand());
     sendableCommandChooser.addOption("Move Off Line", new MoveOffLineAuto());
-    sendableCommandChooser.setDefaultOption("Hello Alan!", new ShootWithAcesCommand());
 
     SmartDashboard.putData("auto chooser", sendableCommandChooser);
     Robot.driveSubsystem.resetDriveTrainControllers();
@@ -113,15 +112,27 @@ public class Robot extends TimedRobot {
 
     Robot.driveSubsystem.zeroDriveEncoders();
     Robot.driveSubsystem.driveTrainBrakeMode();
-    Robot.navXSubsystem.zeroYaw();
-    Robot.shooterSubsystem.configureShooterControllers();
-    Robot.shooterSubsystem.configurePanMotorControllerForMagic();
-    //Robot.shooterSubsystem.zeroShooterEncoders();
-    //Robot.controlPanelSubsystem.resetMotorController();
+
+    // Don't start kinematics untill we're ready
+    navigationSubsystem = new NavigationControlSubsystem(driveSubsystem, navXSubsystem);
+
+    if(RobotMap.enableShooter){
+      Robot.shooterSubsystem.configureShooterControllers();
+      Robot.shooterSubsystem.configurePanMotorControllerForPosition();
+      Robot.shooterSubsystem.configureTiltMotorControllerForPosition();
+      Robot.shooterSubsystem.zeroTiltPot();
+    }
     
 
     oi = new OI();
-  }
+    sendableCommandChooser.addOption("Bounce Path",  new AutonomousTrajectoryRioCommand("BouncePath.wpilib"));
+    sendableCommandChooser.addOption("Barrel Racing",  new AutonomousTrajectoryRioCommand("BarrelRacing.wpilib"));
+    sendableCommandChooser.addOption("10ft Forward", new AutonomousTrajectoryRioCommand("10ftForward.wpilib"));
+    sendableCommandChooser.addOption("Circle of Life",  new AutonomousTrajectoryRioCommand("CircleOfLife.wpilib"));
+
+    sendableCommandChooser.addOption("OffOrigin",  new AutonomousTrajectoryRioCommand("OffOrigin.wpilib"));
+    sendableCommandChooser.setDefaultOption("TestPath1", new AutonomousTrajectoryRioCommand("TestPath1.wpilib"));
+  }       
 
   /**
    * This function is called every robot packet, no matter the mode. Use this for
@@ -134,8 +145,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    //shooterSubsystem.getPanEncoder();
+    // shooterSubsystem.getPanEncoder();
     smartDashboardSubsystem.updateAllDisplays();
+    smartDashboardSubsystem.updatePoseDisplay();
   }
 
   /**
@@ -145,9 +157,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    driveSubsystem.DriveTrainCoastMode();
-    //visionCommand.cancel();
-    //controlPanelSubsystem.stopTalon();
+    // visionCommand.cancel();
+    // controlPanelSubsystem.stopTalon();
   }
 
   @Override
@@ -169,7 +180,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    
+
     autonomousCommand = sendableCommandChooser.getSelected();
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
@@ -182,8 +193,8 @@ public class Robot extends TimedRobot {
     // schedule the autonomous command (example)
     if (autonomousCommand != null) {
       autonomousCommand.start();
-    }
-    else System.out.println("Auto is null.");
+    } else
+      System.out.println("Auto is null.");
   }
 
   /**
@@ -198,7 +209,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
 
     driveSubsystem.driveTrainBrakeMode();
-    
+
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -216,8 +227,8 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
     smartDashboardSubsystem.updateNavXValues();
     smartDashboardSubsystem.updateEncoderValue();
-    
-    //controlPanelSubsystem.putSeenColor();
+
+    // controlPanelSubsystem.putSeenColor();
   }
 
   /**
@@ -225,6 +236,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
-    
+
   }
 }
