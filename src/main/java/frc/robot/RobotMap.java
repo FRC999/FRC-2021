@@ -43,11 +43,9 @@ public class RobotMap {
   public final static int loaderRearMotorControllerID = 11;
 
   // Shooter motor controllers
-  public final static int shooterWheelMotorControllerID = 10;
+  public final static int shooterWheelMotorControllerID = 30;
   public final static int ShooterTiltMotorControllerID = 31;
   public final static int shooterPanMotorControllerID = 22;
-  //If we switch to a falcon motor for shooter
-  public final static int shooterWheelFalconMotorControllerID = 5;
 
   // shooter constants
   /* TODO: get a more accurate value for this */
