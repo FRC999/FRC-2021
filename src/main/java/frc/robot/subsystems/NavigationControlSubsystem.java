@@ -67,17 +67,24 @@ public class NavigationControlSubsystem extends Subsystem {
    * Note that we face due east by default, and that there is not currently a lever
    * to change that.
    */
-  public void zeroPose(){
+  public void resetPose(){
+    resetPose(new Pose2d(RobotMap.startingPoseX, RobotMap.startingPoseY, 
+      new Rotation2d()));
+  }
+
+  /**
+   * This method sets the pose to the robot.
+   * @param startingPose is the new position of the robot.
+   */
+  public void resetPose(Pose2d startingPose){
     /**
      * This method of odometry assumes that encoders are zeroed.  That fact is 
      * documented, but your author missed it in his rush, and wasted precious time
      * trying to debug it.
      */
-    odometry.resetPosition(new Pose2d(RobotMap.startingPoseX, RobotMap.startingPoseY, 
-        new Rotation2d()), navX.getHeading());
-    driveSubsystem.zeroDriveEncoders(); 
+    odometry.resetPosition(startingPose, navX.getHeading());
+    driveSubsystem.zeroDriveEncoders();
   }
-
   public void updateOdometer() {
     Rotation2d gyroAngle = navX.getHeading();
 

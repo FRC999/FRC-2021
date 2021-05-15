@@ -81,10 +81,12 @@ public class OI {
     DriveStickButton6.whileHeld(new ShooterTurretCenterCommand());
     DriveStickButton7.whileHeld(new ShooterTiltManuallyCommand());
     DriveStickButton8.whileHeld(new ShooterZeroTiltCommand());
-    //DriveStickButton9.whenPressed(new Command());
+    DriveStickButton9.whenPressed(new AutonomousTrajectoryBarrelRun());
+    DriveStickButton9.whenReleased(new DriveStopCommand());
     DriveStickButton10.whenPressed(new ShooterRunWheelCommand(1));
-    //DriveStickButton11.whenPressed(new Command());
-    DriveStickButton12.whenPressed(new AutonomousTrajectorySlalomRioCommand());
+    DriveStickButton11.whenPressed(new AutonomousTrajectoryBarrelRun());
+    DriveStickButton11.whenReleased(new DriveStopCommand());
+    DriveStickButton12.whenPressed(new AutonomousTrajectoryRioCommand("Slalom.wpilib"));
     DriveStickButton12.whenReleased(new DriveStopCommand());
 
     // *** TurnStick Commands Here

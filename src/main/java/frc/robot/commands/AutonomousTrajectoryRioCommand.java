@@ -11,6 +11,11 @@ import frc.robot.subsystems.NavigationControlSubsystem;
 /** This form of the class runs all code on the RoboRIO*/
 public class AutonomousTrajectoryRioCommand extends RamseteCommandWpilib {
 
+    /**
+     * Superclass sets this to private, but we need it too!
+     */
+    Trajectory trajectory; 
+
     AutonomousTrajectoryRioCommand(Trajectory trajectory){
         super(
             trajectory, 
@@ -26,15 +31,16 @@ public class AutonomousTrajectoryRioCommand extends RamseteCommandWpilib {
             },
             Robot.navigationSubsystem, Robot.driveSubsystem // Set requirements
         );
-
+        this.trajectory = trajectory;
+ 
     }
     public AutonomousTrajectoryRioCommand(String alpha){
         this(NavigationControlSubsystem.getTrajectory(alpha));
-        System.out.println("initalized trajectory command");
+        System.out.println("initalized trajectory command: "+ alpha);
     }
 
     public void initialize(){
-        Robot.navigationSubsystem.zeroPose();
+        Robot.navigationSubsystem.resetPose(trajectory.getInitialPose());
         System.out.println("New coords" + Robot.navigationSubsystem.getPosition());
         super.initialize();
     }
