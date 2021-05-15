@@ -91,6 +91,7 @@ public class OI {
 
     // *** TurnStick Commands Here
     TurnStickButton1.whileHeld(new ShooterRunWheelCommand(1));
+    TurnStickButton1.whenReleased(new ShooterStandbyCommand());
     TurnStickButton2.whileHeld(new ShooterPanManuallyCommand());
     TurnStickButton3.whileHeld(new IntakeLoaderUpCommand());
     TurnStickButton4.whileHeld(new IntakeLoaderDownCommand());
